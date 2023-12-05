@@ -18,7 +18,7 @@ class SignInScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * .1),
+          SizedBox(height: context.getHeight(factor: .1)),
           SizedBox(
             width: context.getWidth(factor: 0.64),
             child: const ListTile(
@@ -32,26 +32,26 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * .03),
+          SizedBox(height: context.getHeight(factor: .03)),
           const Center(
             child: Text(
               "Welcome Back",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * .1),
+          SizedBox(height: context.getHeight(factor: .1)),
           AuthTextField(
             isPassword: false,
             controller: emailController,
             content: "Email",
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * .02),
+          SizedBox(height: context.getHeight(factor: .02)),
           AuthTextField(
             isPassword: true,
             controller: passwordController,
             content: "Password",
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * .03),
+          SizedBox(height: context.getHeight(factor: .03)),
           AuthButton(
               content: "Sign In",
               onPressedFunc: () {
