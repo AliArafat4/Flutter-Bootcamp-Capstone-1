@@ -10,9 +10,7 @@ packages:
     source: hosted
     version: "2.11.0"
   bloc:
-
     dependency: "direct main"
-
     description:
       name: bloc
       sha256: "3820f15f502372d979121de1f6b97bfcf1630ebff8fe1d52fb2b0bfa49be5b49"
@@ -103,7 +101,6 @@ packages:
     version: "0.0.0"
   intl:
     dependency: "direct main"
-
     description:
       name: intl
       sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
