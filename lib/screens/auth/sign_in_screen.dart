@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:team_hack/extentions/size_extention.dart';
-import 'package:team_hack/screens/chat/chat_screen.dart';
 import 'package:team_hack/screens/create_team/create_team_screen.dart';
 
 import 'components/auth_button.dart';
@@ -58,7 +57,7 @@ class SignInScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreateTeamScreen()));
+                        builder: (context) => const CreateTeamScreen()));
               }),
         ],
       ),

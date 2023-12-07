@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_hack/extentions/size_extention.dart';
-import 'package:team_hack/extentions/size_extention.dart';
-import 'package:team_hack/extentions/size_extention.dart';
-import 'package:team_hack/extentions/size_extention.dart';
-import 'package:team_hack/extentions/size_extention.dart';
-import 'package:team_hack/extentions/size_extention.dart';
+
 import 'package:team_hack/screens/create_team/components/create_team_button.dart';
 
 import 'components/create_team_text_field.dart';
