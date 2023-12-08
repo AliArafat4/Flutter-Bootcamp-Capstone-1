@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 import 'package:team_hack/screens/home/home_screen.dart';
@@ -85,9 +87,11 @@ class SignInScreen extends StatelessWidget {
 import 'package:flutter/material.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/create_team/create_team_screen.dart';
+import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
 
 import 'components/auth_button.dart';
 import 'components/auth_text_field.dart';
+import 'components/show_snack_bar.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -135,14 +139,33 @@ class SignInScreen extends StatelessWidget {
             content: "Password",
           ),
           SizedBox(height: context.getHeight(factor: .03)),
-          AuthButton(
-              content: "Sign In",
-              onPressedFunc: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CreateTeamScreen()));
-              }),
+          BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              state is AuthLoginErrorState
+                  ? showSnackBar(context: context, message: state.errorMsg)
+                  : const SizedBox();
+              state is AuthLoginSuccessState
+                  ? Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => const NavigationBarScreen()))
+                  : const SizedBox();
+            },
+            builder: (context, state) {
+              return AuthButton(
+                  content: "Sign In",
+                  onPressedFunc: () {
+                    context.read<AuthBloc>().add(AuthLoginEvent(
+                        email: emailController.text, password: passwordController.text));
+                  });
+            },
+          ),
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) => state is LoadingState
+                ? const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: LinearProgressIndicator(),
+                  )
+                : const SizedBox(),
+          )
         ],
       ),
     );
