@@ -35,8 +35,7 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => AddHackathonScreen()),
+                            MaterialPageRoute(builder: (context) => AddHackathonScreen()),
                           );
                         },
                         icon: const Icon(Icons.add))
@@ -77,16 +76,13 @@ class HomeScreen extends StatelessWidget {
                                   ListView.builder(
                                       //shrinkWrap: true,
                                       itemCount: 4, //change it later
-                                      itemBuilder:
-                                          (BuildContext context, index) {
+                                      itemBuilder: (BuildContext context, index) {
                                         return Stack(
-                                          alignment:
-                                              FractionalOffset.bottomCenter,
+                                          alignment: FractionalOffset.bottomCenter,
                                           children: [
                                             Container(
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
+                                                borderRadius: BorderRadius.circular(50),
                                               ),
                                               child: Image.asset(
                                                 "assets/images/hackImage.png",
@@ -94,36 +90,32 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                             Container(
                                               height: 50.0,
-                                              color: const Color.fromARGB(
-                                                  237, 166, 28, 28),
+                                              color: const Color.fromARGB(237, 166, 28, 28),
                                               child: const Padding(
-                                                padding: EdgeInsets.only(
-                                                    left: 10, top: 5),
+                                                padding: EdgeInsets.only(left: 10, top: 5),
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
-                                                      'Hackathon Name',
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 18),
+                                                    Flexible(
+                                                      child: Text(
+                                                        'Hackathon Name',
+                                                        style: TextStyle(
+                                                            color: Colors.white, fontSize: 18),
+                                                      ),
                                                     ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          'Riyadh,',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                        Text(
-                                                          '01/08/2023',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                      ],
+                                                    Flexible(
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            'Riyadh,',
+                                                            style: TextStyle(color: Colors.white),
+                                                          ),
+                                                          Text(
+                                                            '01/08/2023',
+                                                            style: TextStyle(color: Colors.white),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -140,12 +132,9 @@ class HomeScreen extends StatelessWidget {
                                   )),
 
                                   // Content of Tab 3
-                                  const Center(
-                                      child: Text('Tab Business analysis')),
-                                  const Center(
-                                      child: Text('Tab Data analysis')),
-                                  const Center(
-                                      child: Text('Tab Information security')),
+                                  const Center(child: Text('Tab Business analysis')),
+                                  const Center(child: Text('Tab Data analysis')),
+                                  const Center(child: Text('Tab Information security')),
                                   const Center(child: Text('Tab Networking')),
                                   const Center(child: Text('Tab All')),
                                 ],

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
+import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
 
 import 'components/auth_button.dart';
 import 'components/auth_text_field.dart';
+import 'components/show_snack_bar.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -10,8 +14,8 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,23 +52,57 @@ class SignUpScreen extends StatelessWidget {
           SizedBox(height: context.getHeight(factor: .02)),
           AuthTextField(
             isPassword: false,
-            controller: emailController,
+            controller: nameController,
             content: "Name",
-          ),
-          SizedBox(height: context.getHeight(factor: .02)),
-          AuthTextField(
-            isPassword: false,
-            controller: emailController,
-            content: "Password",
           ),
           SizedBox(height: context.getHeight(factor: .02)),
           AuthTextField(
             isPassword: true,
             controller: passwordController,
+            content: "Password",
+          ),
+          SizedBox(height: context.getHeight(factor: .02)),
+          AuthTextField(
+            isPassword: true,
+            controller: confirmPasswordController,
             content: "Confirm Password",
           ),
           SizedBox(height: context.getHeight(factor: .03)),
-          AuthButton(content: "Register", onPressedFunc: () {}),
+          BlocConsumer<AuthBloc, AuthState>(
+            listener: (context, state) {
+              state is AuthRegisterErrorState
+                  ? showSnackBar(context: context, message: state.errorMsg)
+                  : const SizedBox();
+              state is AuthRegisterSuccessState
+                  ? Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
+                      (route) => false,
+                    )
+                  : const SizedBox();
+            },
+            builder: (context, state) {
+              return AuthButton(
+                  content: "Register",
+                  onPressedFunc: () {
+                    context.read<AuthBloc>().add(
+                          AuthRegisterEvent(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              userName: nameController.text,
+                              confirmPassword: confirmPasswordController.text),
+                        );
+                  });
+            },
+          ),
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) => state is LoadingState
+                ? const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: LinearProgressIndicator(),
+                  )
+                : const SizedBox(),
+          )
         ],
       ),
     );
