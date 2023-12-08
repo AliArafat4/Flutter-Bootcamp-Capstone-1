@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/member_state.dart';
 
-class RequestToJoin extends StatelessWidget {
-  const RequestToJoin(
+class RequestToJoinCard extends StatelessWidget {
+  const RequestToJoinCard(
       {super.key,
       required this.hackathonName,
       required this.teamRoleName,
@@ -18,23 +18,42 @@ class RequestToJoin extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.grey.withOpacity(0.2),
+          color: Colors.white,
         ),
         width: MediaQuery.of(context).size.width,
-        height: 348,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(hackathonName),
-              Text(teamRoleName),
-              MemberState(
-                title: state,
-                color: Colors.grey.withOpacity(0.4),
+        height: MediaQuery.of(context).size.height * 0.1,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 16, top: 22, right: 16, bottom: 16),
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        hackathonName,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      Text(
+                        teamRoleName,
+                        style: TextStyle(
+                            fontSize: 14, color: Colors.black.withOpacity(0.6)),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  MemberState(
+                    title: state,
+                    color: const Color(0xff00bb27).withOpacity(0.1),
+                    textColor: const Color(0xff00bb27),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
