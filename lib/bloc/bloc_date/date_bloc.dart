@@ -7,7 +7,6 @@ part 'date_state.dart';
 class DateBloc extends Bloc<DateEvent, DateState> {
   DateBloc() : super(DateInitial()) {
     on<DateEvent>((event, emit) {
-      // TODO: implement event handler
     });
   }
 }

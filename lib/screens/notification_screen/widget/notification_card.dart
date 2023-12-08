@@ -16,7 +16,7 @@ class NotificationCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.grey.withOpacity(0.2),
+          color: const Color(0xff95beff).withOpacity(0.2),
         ),
         width: MediaQuery.of(context).size.width,
         height: isRequestNotification
@@ -27,7 +27,7 @@ class NotificationCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 22, left: 16),
+              padding: const EdgeInsets.only(top: 22, left: 16),
               child: Text(notificationTitle),
             ),
             const SizedBox(
@@ -38,6 +38,8 @@ class NotificationCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       PrimaryButton(
+                        textColor: Colors.white,
+                        color: const Color(0xff64a3fa),
                         width: MediaQuery.of(context).size.width / 2.5,
                         height: MediaQuery.of(context).size.height / 18,
                         title: "Accepte",
@@ -47,11 +49,12 @@ class NotificationCard extends StatelessWidget {
                         width: 16,
                       ),
                       SecondButton(
-                        width: MediaQuery.of(context).size.width / 2.5,
-                        height: MediaQuery.of(context).size.height / 18,
-                        title: "Reject",
-                        onPressed: () {},
-                      ),
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          height: MediaQuery.of(context).size.height / 18,
+                          title: "Reject",
+                          onPressed: () {},
+                          textColor: Colors.red,
+                          borderColor: Colors.red),
                     ],
                   )
                 : Container()

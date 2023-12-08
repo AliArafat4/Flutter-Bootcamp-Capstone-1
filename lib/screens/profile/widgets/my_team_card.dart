@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/member_info.dart';
-import 'package:team_hack/screens/notification_screen/widget/second_button.dart';
 
-class TeamCard extends StatelessWidget {
-  const TeamCard(
+class MyTeamCard extends StatelessWidget {
+  const MyTeamCard(
       {super.key,
+      required this.teamName,
       required this.firstMemberName,
       required this.secondMemberName,
       required this.thirdMemberName,
@@ -13,8 +13,10 @@ class TeamCard extends StatelessWidget {
       required this.secondMemberRole,
       required this.thirdMemberRole,
       required this.fourMemberRole,
-      required this.teamName});
-
+      required this.hackathonName,
+      required this.hackathonImage});
+  final String hackathonImage;
+  final String hackathonName;
   final String teamName;
   final String firstMemberName,
       secondMemberName,
@@ -24,7 +26,6 @@ class TeamCard extends StatelessWidget {
       secondMemberRole,
       thirdMemberRole,
       fourMemberRole;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,26 +33,43 @@ class TeamCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-          //Color(0xff95beff).withOpacity(0.2),
+          color: Colors.grey.withOpacity(0.2),
         ),
         width: MediaQuery.of(context).size.width,
-        height: 348,
+        height: MediaQuery.of(context).size.height / 2.6,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                teamName,
-                style: const TextStyle(fontSize: 18, color: Color(0xff0e3a6c)),
+              Row(
+                children: [
+                  ClipOval(
+                      child: Image.asset(
+                    hackathonImage,
+                    width: 90,
+                    fit: BoxFit.fill,
+                  )),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        hackathonName,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                      Text(
+                        teamName,
+                        style:
+                            const TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               const Divider(
                 endIndent: 32,
               ),
-              //const Text("Members"),
-              const SizedBox(height: 8),
-
+              const SizedBox(height: 16),
               MemberInfo(
                 memberName: firstMemberName,
                 memberRole: firstMemberRole,
@@ -68,16 +86,6 @@ class TeamCard extends StatelessWidget {
               MemberInfo(
                 memberName: fourMemberName,
                 memberRole: fourMemberRole,
-              ),
-              Center(
-                child: SecondButton(
-                  textColor: const Color(0xff0477f4),
-                  width: MediaQuery.of(context).size.width - 160,
-                  height: MediaQuery.of(context).size.height / 16,
-                  title: "Request to join",
-                  onPressed: () {},
-                  borderColor: const Color(0xff0477f4),
-                ),
               ),
             ],
           ),

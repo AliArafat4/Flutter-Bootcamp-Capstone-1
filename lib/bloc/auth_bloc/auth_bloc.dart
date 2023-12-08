@@ -8,6 +8,7 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
+
     on<AuthRegisterEvent>((event, emit) async {
       emit(LoadingState());
 
@@ -50,5 +51,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       }
     });
+
   }
 }

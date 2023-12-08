@@ -4,6 +4,8 @@ import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_event.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_state.dart';
 import 'package:team_hack/screens/home/home_screen.dart';
+import 'package:team_hack/screens/notification_screen/notification_screen.dart';
+import 'package:team_hack/screens/profile/profile_screen.dart';
 import 'package:team_hack/screens/search/search_screen.dart';
 
 class NavigationBarScreen extends StatelessWidget {
@@ -16,8 +18,8 @@ class NavigationBarScreen extends StatelessWidget {
         final pages = [
           const HomeScreen(),
           const SearchScreen(),
-          const HomeScreen(), //change it to Notification screen
-          const HomeScreen() // change it to Profile screen
+          const NotificationScrren(),
+          const ProfileScreen()
         ];
         int currentIndex =
             state is NavigationInitialState ? state.indexPage : 0;
@@ -25,7 +27,7 @@ class NavigationBarScreen extends StatelessWidget {
           extendBody: true,
           body: pages[currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-              selectedItemColor: const Color.fromRGBO(211, 84, 0, 1),
+              selectedItemColor: const Color(0xff64a3fa),
               elevation: 0,
               backgroundColor: Colors.orange[200],
               currentIndex: currentIndex,
@@ -37,10 +39,10 @@ class NavigationBarScreen extends StatelessWidget {
               items: [
                 BottomNavigationBarItem(
                     icon: Icon(
-                      Icons.house,
+                      Icons.house_outlined,
                       size: 20,
                       color: currentIndex == 0
-                          ? const Color.fromRGBO(211, 84, 0, 1)
+                          ? const Color(0xff64a3fa)
                           : const Color.fromRGBO(0, 0, 0, 0.5),
                     ),
                     label: 'Home'),
@@ -49,7 +51,7 @@ class NavigationBarScreen extends StatelessWidget {
                       Icons.search_rounded,
                       size: 20,
                       color: currentIndex == 1
-                          ? const Color.fromRGBO(211, 84, 0, 1)
+                          ? const Color(0xff64a3fa)
                           : const Color.fromRGBO(0, 0, 0, 0.5),
                     ),
                     label: 'Search'),
@@ -58,7 +60,7 @@ class NavigationBarScreen extends StatelessWidget {
                       Icons.notifications_none_rounded,
                       size: 20,
                       color: currentIndex == 2
-                          ? const Color.fromRGBO(211, 84, 0, 1)
+                          ? const Color(0xff64a3fa)
                           : const Color.fromRGBO(0, 0, 0, 0.5),
                     ),
                     label: 'Notification'),
@@ -67,7 +69,7 @@ class NavigationBarScreen extends StatelessWidget {
                       Icons.person_outline_rounded,
                       size: 20,
                       color: currentIndex == 3
-                          ? const Color.fromRGBO(211, 84, 0, 1)
+                          ? const Color(0xff64a3fa)
                           : const Color.fromRGBO(0, 0, 0, 0.5),
                     ),
                     label: 'Profile'),
