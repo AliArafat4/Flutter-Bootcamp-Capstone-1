@@ -15,6 +15,7 @@ dependencies:
   flutter_bloc: ^8.1.3
   intl: ^0.18.1
   chat_bubbles: ^1.5.0
+  shared_preferences: ^2.2.2
 
 
 dev_dependencies:
@@ -25,6 +26,8 @@ dev_dependencies:
 flutter:
   assets:
   - assets/images/hackathon_image.png
+  - assets/images/proofile_image.jpg
+  - assets/images/start_imge.jpg
+  - assets/images/hackImage.png
   uses-material-design: true
-  assets:
-    - assets\images\hackImage.png
+

@@ -9,7 +9,7 @@ class HackathonInfoCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.grey.withOpacity(0.2),
+        color: const Color(0xff95beff).withOpacity(0.2),
       ),
       width: MediaQuery.of(context).size.width,
       height: 164,

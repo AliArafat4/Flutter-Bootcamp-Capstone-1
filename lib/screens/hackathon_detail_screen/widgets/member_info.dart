@@ -22,7 +22,7 @@ class MemberInfo extends StatelessWidget {
             children: [
               Text(
                 memberName,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               Text(
                 memberRole,
@@ -33,9 +33,10 @@ class MemberInfo extends StatelessWidget {
           ),
           const Spacer(),
           isLeader
-              ? MemberState(
+              ? const MemberState(
                   title: 'leader',
-                  color: Colors.grey.withOpacity(0.4),
+                  color: Color(0xffECF2FF),
+                  textColor: Color(0xff0477f4),
                 )
               : Container()
         ],

@@ -74,8 +74,11 @@ class HomeScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(10),
                               child: TabBarView(
                                 children: [
-                                  ListView.builder(
-                                      //shrinkWrap: true,
+                                  ListView.separated(
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(
+                                            height: 22,
+                                          ),
                                       itemCount: 4, //change it later
                                       itemBuilder:
                                           (BuildContext context, index) {
@@ -93,9 +96,9 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Container(
-                                              height: 50.0,
-                                              color: const Color.fromARGB(
-                                                  237, 166, 28, 28),
+                                              height: 70,
+                                              color: const Color(0xff0477f4)
+                                                  .withOpacity(0.6),
                                               child: const Padding(
                                                 padding: EdgeInsets.only(
                                                     left: 10, top: 5),
