@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
-
+import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
+import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
 
 import 'components/auth_button.dart';
 import 'components/auth_text_field.dart';
@@ -82,12 +83,12 @@ class SignUpScreen extends StatelessWidget {
                   : const SizedBox();
             },
             builder: (context, state) {
-              return  PrimaryButton(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 16,
-              title: "Register",
-              color: const Color(0xff64a3fa),
-              textColor: Colors.white,
+              return PrimaryButton(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 16,
+                  title: "Register",
+                  color: const Color(0xff64a3fa),
+                  textColor: Colors.white,
                   onPressed: () {
                     context.read<AuthBloc>().add(
                           AuthRegisterEvent(
@@ -112,4 +113,3 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
-
