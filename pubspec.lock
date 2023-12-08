@@ -65,7 +65,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-
   crypto:
     dependency: transitive
     description:
@@ -74,7 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
-
   dot_navigation_bar:
     dependency: "direct main"
     description:
@@ -146,7 +144,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-
   functions_client:
     dependency: transitive
     description:
@@ -195,7 +192,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-
   intl:
     dependency: "direct main"
     description:
@@ -252,7 +248,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
-
   mime:
     dependency: transitive
     description:
@@ -261,7 +256,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-
   nested:
     dependency: transitive
     description:
@@ -278,7 +272,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
-
   path_provider:
     dependency: transitive
     description:
@@ -303,7 +296,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
-
   path_provider_linux:
     dependency: transitive
     description:
@@ -344,7 +336,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.7"
-
   postgrest:
     dependency: transitive
     description:
@@ -353,7 +344,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.2"
-
   provider:
     dependency: transitive
     description:
@@ -362,7 +352,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.1"
-
   realtime_client:
     dependency: transitive
     description:
@@ -387,7 +376,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-
   shared_preferences:
     dependency: "direct main"
     description:
@@ -444,7 +432,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
-
   sign_in_with_apple:
     dependency: transitive
     description:
@@ -469,7 +456,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-
   sky_engine:
     dependency: transitive
     description: flutter
@@ -635,7 +621,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.0"
-
   web_socket_channel:
     dependency: transitive
     description:
@@ -676,7 +661,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.9.4"
-
   win32:
     dependency: transitive
     description:
@@ -693,7 +677,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
-
   yet_another_json_isolate:
     dependency: transitive
     description:
@@ -702,7 +685,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-
 sdks:
   dart: ">=3.2.0 <4.0.0"
   flutter: ">=3.16.0"

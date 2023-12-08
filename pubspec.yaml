@@ -30,10 +30,7 @@ dev_dependencies:
 flutter:
   assets:
   - assets/images/hackathon_image.png
-
-
   - .env
-
   - assets/images/proofile_image.jpg
   - assets/images/start_imge.jpg
   - assets/images/hackImage.png

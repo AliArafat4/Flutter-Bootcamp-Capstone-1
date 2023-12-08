@@ -26,9 +26,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              context
-                  .read<ThemeBloc>()
-                  .add(ChangeThemeEvent(themeText: "light"));
+              context.read<ThemeBloc>().add(ChangeThemeEvent(themeText: "light"));
             },
             icon: const Icon(
               Icons.sunny,
@@ -37,9 +35,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           IconButton(
               onPressed: () {
-                context
-                    .read<ThemeBloc>()
-                    .add(ChangeThemeEvent(themeText: "dark"));
+                context.read<ThemeBloc>().add(ChangeThemeEvent(themeText: "dark"));
               },
               icon: Icon(
                 Icons.nightlight,
