@@ -21,8 +21,7 @@ class WidgetTextFieldDate extends StatelessWidget {
           filled: true,
           fillColor: const Color.fromARGB(157, 255, 255, 255),
           hintText: textfieldText,
-          border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
+          border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
         onTap: () {
           FocusScope.of(context).unfocus();

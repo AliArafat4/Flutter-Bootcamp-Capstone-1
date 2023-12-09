@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
-import 'package:team_hack/screens/auth/components/auth_button.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
-
-import 'package:team_hack/screens/home/home_screen.dart';
 
 import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
 import 'components/auth_text_field.dart';
@@ -41,16 +38,13 @@ class SignInScreen extends StatelessWidget {
                 const Text(
                   "Sign In",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 28,
-                      color: Color(0xff62c1c7)),
+                      fontWeight: FontWeight.w600, fontSize: 28, color: Color(0xff62c1c7)),
                 ),
                 Text(
                   "Sign in to continue",
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey.withOpacity(0.9),
-
                   ),
                 ),
               ],
@@ -86,8 +80,11 @@ class SignInScreen extends StatelessWidget {
                     ? showSnackBar(context: context, message: state.errorMsg)
                     : const SizedBox();
                 state is AuthLoginSuccessState
-                    ? Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const NavigationBarScreen()))
+                    ? Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
+                        (route) => false,
+                      )
                     : const SizedBox();
               },
               builder: (context, state) {
@@ -95,8 +92,6 @@ class SignInScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height / 16,
                     title: "Login",
-                    color: const Color(0xff64a3fa),
-                    textColor: Colors.white,
                     onPressed: () {
                       context.read<AuthBloc>().add(AuthLoginEvent(
                           email: emailController.text, password: passwordController.text));

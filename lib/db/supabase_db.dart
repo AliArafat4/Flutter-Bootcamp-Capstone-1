@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/models/user_model.dart';
 
 class SupaBaseDB {
@@ -67,6 +68,53 @@ class SupaBaseDB {
       final user = await client.from("users").select().eq('user_id', client.auth.currentUser!.id);
       final userInfo = UserModel.fromJson(user.first);
       return userInfo;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  addHack({
+    required String name,
+    required int teamSize,
+    required int numberOfTeams,
+    required String starRegDate,
+    required String endRegDate,
+    required String hackStartDate,
+    required String hackEndDate,
+    required String field,
+    required String description,
+    required String location,
+  }) async {
+    try {
+      final client = Supabase.instance.client;
+      final hack = await client.from("hackathons").insert({
+        "name": name,
+        "team_size": teamSize,
+        "number_of_teams": numberOfTeams,
+        "start_date_register": starRegDate,
+        "end_date_register": endRegDate,
+        "start_date_hack": hackStartDate,
+        "end_date_hack": hackEndDate,
+        "field": field,
+        "description": description,
+        "location": location,
+      });
+      return true;
+    } catch (err) {
+      print(err);
+      return false;
+    }
+  }
+
+  getAllHack({String field = "*"}) async {
+    try {
+      final client = Supabase.instance.client;
+      final hacks = await client.from("hackathons").select(field);
+      final hacksList = [];
+      for (var item in hacks) {
+        hacksList.add(HackModel.fromJson(item));
+      }
+      return hacksList;
     } catch (err) {
       return err;
     }
