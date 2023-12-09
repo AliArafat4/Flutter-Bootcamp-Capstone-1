@@ -32,11 +32,10 @@ class MyTeamCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.grey.withOpacity(0.2),
-        ),
+            borderRadius: BorderRadius.circular(12),
+            color: Theme.of(context).colorScheme.secondary),
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 2.6,
+        height: MediaQuery.of(context).size.height / 2.5,
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -47,15 +46,20 @@ class MyTeamCard extends StatelessWidget {
                   ClipOval(
                       child: Image.asset(
                     hackathonImage,
-                    width: 90,
+                    width: 60,
+                    height: 60,
                     fit: BoxFit.fill,
                   )),
+                  const SizedBox(
+                    width: 16,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         hackathonName,
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(
+                            fontSize: 18, color: Color(0xff695678)),
                       ),
                       Text(
                         teamName,
@@ -67,7 +71,7 @@ class MyTeamCard extends StatelessWidget {
                 ],
               ),
               const Divider(
-                endIndent: 32,
+                endIndent: 2,
               ),
               const SizedBox(height: 16),
               MemberInfo(

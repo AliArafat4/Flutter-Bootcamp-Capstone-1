@@ -4,7 +4,7 @@ import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
-import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
+import 'package:team_hack/screens/start/start_screen.dart';
 
 late SharedPreferences prefs;
 void main() async {
@@ -20,7 +20,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
         BlocProvider(create: (context) => ThemeBloc()),
       ],
@@ -29,7 +28,7 @@ class MainApp extends StatelessWidget {
           return MaterialApp(
               theme: state.themeData,
               debugShowCheckedModeBanner: false,
-              home: const NavigationBarScreen());
+              home: const StartScreen());
         } else {
           return Container();
         }

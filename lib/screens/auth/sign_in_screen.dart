@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
-import 'package:team_hack/screens/home/home_screen.dart';
+import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
 import 'components/auth_text_field.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -25,53 +25,51 @@ class SignInScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: context.getHeight(factor: .1)),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32, top: 64, right: 200),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Sign In",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28,
-                        color: Color(0xff64a3fa)),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Sign In",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 28,
+                      color: Color(0xff62c1c7)),
+                ),
+                Text(
+                  "Sign in to continue",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey.withOpacity(0.9),
                   ),
-                  Text(
-                    "Sign in to continue",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey.withOpacity(0.9),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 32,
             ),
             AuthTextField(
               isPassword: false,
               controller: emailController,
               content: "Email",
             ),
-            SizedBox(height: context.getHeight(factor: .02)),
             AuthTextField(
               isPassword: true,
               controller: passwordController,
               content: "Password",
             ),
-            SizedBox(height: context.getHeight(factor: .03)),
             PrimaryButton(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 16,
               title: "Login",
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NavigationBarScreen()));
               },
-              color: const Color(0xff64a3fa),
-              textColor: Colors.white,
             ),
           ],
         ),

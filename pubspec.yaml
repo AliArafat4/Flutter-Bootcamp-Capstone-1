@@ -27,7 +27,14 @@ flutter:
   assets:
   - assets/images/hackathon_image.png
   - assets/images/proofile_image.jpg
-  - assets/images/start_imge.jpg
   - assets/images/hackImage.png
+  - assets/images/start_img.png
+  - assets/images/design_filed.png
+  - assets/images/business_analysis_filed.png
+  - assets/images/data_analysis_filed.png
+  - assets/images/information_security_filed.png
+  - assets/images/network_filed.png
+  - assets/images/programming_filed.png
+  - assets/images/success_icon.png
   uses-material-design: true
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:team_hack/screens/create_team/create_team_screen.dart';
+import 'package:team_hack/screens/hackathon_detail_screen/widgets/hackathon_main_detail.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/hackathon_info_card.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/team_card.dart';
+import 'package:team_hack/screens/team/team_screen.dart';
 
 class HackathonDetail extends StatelessWidget {
   const HackathonDetail({super.key});
@@ -22,30 +24,17 @@ class HackathonDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
-                  "assets/images/hackathon_image.png",
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "AI Creation Hackathon",
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff0477f4)),
-              ),
-              Text(
-                "Join us in a unique experience focused on image creations using artificial intelligence. A customized experience for everyone, whether you are a marketer, social media expert, artist or even someone who wants to explore the world of artificial intelligence. Participate with us virtually, starting at 6pm on December 7th until 6pm on December 9th and discover new possibilities.",
-                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              const HackathonMainDetail(
+                hackathonImage: "assets/images/hackathon_image.png",
+                hackathonName: "AI Creation Hackathon",
+                hackathonDetail:
+                    "Join us in a unique experience focused on image creations using artificial intelligence. A customized experience for everyone, whether you are a marketer, social media expert, artist or even someone who wants to explore the world of artificial intelligence. Participate with us virtually, starting at 6pm on December 7th until 6pm on December 9th and discover new possibilities.",
               ),
               const SizedBox(
-                height: 14,
+                height: 22,
               ),
-              const SizedBox(height: 16),
               const HackathonInfoCard(),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               PrimaryButton(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 16,
@@ -56,8 +45,6 @@ class HackathonDetail extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => const CreateTeamScreen()));
                 },
-                color: const Color(0xff0477f4),
-                textColor: Colors.white,
               ),
               const SizedBox(height: 16),
               Row(
@@ -68,10 +55,15 @@ class HackathonDetail extends StatelessWidget {
                   ),
                   const Spacer(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TeamScreen()),
+                      );
+                    },
                     child: const Text(
                       "View all",
-                      style: TextStyle(color: Color(0xff0477f4)),
                     ),
                   ),
                 ],

@@ -17,9 +17,8 @@ class RequestToJoinCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-        ),
+            borderRadius: BorderRadius.circular(12),
+            color: Theme.of(context).colorScheme.secondary),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.1,
         child: Column(
@@ -35,7 +34,8 @@ class RequestToJoinCard extends StatelessWidget {
                     children: [
                       Text(
                         hackathonName,
-                        style: const TextStyle(fontSize: 16),
+                        style: const TextStyle(
+                            fontSize: 16, color: Color(0xff695678)),
                       ),
                       Text(
                         teamRoleName,
@@ -46,10 +46,9 @@ class RequestToJoinCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   MemberState(
-                    title: state,
-                    color: const Color(0xff00bb27).withOpacity(0.1),
-                    textColor: const Color(0xff00bb27),
-                  ),
+                      title: state,
+                      color: const Color(0xff00bb27).withOpacity(0.1),
+                      textColor: const Color(0xff00bb27)),
                 ],
               ),
             ),

@@ -11,14 +11,14 @@ class SkillSection extends StatelessWidget {
         Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
-              color: const Color(0xff95beff).withOpacity(0.2),
+              color: const Color(0xff62c1c7).withOpacity(0.1),
             ),
             width: MediaQuery.of(context).size.width / 4,
             height: MediaQuery.of(context).size.height / 22,
             child: Center(
               child: Text(skillName,
                   style: const TextStyle(
-                    color: Color(0xff0477f4),
+                    color: Color(0xff62c1c7),
                   )),
             )),
         const SizedBox(

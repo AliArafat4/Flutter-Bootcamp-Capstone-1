@@ -12,59 +12,65 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: context.getHeight(factor: 0.09)),
-              Image.asset("assets/images/start_imge.jpg"),
-              SizedBox(height: context.getHeight(factor: 0.02)),
-              const Row(
+        child: Column(
+          children: [
+            SizedBox(height: context.getHeight(factor: 0.08)),
+            Image.asset("assets/images/start_img.png"),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Welcome To",
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+                  const Row(
+                    children: [
+                      Text(
+                        "Welcome To",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 28),
+                      ),
+                      Text(
+                        " TeamHack",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 28,
+                            color: Color(0xff62c1c7)),
+                      ),
+                    ],
                   ),
-                  Text(
-                    " TeamHack",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 24,
-                        color: Color(0xff007cff)),
+                  const Text(
+                    "Discover community and create team easily",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  SizedBox(height: context.getHeight(factor: 0.1)),
+                  PrimaryButton(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 16,
+                    title: "Login",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignInScreen()));
+                    },
+                  ),
+                  SizedBox(height: context.getHeight(factor: 0.02)),
+                  SecondButton(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 16,
+                    title: "Register",
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpScreen()));
+                    },
+                    borderColor: const Color(0xff62c1c7),
+                    textColor: const Color(0xff62c1c7),
                   ),
                 ],
               ),
-              const Text(
-                "Discover community and create team easily",
-                style: TextStyle(color: Colors.grey),
-              ),
-              SizedBox(height: context.getHeight(factor: 0.1)),
-              PrimaryButton(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 16,
-                title: "Login",
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignInScreen()));
-                },
-                color: const Color(0xff64a3fa),
-                textColor: Colors.white,
-              ),
-              SizedBox(height: context.getHeight(factor: 0.02)),
-              SecondButton(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 16,
-                title: "Register",
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignUpScreen()));
-                },
-                borderColor: const Color(0xff64a3fa),
-                textColor: const Color(0xff007cff),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -11,15 +11,21 @@ class HackathonInfo extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20),
       child: Row(
         children: [
-          Icon(
-            icon,
-            color: const Color(0xff0477f4),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(200),
+              color: const Color(0xff695678).withOpacity(0.1),
+            ),
+            width: 40,
+            height: 40,
+            child: Icon(
+              icon,
+            ),
           ),
           const SizedBox(width: 8),
-          Text(
-            title,
-            style: TextStyle(color: Colors.black.withOpacity(0.8)),
-          ),
+          Text(title, style: Theme.of(context).textTheme.titleMedium
+              //TextStyle(color: Colors.black.withOpacity(0.8),),
+              ),
         ],
       ),
     );

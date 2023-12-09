@@ -32,8 +32,7 @@ class TeamCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-          //Color(0xff95beff).withOpacity(0.2),
+          color: Theme.of(context).colorScheme.secondary,
         ),
         width: MediaQuery.of(context).size.width,
         height: 348,
@@ -44,14 +43,12 @@ class TeamCard extends StatelessWidget {
             children: [
               Text(
                 teamName,
-                style: const TextStyle(fontSize: 18, color: Color(0xff0e3a6c)),
+                style: const TextStyle(fontSize: 18, color: Color(0xff695678)),
               ),
               const Divider(
                 endIndent: 32,
               ),
-              //const Text("Members"),
               const SizedBox(height: 8),
-
               MemberInfo(
                 memberName: firstMemberName,
                 memberRole: firstMemberRole,
@@ -71,12 +68,12 @@ class TeamCard extends StatelessWidget {
               ),
               Center(
                 child: SecondButton(
-                  textColor: const Color(0xff0477f4),
+                  textColor: const Color(0xff62c1c7),
                   width: MediaQuery.of(context).size.width - 160,
                   height: MediaQuery.of(context).size.height / 16,
                   title: "Request to join",
                   onPressed: () {},
-                  borderColor: const Color(0xff0477f4),
+                  borderColor: const Color(0xff62c1c7),
                 ),
               ),
             ],

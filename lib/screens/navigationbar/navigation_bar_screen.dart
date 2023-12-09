@@ -27,53 +27,53 @@ class NavigationBarScreen extends StatelessWidget {
           extendBody: true,
           body: pages[currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-              selectedItemColor: const Color(0xff64a3fa),
-              elevation: 0,
-              backgroundColor: Colors.orange[200],
-              currentIndex: currentIndex,
-              onTap: (index) {
-                context
-                    .read<NavigationBloc>()
-                    .add(ClickNavigationEvent(clickIndex: index));
-              },
-              items: [
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.house_outlined,
-                      size: 20,
-                      color: currentIndex == 0
-                          ? const Color(0xff64a3fa)
-                          : const Color.fromRGBO(0, 0, 0, 0.5),
-                    ),
-                    label: 'Home'),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.search_rounded,
-                      size: 20,
-                      color: currentIndex == 1
-                          ? const Color(0xff64a3fa)
-                          : const Color.fromRGBO(0, 0, 0, 0.5),
-                    ),
-                    label: 'Search'),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.notifications_none_rounded,
-                      size: 20,
-                      color: currentIndex == 2
-                          ? const Color(0xff64a3fa)
-                          : const Color.fromRGBO(0, 0, 0, 0.5),
-                    ),
-                    label: 'Notification'),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.person_outline_rounded,
-                      size: 20,
-                      color: currentIndex == 3
-                          ? const Color(0xff64a3fa)
-                          : const Color.fromRGBO(0, 0, 0, 0.5),
-                    ),
-                    label: 'Profile'),
-              ]),
+            selectedItemColor: const Color(0xff62c1c7),
+            elevation: 0,
+            currentIndex: currentIndex,
+            onTap: (index) {
+              context
+                  .read<NavigationBloc>()
+                  .add(ClickNavigationEvent(clickIndex: index));
+            },
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.house_outlined,
+                    size: 20,
+                    color: currentIndex == 0
+                        ? const Color(0xff62c1c7)
+                        : Colors.grey,
+                  ),
+                  label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.search,
+                    size: 20,
+                    color: currentIndex == 1
+                        ? const Color(0xff62c1c7)
+                        : Colors.grey,
+                  ),
+                  label: 'Search'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.notifications_none_rounded,
+                    size: 20,
+                    color: currentIndex == 2
+                        ? const Color(0xff62c1c7)
+                        : Colors.grey,
+                  ),
+                  label: 'Notification'),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.person_outline_rounded,
+                  size: 20,
+                  color:
+                      currentIndex == 3 ? const Color(0xff62c1c7) : Colors.grey,
+                ),
+                label: 'Profile',
+              ),
+            ],
+          ),
         );
       },
     );

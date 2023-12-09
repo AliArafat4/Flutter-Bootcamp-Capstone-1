@@ -20,7 +20,7 @@ class CreateTeamTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 80,
       child: TextField(
         onTap: onTapFunc,
         keyboardType: keyboardType,
@@ -28,15 +28,23 @@ class CreateTeamTextField extends StatelessWidget {
         textAlign: TextAlign.start,
         textAlignVertical: TextAlignVertical.bottom,
         decoration: InputDecoration(
-            focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25)),
-                borderSide: BorderSide(color: Colors.transparent)),
-            filled: true,
-            hintText: content,
-            hintStyle: const TextStyle(fontWeight: FontWeight.w400),
-            enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(25)),
-                borderSide: BorderSide(color: Colors.transparent))),
+          hintText: content,
+          hintStyle:
+              const TextStyle(color: Colors.grey, fontWeight: FontWeight.w400),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 18, horizontal: 22),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        ),
       ),
     );
   }

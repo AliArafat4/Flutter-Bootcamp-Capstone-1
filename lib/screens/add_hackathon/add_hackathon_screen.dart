@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_dropdown.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_textfield_date.dart';
-import 'package:team_hack/widgets/widget_textfield.dart';
+import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
+import 'package:team_hack/widgets/create_hackathon_textfiled.dart';
 
 class AddHackathonScreen extends StatelessWidget {
   AddHackathonScreen({super.key});
@@ -104,12 +105,12 @@ class AddHackathonScreen extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const WidgetTextField(
-                  textFieldText: 'Enter Hackathon Name',
+                CreateHackathonTextFiled(
+                  content: 'Enter Hackathon Name',
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 70,
@@ -121,8 +122,8 @@ class AddHackathonScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 70,
                 ),
-                const WidgetTextField(
-                  textFieldText: 'Enter The Location',
+                CreateHackathonTextFiled(
+                  content: 'Enter The Location',
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 30,
@@ -191,8 +192,8 @@ class AddHackathonScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 30,
                 ),
-                const WidgetTextField(
-                  textFieldText: 'Enter Hackathon Details',
+                CreateHackathonTextFiled(
+                  content: 'Enter Hackathon Details',
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 70,
@@ -204,25 +205,17 @@ class AddHackathonScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 70,
                 ),
-                const WidgetTextField(
-                  textFieldText: 'Enter Team Size',
+                CreateHackathonTextFiled(
+                  content: 'Enter Team Size',
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 15,
                 ),
-                SizedBox(
+                PrimaryButton(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 20,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ))),
-                      child: const Text('Add'),
-                    )),
+                    height: MediaQuery.of(context).size.height / 16,
+                    title: "Add",
+                    onPressed: () {})
               ],
             ),
           ),
