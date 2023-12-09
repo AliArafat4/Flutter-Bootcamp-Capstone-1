@@ -34,6 +34,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
                 const Spacer(),
                 Switch(
+                  trackOutlineColor:
+                      const MaterialStatePropertyAll(Colors.transparent),
                   activeColor: Colors.white,
                   activeTrackColor: const Color(0xff62c1c7),
                   inactiveThumbColor: Colors.white,
@@ -63,7 +65,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const StartScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const StartScreen()),
                   );
                 })
           ],

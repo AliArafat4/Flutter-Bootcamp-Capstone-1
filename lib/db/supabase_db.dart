@@ -25,8 +25,8 @@ class SupaBaseDB {
     try {
       supaBaseInstance = Supabase.instance.client;
 
-      final currentUser =
-          await supaBaseInstance.auth.signInWithPassword(email: email, password: password);
+      final currentUser = await supaBaseInstance.auth
+          .signInWithPassword(email: email, password: password);
 
       return "ok";
     } catch (err) {
@@ -34,7 +34,10 @@ class SupaBaseDB {
     }
   }
 
-  signUp({required String email, required String password, required String name}) async {
+  signUp(
+      {required String email,
+      required String password,
+      required String name}) async {
     try {
       supaBaseInstance = Supabase.instance.client;
 
@@ -65,7 +68,10 @@ class SupaBaseDB {
   Future<dynamic> getCurrentUser() async {
     try {
       final client = Supabase.instance.client;
-      final user = await client.from("users").select().eq('user_id', client.auth.currentUser!.id);
+      final user = await client
+          .from("users")
+          .select()
+          .eq('user_id', client.auth.currentUser!.id);
       final userInfo = UserModel.fromJson(user.first);
       return userInfo;
     } catch (err) {

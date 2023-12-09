@@ -45,8 +45,9 @@ class TeamCard extends StatelessWidget {
                 teamName,
                 style: const TextStyle(fontSize: 18, color: Color(0xff695678)),
               ),
-              const Divider(
+              Divider(
                 endIndent: 32,
+                color: Colors.grey.withOpacity(0.4),
               ),
               const SizedBox(height: 8),
               MemberInfo(

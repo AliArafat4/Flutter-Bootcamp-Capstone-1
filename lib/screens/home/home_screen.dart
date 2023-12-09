@@ -55,7 +55,6 @@ class HomeScreen extends StatelessWidget {
                           Tab(text: 'Networking'),
                         ],
                       ),
-
                       const SizedBox(
                         height: 22,
                       ),
@@ -185,7 +184,6 @@ class HomeScreen extends StatelessWidget {
                                 'Tab Programming',
                                 style: TextStyle(color: Colors.red),
                               )),
-
 
                               // Content of Tab 3
                               const Center(

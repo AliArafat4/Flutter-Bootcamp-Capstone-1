@@ -18,10 +18,22 @@ class WidgetTextFieldDate extends StatelessWidget {
         controller: controllerDate,
         canRequestFocus: false,
         decoration: InputDecoration(
-          filled: true,
-          fillColor: const Color.fromARGB(157, 255, 255, 255),
           hintText: textfieldText,
-          border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+          hintStyle:
+              const TextStyle(color: Colors.grey, fontWeight: FontWeight.w400),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 18, horizontal: 22),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
         onTap: () {
           FocusScope.of(context).unfocus();

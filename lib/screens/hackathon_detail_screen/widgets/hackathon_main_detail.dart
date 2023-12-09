@@ -23,7 +23,7 @@ class HackathonMainDetail extends StatelessWidget {
       const SizedBox(height: 16),
       Text(
         hackathonName,
-        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
               color: Theme.of(context).colorScheme.onPrimary,
             ),
       ),

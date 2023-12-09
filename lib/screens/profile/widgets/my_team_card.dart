@@ -70,8 +70,9 @@ class MyTeamCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const Divider(
+              Divider(
                 endIndent: 2,
+                color: Colors.grey.withOpacity(0.4),
               ),
               const SizedBox(height: 16),
               MemberInfo(
