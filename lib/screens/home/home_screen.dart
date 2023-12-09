@@ -55,6 +55,7 @@ class HomeScreen extends StatelessWidget {
                           Tab(text: 'Networking'),
                         ],
                       ),
+
                       const SizedBox(
                         height: 22,
                       ),
@@ -76,12 +77,115 @@ class HomeScreen extends StatelessWidget {
                                       hackathonLocation: "Riyadh",
                                     );
                                   }),
+// =======
+//                     ),
+//                     IconButton(
+//                         onPressed: () {
+//                           Navigator.push(
+//                             context,
+//                             MaterialPageRoute(builder: (context) => AddHackathonScreen()),
+//                           );
+//                         },
+//                         icon: const Icon(Icons.add))
+//                   ],
+//                 ),
+//                 const SizedBox(
+//                   height: 50,
+//                 ),
+//                 Expanded(
+//                   child: DefaultTabController(
+//                     length: 7,
+//                     child: SizedBox(
+//                       height: MediaQuery.of(context).size.height,
+//                       child: Column(
+//                         children: [
+//                           Container(
+//                             color: const Color.fromARGB(255, 196, 222, 197),
+//                             child: const TabBar(
+//                               isScrollable: true,
+//                               labelColor: Colors.black,
+//                               indicatorColor: Color.fromARGB(173, 244, 67, 54),
+//                               tabs: [
+//                                 Tab(text: 'Design'),
+//                                 Tab(text: 'Programming'),
+//                                 Tab(text: 'Business analysis'),
+//                                 Tab(text: 'Data analysis'),
+//                                 Tab(text: 'Information security'),
+//                                 Tab(text: 'Networking'),
+//                                 Tab(text: 'All'),
+//                               ],
+//                             ),
+//                           ),
+//                           Flexible(
+//                             child: Padding(
+//                               padding: const EdgeInsets.all(10),
+//                               child: TabBarView(
+//                                 children: [
+//                                   ListView.separated(
+//                                       separatorBuilder: (context, index) =>
+//                                           const SizedBox(
+//                                             height: 22,
+//                                           ),
+//                                       itemCount: 4, //change it later
+//                                       itemBuilder: (BuildContext context, index) {
+//                                         return Stack(
+//                                           alignment: FractionalOffset.bottomCenter,
+//                                           children: [
+//                                             Container(
+//                                               decoration: BoxDecoration(
+//                                                 borderRadius: BorderRadius.circular(50),
+//                                               ),
+//                                               child: Image.asset(
+//                                                 "assets/images/hackImage.png",
+//                                               ),
+//                                             ),
+//                                             Container(
+
+//                                               height: 70,
+//                                               color: const Color(0xff0477f4)
+//                                                   .withOpacity(0.6),
+
+//                                               child: const Padding(
+//                                                 padding: EdgeInsets.only(left: 10, top: 5),
+//                                                 child: Column(
+//                                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                                   children: [
+//                                                     Flexible(
+//                                                       child: Text(
+//                                                         'Hackathon Name',
+//                                                         style: TextStyle(
+//                                                             color: Colors.white, fontSize: 18),
+//                                                       ),
+//                                                     ),
+//                                                     Flexible(
+//                                                       child: Row(
+//                                                         children: [
+//                                                           Text(
+//                                                             'Riyadh,',
+//                                                             style: TextStyle(color: Colors.white),
+//                                                           ),
+//                                                           Text(
+//                                                             '01/08/2023',
+//                                                             style: TextStyle(color: Colors.white),
+//                                                           ),
+//                                                         ],
+//                                                       ),
+//                                                     ),
+//                                                   ],
+//                                                 ),
+//                                               ),
+//                                             ),
+//                                           ],
+//                                         );
+//                                       }),
+// >>>>>>> main
 
                               const Center(
                                   child: Text(
                                 'Tab Programming',
                                 style: TextStyle(color: Colors.red),
                               )),
+
 
                               // Content of Tab 3
                               const Center(
@@ -92,6 +196,17 @@ class HomeScreen extends StatelessWidget {
                               const Center(child: Text('Tab Networking')),
                               const Center(child: Text('Tab All')),
                             ],
+// =======
+//                                   // Content of Tab 3
+//                                   const Center(child: Text('Tab Business analysis')),
+//                                   const Center(child: Text('Tab Data analysis')),
+//                                   const Center(child: Text('Tab Information security')),
+//                                   const Center(child: Text('Tab Networking')),
+//                                   const Center(child: Text('Tab All')),
+//                                 ],
+//                               ),
+//                             ),
+// >>>>>>> main
                           ),
                         ),
                       ),

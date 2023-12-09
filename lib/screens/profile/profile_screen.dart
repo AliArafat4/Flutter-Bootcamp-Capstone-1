@@ -19,12 +19,14 @@ class ProfileScreen extends StatelessWidget {
         title: const Text("Profile"),
         actions: [
           IconButton(
+
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const SettingScreen()),
                 );
+
               },
               icon: const Icon(Icons.settings))
         ],

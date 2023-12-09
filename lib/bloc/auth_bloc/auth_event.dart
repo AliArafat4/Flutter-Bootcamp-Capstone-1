@@ -9,14 +9,12 @@ class AuthLoginEvent extends AuthEvent {
 }
 
 class AuthRegisterEvent extends AuthEvent {
-  final String email, password, userName, phone, confirmPassword;
-  final BuildContext context;
+  final String email, password, userName, confirmPassword;
+  // final BuildContext context;
   AuthRegisterEvent({
     required this.email,
     required this.password,
     required this.userName,
-    required this.phone,
     required this.confirmPassword,
-    required this.context,
   });
 }
