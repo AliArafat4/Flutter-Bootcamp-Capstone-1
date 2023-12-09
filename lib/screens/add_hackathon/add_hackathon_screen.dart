@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
+import 'package:team_hack/screens/add_hackathon/components/google_maps.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_dropdown.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_textfield_date.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
@@ -152,9 +153,13 @@ class AddHackathonScreen extends StatelessWidget {
                 CreateHackathonTextFiled(
                   content: 'Location',
                   controller: locationController,
-                  isDisabled: false,
+                  isDisabled: true,
                   onTapFunc: () {
                     //TODO: OPEN GOOGLE MAPS
+                    print("object");
+                    print("22");
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MapSample()));
                   },
                   iconButton: const IconButton(
                     onPressed: null,
@@ -172,7 +177,8 @@ class AddHackathonScreen extends StatelessWidget {
                       flex: 2,
                       child: WidgetTextFieldDate(
                         selectDate: () async {
-                          startDateRegister = await selectStartDateRegister(context);
+                          startDateRegister =
+                              await selectStartDateRegister(context);
                         },
                         controllerDate: conStartDateRegister,
                         textfieldText: 'StartDate of Register',
@@ -185,7 +191,8 @@ class AddHackathonScreen extends StatelessWidget {
                       flex: 2,
                       child: WidgetTextFieldDate(
                         selectDate: () async {
-                          endDateRegister = await selectEndDateRegister(context);
+                          endDateRegister =
+                              await selectEndDateRegister(context);
                         },
                         controllerDate: conEndDateRegister,
                         textfieldText: 'EndDate of Register',
@@ -254,7 +261,9 @@ class AddHackathonScreen extends StatelessWidget {
                 BlocConsumer<HackCubit, HackState>(
                   listener: (context, state) {
                     state is AddHackSuccessState
-                        ? showSnackBar(context: context, message: "Hackathon Added Successfully")
+                        ? showSnackBar(
+                            context: context,
+                            message: "Hackathon Added Successfully")
                         : const SizedBox();
                     state is AddHackErrorState
                         ? showSnackBar(context: context, message: state.errMsg)
