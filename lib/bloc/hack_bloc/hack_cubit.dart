@@ -53,6 +53,15 @@ class HackCubit extends Cubit<HackState> {
     }
   }
 
+  getAllHacksFunc({String field = "*"}) async {
+    final hackModel = await SupaBaseDB().getAllHack(field: field);
+    if (hackModel.toString().toLowerCase().contains("does not exist")) {
+      emit(GetAllHacksErrorState(errMsg: hackModel.toString()));
+    } else {
+      emit(GetAllHacksState(hackModel: hackModel));
+    }
+  }
+
   dateFormatFunc({required String time}) {
     // final day = DateFormat.E().format(DateTime.parse(time));
     // final hrs = DateFormat.Hms().format(DateTime.parse(time));
