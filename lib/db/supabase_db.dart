@@ -8,8 +8,8 @@ class SupaBaseDB {
 
   initializeSupa() async {
     await Supabase.initialize(
-      url: dotenv.env['URL']!,
-      anonKey: dotenv.env['KEY']!,
+      url: dotenv.env['SupaURL']!,
+      anonKey: dotenv.env['SupaKEY']!,
     );
   }
 
