@@ -17,7 +17,8 @@ class PersonalInfo extends StatelessWidget {
           ),
           Text(
             email,
-            style: const TextStyle(fontSize: 14, color: Colors.grey),
+            style:
+                TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)),
           )
         ],
       ),

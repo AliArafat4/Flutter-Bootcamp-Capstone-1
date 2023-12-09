@@ -10,6 +10,10 @@ import 'screens/start/start_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
+import 'package:team_hack/screens/start/start_screen.dart';
+
 
 late SharedPreferences prefs;
 void main() async {

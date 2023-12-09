@@ -15,9 +15,8 @@ class NotificationCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: const Color(0xff95beff).withOpacity(0.2),
-        ),
+            borderRadius: BorderRadius.circular(12),
+            color: Theme.of(context).colorScheme.secondary),
         width: MediaQuery.of(context).size.width,
         height: isRequestNotification
             ? MediaQuery.of(context).size.height / 6
@@ -38,8 +37,6 @@ class NotificationCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       PrimaryButton(
-                        textColor: Colors.white,
-                        color: const Color(0xff64a3fa),
                         width: MediaQuery.of(context).size.width / 2.5,
                         height: MediaQuery.of(context).size.height / 18,
                         title: "Accepte",

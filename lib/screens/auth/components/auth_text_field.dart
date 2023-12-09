@@ -26,42 +26,37 @@ class _AuthTextFieldState extends State<AuthTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: SizedBox(
-        height: 50,
-        child: TextField(
-          readOnly: widget.onlyRead ?? false,
-          onTap: widget.onTapFunc,
-          keyboardType: widget.keyboardType,
-          controller: widget.controller,
-          obscureText: (widget.isPassword) ? isObscured : false,
-          textAlign: TextAlign.start,
-          //  style: const TextStyle(color: whiteTextColor),
-          textAlignVertical: TextAlignVertical.bottom,
-          // cursorColor: greyTextColor,
-          decoration: InputDecoration(
-            suffixIcon:
-                (widget.isPassword) ? passwordVisibility() : const SizedBox(),
-            hintText: widget.content,
-            hintStyle: const TextStyle(
-                //    color: greyTextColor,
-                //   fontSize: fontSize18,
-                fontWeight: FontWeight.w400),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide:
-                  BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide:
-                  BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
-            ),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 18, horizontal: 22),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+    return SizedBox(
+      height: 80,
+      child: TextField(
+        readOnly: widget.onlyRead ?? false,
+        onTap: widget.onTapFunc,
+        keyboardType: widget.keyboardType,
+        controller: widget.controller,
+        obscureText: (widget.isPassword) ? isObscured : false,
+        textAlign: TextAlign.start,
+        //  style: const TextStyle(color: whiteTextColor),
+        textAlignVertical: TextAlignVertical.bottom,
+        // cursorColor: greyTextColor,
+        decoration: InputDecoration(
+          suffixIcon:
+              (widget.isPassword) ? passwordVisibility() : const SizedBox(),
+          hintText: widget.content,
+          hintStyle:
+              const TextStyle(color: Colors.grey, fontWeight: FontWeight.w400),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
           ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 18, horizontal: 22),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
       ),
     );

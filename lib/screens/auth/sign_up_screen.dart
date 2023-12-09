@@ -35,50 +35,54 @@ class SignUpScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32, top: 64, right: 162),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Sign Up",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 28, color: Color(0xff64a3fa)),
+
+            SizedBox(height: context.getHeight(factor: .1)),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Sign Up",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 28,
+                      color: Color(0xff62c1c7)),
+                ),
+                Text(
+                  "Create a new account",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey.withOpacity(0.9),
+
                   ),
-                  Text(
-                    "Create a new account",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey.withOpacity(0.9),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 32,
             ),
             AuthTextField(
               isPassword: false,
               controller: emailController,
               content: "Email",
             ),
-            SizedBox(height: context.getHeight(factor: .02)),
             AuthTextField(
               isPassword: false,
               controller: nameController,
               content: "Name",
             ),
-            SizedBox(height: context.getHeight(factor: .02)),
             AuthTextField(
               isPassword: true,
               controller: passwordController,
               content: "Password",
             ),
-            SizedBox(height: context.getHeight(factor: .02)),
             AuthTextField(
               isPassword: true,
               controller: confirmPasswordController,
               content: "Confirm Password",
             ),
+
             SizedBox(height: context.getHeight(factor: .03)),
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
@@ -109,6 +113,7 @@ class SignUpScreen extends StatelessWidget {
                                 confirmPassword: confirmPasswordController.text),
                           );
                     });
+
               },
             ),
             BlocBuilder<AuthBloc, AuthState>(

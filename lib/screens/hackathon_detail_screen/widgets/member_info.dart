@@ -33,10 +33,10 @@ class MemberInfo extends StatelessWidget {
           ),
           const Spacer(),
           isLeader
-              ? const MemberState(
+              ? MemberState(
                   title: 'leader',
-                  color: Color(0xffECF2FF),
-                  textColor: Color(0xff0477f4),
+                  color: const Color(0xff695678).withOpacity(0.1),
+                  textColor: const Color(0xff695678),
                 )
               : Container()
         ],

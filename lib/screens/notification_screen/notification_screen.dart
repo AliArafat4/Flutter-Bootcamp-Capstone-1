@@ -10,7 +10,6 @@ class NotificationScrren extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios_sharp),
         title: const Text("Notification"),
       ),
       body: const SingleChildScrollView(
