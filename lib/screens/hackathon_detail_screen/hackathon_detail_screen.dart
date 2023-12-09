@@ -12,7 +12,6 @@ class HackathonDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF7F7F7),
       appBar: AppBar(
         leading: const Icon(Icons.arrow_back_ios_sharp),
         title: const Text("Details"),

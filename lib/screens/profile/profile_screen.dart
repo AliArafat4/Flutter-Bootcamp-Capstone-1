@@ -7,8 +7,6 @@ import 'package:team_hack/screens/profile/widgets/request_to_join_card.dart';
 import 'package:team_hack/screens/profile/widgets/skills_section.dart';
 import 'package:team_hack/screens/setting_screen/setting.dart';
 
-enum SegmentType { profile, education }
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -19,14 +17,12 @@ class ProfileScreen extends StatelessWidget {
         title: const Text("Profile"),
         actions: [
           IconButton(
-
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const SettingScreen()),
                 );
-
               },
               icon: const Icon(Icons.settings))
         ],

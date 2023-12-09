@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 class WidgetDropdownButton extends StatelessWidget {
   WidgetDropdownButton(
-      {super.key, required this.listString, required this.labelDropdownButton, required this.func});
+      {super.key,
+      required this.listString,
+      required this.labelDropdownButton,
+      required this.func});
 
   String? dropdownValue;
   final String labelDropdownButton;
@@ -18,13 +21,17 @@ class WidgetDropdownButton extends StatelessWidget {
           width: 12,
         ),
         DropdownButton<String>(
-          value: dropdownValue ?? listString.first, //if null, give me first element
+          value: dropdownValue ??
+              listString.first, //if null, give me first element
           icon: const Icon(Icons.arrow_drop_down_outlined),
           elevation: 16,
-          style: const TextStyle(color: Color.fromARGB(187, 0, 0, 0)),
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: Theme.of(context).colorScheme.onPrimary),
           underline: Container(
             height: 2,
-            color: Colors.deepPurpleAccent,
+            color: const Color(0xff62c1c7),
           ),
           onChanged: func,
           //     (String? value) {

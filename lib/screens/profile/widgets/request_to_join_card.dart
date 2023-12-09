@@ -39,8 +39,8 @@ class RequestToJoinCard extends StatelessWidget {
                       ),
                       Text(
                         teamRoleName,
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.black.withOpacity(0.6)),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary),
                       ),
                     ],
                   ),

@@ -35,7 +35,6 @@ flutter:
   - .env
   - assets/images/proofile_image.jpg
   - assets/images/hackImage.png
-
   - assets/images/start_img.png
   - assets/images/design_filed.png
   - assets/images/business_analysis_filed.png

@@ -25,24 +25,25 @@ class HackathonCard extends StatelessWidget {
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12), topRight: Radius.circular(12)),
             child: Image.asset(
-              "assets/images/hackathon_image.png",
+              "assets/images/hackImage.png",
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 16, top: 16),
+            padding: const EdgeInsets.only(left: 16, top: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   hackathonName,
-                  style: const TextStyle(fontSize: 20, color: Color(0xff62c1c7)),
+                  style:
+                      const TextStyle(fontSize: 20, color: Color(0xff62c1c7)),
                 ),
                 const SizedBox(
-                  height: 22,
+                  height: 8,
                 ),
                 Row(
                   children: [
-                    const Icon(Icons.location_on),
+                    const Icon(Icons.location_on_outlined),
                     const SizedBox(
                       width: 4,
                     ),
@@ -50,7 +51,7 @@ class HackathonCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 14,
+                  height: 8,
                 ),
                 Row(
                   children: [

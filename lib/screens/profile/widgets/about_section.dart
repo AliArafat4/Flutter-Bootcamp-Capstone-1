@@ -14,8 +14,10 @@ class AboutSection extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 32,
           child: Text(
             bio,
-            style:
-                TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 14),
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: Theme.of(context).colorScheme.onPrimary),
           ),
         )
       ],
