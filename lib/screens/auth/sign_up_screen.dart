@@ -4,14 +4,8 @@ import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
-
-import 'components/auth_button.dart';
 import 'components/auth_text_field.dart';
 import 'components/show_snack_bar.dart';
-
-import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
-import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
-import 'components/auth_text_field.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -37,7 +31,6 @@ class SignUpScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             SizedBox(height: context.getHeight(factor: .1)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,16 +38,13 @@ class SignUpScreen extends StatelessWidget {
                 const Text(
                   "Sign Up",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 28,
-                      color: Color(0xff62c1c7)),
+                      fontWeight: FontWeight.w600, fontSize: 28, color: Color(0xff62c1c7)),
                 ),
                 Text(
                   "Create a new account",
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey.withOpacity(0.9),
-
                   ),
                 ),
               ],
@@ -82,7 +72,6 @@ class SignUpScreen extends StatelessWidget {
               controller: confirmPasswordController,
               content: "Confirm Password",
             ),
-
             SizedBox(height: context.getHeight(factor: .03)),
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
@@ -102,8 +91,6 @@ class SignUpScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height / 16,
                     title: "Register",
-                    color: const Color(0xff64a3fa),
-                    textColor: Colors.white,
                     onPressed: () {
                       context.read<AuthBloc>().add(
                             AuthRegisterEvent(
@@ -113,7 +100,6 @@ class SignUpScreen extends StatelessWidget {
                                 confirmPassword: confirmPasswordController.text),
                           );
                     });
-
               },
             ),
             BlocBuilder<AuthBloc, AuthState>(
