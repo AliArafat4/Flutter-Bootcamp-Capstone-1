@@ -1,22 +1,6 @@
 import 'package:flutter/material.dart';
 
-final listFiledName = [
-  "Design",
-  "Programming",
-  "Data analysis",
-  "Bussines analysis",
-  "Information security",
-  "Networking"
-];
 
-final listFiledImage = [
-  "assets/images/design_filed.png",
-  "assets/images/programming_filed.png",
-  "assets/images/data_analysis_filed.png",
-  "assets/images/business_analysis_filed.png",
-  "assets/images/information_security_filed.png",
-  "assets/images/network_filed.png"
-];
 
 class SearchField extends StatelessWidget {
   const SearchField(

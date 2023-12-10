@@ -28,7 +28,6 @@ final Map appThemeMap = {
     ),
     colorScheme: const ColorScheme.light(
       secondary: Colors.white,
-      onPrimary: Colors.black,
     ),
     primaryTextTheme: TextTheme(
       titleSmall: TextStyle(color: Colors.black.withOpacity(0.6)),
@@ -44,11 +43,14 @@ final Map appThemeMap = {
       brightness: Brightness.dark,
       colorScheme: ColorScheme.dark(
         secondary: const Color(0xff62c1c7).withOpacity(0.1),
+        onPrimary: Colors.green,
+        onSecondary: Colors.red,
       ),
       //textTheme: TextTheme()
-      appBarTheme: const AppBarTheme(
-        iconTheme: IconThemeData(color: Colors.white),
-      ),
+      appBarTheme:
+          const AppBarTheme(iconTheme: IconThemeData(color: Colors.amber)
+              //  iconTheme: IconThemeData(color: Colors.white),
+              ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: const Color(0xff62c1c7),

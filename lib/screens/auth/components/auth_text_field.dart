@@ -9,8 +9,9 @@ class AuthTextField extends StatefulWidget {
     this.keyboardType,
     this.onlyRead,
     this.onTapFunc,
+    this.onChangeFunc,
   });
-
+  final Function(String)? onChangeFunc;
   final bool isPassword;
   final String content;
   final TextEditingController? controller;
@@ -29,7 +30,9 @@ class _AuthTextFieldState extends State<AuthTextField> {
     return SizedBox(
       height: 80,
       child: TextField(
+       
         readOnly: widget.onlyRead ?? false,
+         onChanged: widget.onChangeFunc,
         onTap: widget.onTapFunc,
         keyboardType: widget.keyboardType,
         controller: widget.controller,

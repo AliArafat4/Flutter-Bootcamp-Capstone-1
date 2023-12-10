@@ -12,11 +12,13 @@ class AboutSection extends StatelessWidget {
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width - 32,
-          child: Text(
-            bio,
-            style:
-                TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 14),
-          ),
+          child: Text(bio,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.onPrimary)
+              // TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 14),
+              ),
         )
       ],
     );
