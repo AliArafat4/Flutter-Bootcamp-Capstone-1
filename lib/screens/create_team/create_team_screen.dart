@@ -86,6 +86,7 @@ class CreateTeamScreen extends StatelessWidget {
                     }
                     if (state is CreateTeamSuccessState) {
                       showSuccessDiolg(
+                          func: () {},
                           context: context,
                           successMessage: state.successmessage);
                     } else if (state is CreateTeamErrorState) {
