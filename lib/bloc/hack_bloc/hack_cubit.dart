@@ -57,8 +57,11 @@ class HackCubit extends Cubit<HackState> {
     emit(AddHackLoadingState());
 
     final hackModel = await SupaBaseDB().getAllHack(field: field);
+
     if (hackModel.toString().toLowerCase().contains("does not exist")) {
       emit(GetAllHacksErrorState(errMsg: hackModel.toString()));
+    } else if (hackModel.isEmpty) {
+      emit(AddHackNoDataState());
     } else {
       emit(GetAllHacksState(hackModel: hackModel));
     }

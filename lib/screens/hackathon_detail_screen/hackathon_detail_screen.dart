@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/screens/create_team/create_team_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/hackathon_main_detail.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
@@ -7,13 +8,19 @@ import 'package:team_hack/screens/hackathon_detail_screen/widgets/team_card.dart
 import 'package:team_hack/screens/team/team_screen.dart';
 
 class HackathonDetail extends StatelessWidget {
-  const HackathonDetail({super.key});
+  const HackathonDetail({super.key, required this.selectedHack});
 
+  final HackModel selectedHack;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios_sharp),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_sharp),
+        ),
         title: const Text("Details"),
       ),
       body: SingleChildScrollView(
@@ -23,16 +30,19 @@ class HackathonDetail extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HackathonMainDetail(
+              HackathonMainDetail(
                 hackathonImage: "assets/images/hackathon_image.png",
-                hackathonName: "AI Creation Hackathon",
-                hackathonDetail:
-                    "Join us in a unique experience focused on image creations using artificial intelligence. A customized experience for everyone, whether you are a marketer, social media expert, artist or even someone who wants to explore the world of artificial intelligence. Participate with us virtually, starting at 6pm on December 7th until 6pm on December 9th and discover new possibilities.",
+                hackathonName: "${selectedHack.name}",
+                hackathonDetail: "${selectedHack.description}",
               ),
               const SizedBox(
                 height: 22,
               ),
-              const HackathonInfoCard(),
+              HackathonInfoCard(
+                  location: selectedHack.location,
+                  startDate: selectedHack.hackStartDate,
+                  endDate: selectedHack.hackEndDate,
+                  teamSize: selectedHack.teamSize.toString()),
               const SizedBox(height: 8),
               PrimaryButton(
                 width: MediaQuery.of(context).size.width,
@@ -40,9 +50,11 @@ class HackathonDetail extends StatelessWidget {
                 title: "Create team",
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CreateTeamScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateTeamScreen(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 16),

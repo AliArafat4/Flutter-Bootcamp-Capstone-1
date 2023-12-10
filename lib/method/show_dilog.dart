@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 
-showsuccessDiolg({required BuildContext context, String? successMessage}) {
+showSuccessDiolg(
+    {required BuildContext context, required String? successMessage}) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
       elevation: 0,
       backgroundColor: Colors.white,
       content: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.5,
+        height: MediaQuery.of(context).size.height * 0.4,
         child: Center(
           child: Column(
             children: [
               const SizedBox(
-                height: 32,
+                height: 12,
               ),
               Image.asset(
                 "assets/images/success_icon.png",
                 width: 180,
               ),
               const SizedBox(
-                height: 24,
+                height: 8,
               ),
               Column(
                 children: [
@@ -31,20 +33,27 @@ showsuccessDiolg({required BuildContext context, String? successMessage}) {
                         color: Color(0xff07CC66),
                         fontWeight: FontWeight.w700),
                   ),
-                  Text(
-                    successMessage!,
-                    style: TextStyle(
-                        fontSize: 14, color: Colors.black.withOpacity(0.6)),
+                  Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      successMessage!,
+                      style: TextStyle(
+                          fontSize: 14, color: Colors.black.withOpacity(0.6)),
+                    ),
                   ),
                   const SizedBox(
-                    height: 62,
+                    height: 12,
                   ),
                   PrimaryButton(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height / 18,
                     title: "Done",
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HackathonDetail()),
+                      );
                     },
                   )
                 ],
