@@ -4,16 +4,16 @@ class CreateTeamTextField extends StatelessWidget {
   const CreateTeamTextField(
       {Key? key,
       required this.content,
-      this.controller,
-      this.keyboardType,
+      required this.controller,
+      required this.keyboardType,
       this.onTapFunc})
       : super(key: key);
 
   final String content;
 
-  final TextEditingController? controller;
+  final TextEditingController controller;
 
-  final TextInputType? keyboardType;
+  final TextInputType keyboardType;
 
   final Function()? onTapFunc;
 
