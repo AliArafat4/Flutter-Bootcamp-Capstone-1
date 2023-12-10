@@ -54,6 +54,8 @@ class HackCubit extends Cubit<HackState> {
   }
 
   getAllHacksFunc({String field = "*"}) async {
+    emit(AddHackLoadingState());
+
     final hackModel = await SupaBaseDB().getAllHack(field: field);
     if (hackModel.toString().toLowerCase().contains("does not exist")) {
       emit(GetAllHacksErrorState(errMsg: hackModel.toString()));

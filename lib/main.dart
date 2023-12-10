@@ -43,7 +43,7 @@ class MainApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               home: SupaBaseDB().isTokenExpired()
                   ? const StartScreen()
-                  : const StartScreen());
+                  : const NavigationBarScreen());
         } else {
           return Container();
         }
