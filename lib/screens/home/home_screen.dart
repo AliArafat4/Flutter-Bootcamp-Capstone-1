@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/screens/add_hackathon/add_hackathon_screen.dart';
+import 'package:team_hack/screens/chat/chat_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
 import 'package:team_hack/screens/home/widget/hackathon_card.dart';
 
@@ -12,8 +14,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<HackCubit>();
-    bloc.state is HackInitial ? bloc.getAllHacksFunc() : const SizedBox();
+    final blocHack = context.read<HackCubit>();
+    blocHack.state is HackInitial
+        ? blocHack.getAllHacksFunc()
+        : const SizedBox();
+    final bloc = context.read<AuthBloc>();
+    bloc.state is AuthInitial
+        ? bloc.add(AuthGetCurrentUserEvent())
+        : const SizedBox();
+
     const List<String> tabsTitle = [
       'All',
       'Design',
@@ -36,15 +45,41 @@ class HomeScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                   ),
                   const Spacer(),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddHackathonScreen()),
-                        );
-                      },
-                      icon: const Icon(Icons.add)),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    buildWhen: (previous, current) =>
+                        current is AuthGetCurrentUserState,
+                    builder: (context, state) {
+                      return state is AuthGetCurrentUserState
+                          ? state.user.isAdmin ?? false
+                              ? IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AddHackathonScreen()),
+                                    );
+                                  },
+                                  icon: const Icon(Icons.add))
+                              : IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ChatScreen()),
+                                    );
+                                  },
+                                  icon: const Icon(Icons.chat))
+                          : const SizedBox();
+                    },
+                    listener: (BuildContext context, AuthState state) {
+                      state is AuthGetCurrentUserState
+                          ? const SizedBox()
+                          : context
+                              .read<AuthBloc>()
+                              .add(AuthGetCurrentUserEvent());
+                    },
+                  ),
                 ],
               ),
               const SizedBox(
@@ -90,13 +125,10 @@ class HomeScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(10),
                               child: TabBarView(
                                 children: [
-                                  CustomHacksCards(state: state),
-                                  CustomHacksCards(state: state),
-                                  CustomHacksCards(state: state),
-                                  CustomHacksCards(state: state),
-                                  CustomHacksCards(state: state),
-                                  CustomHacksCards(state: state),
-                                  CustomHacksCards(state: state),
+                                  ...List.generate(
+                                    7,
+                                    (index) => CustomHacksCards(state: state),
+                                  )
                                 ],
                               ),
                             ),

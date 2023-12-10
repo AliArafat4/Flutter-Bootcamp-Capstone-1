@@ -31,7 +31,6 @@ class HackCubit extends Cubit<HackState> {
         field.isNotEmpty &&
         description.isNotEmpty &&
         location.isNotEmpty) {
-      print(endRegDate);
       final response = await SupaBaseDB().addHack(
           name: name,
           teamSize: int.tryParse(teamSize)!,
@@ -45,11 +44,14 @@ class HackCubit extends Cubit<HackState> {
           location: location);
       if (response) {
         emit(AddHackSuccessState());
+        getAllHacksFunc();
       } else {
         emit(AddHackErrorState(errMsg: "An Error has Occurred"));
+        getAllHacksFunc();
       }
     } else {
       emit(AddHackErrorState(errMsg: "Please Fill the Required Fields"));
+      getAllHacksFunc();
     }
   }
 
