@@ -126,4 +126,26 @@ class SupaBaseDB {
       return err.message;
     }
   }
+
+  addNewTeam(
+      {required String teamName,
+      required String firstMemberName,
+      required String secondMemberName,
+      required String thirdMemberName}) async {
+    try {
+      final client = Supabase.instance.client;
+      final team = await client.from("teams").insert({
+        "team_name": teamName,
+        "first_member_name": firstMemberName,
+        "second_member_name": secondMemberName,
+        "third_member_name": thirdMemberName,
+        "fourth_member_name": "",
+        "fifth_member_name": "",
+      });
+      return true;
+    } catch (error) {
+      print(error);
+      return false;
+    }
+  }
 }

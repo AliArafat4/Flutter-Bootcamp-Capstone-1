@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
+import 'package:team_hack/bloc/create_new_team/create_new_team_bloc.dart';
+import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
 import 'bloc/hack_bloc/hack_cubit.dart';
 import 'db/supabase_db.dart';
 import 'screens/start/start_screen.dart';
@@ -34,6 +35,7 @@ class MainApp extends StatelessWidget {
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<HackCubit>(create: (context) => HackCubit()),
         BlocProvider(create: (context) => ThemeBloc()),
+        BlocProvider(create: (context) => CreateNewTeamBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
         if (state is GetThemeState) {
@@ -42,7 +44,7 @@ class MainApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               home: SupaBaseDB().isTokenExpired()
                   ? const StartScreen()
-                  : const StartScreen());
+                  : HackathonDetail());
         } else {
           return Container();
         }

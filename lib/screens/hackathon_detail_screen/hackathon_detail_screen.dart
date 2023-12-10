@@ -40,9 +40,11 @@ class HackathonDetail extends StatelessWidget {
                 title: "Create team",
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CreateTeamScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateTeamScreen(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 16),
