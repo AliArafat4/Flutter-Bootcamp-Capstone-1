@@ -18,6 +18,7 @@ final Map appThemeMap = {
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: Colors.transparent,
+      elevation: 0,
     ),
     brightness: Brightness.light,
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -26,10 +27,8 @@ final Map appThemeMap = {
         elevation: 0,
       ),
     ),
-
     colorScheme: ColorScheme.light(
         secondary: Colors.white, onPrimary: Colors.black.withOpacity(0.5)),
-
     primaryTextTheme: TextTheme(
       titleSmall: TextStyle(color: Colors.black.withOpacity(0.6)),
     ),
@@ -38,7 +37,6 @@ final Map appThemeMap = {
     brightness: Brightness.dark,
     colorScheme: ColorScheme.dark(
         secondary: const Color(0xff62c1c7).withOpacity(0.1),
-
         onPrimary: Colors.grey),
     appBarTheme:
         const AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
@@ -52,7 +50,6 @@ final Map appThemeMap = {
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xff62c1c7),
         elevation: 0,
-
       ),
     ),
   ),

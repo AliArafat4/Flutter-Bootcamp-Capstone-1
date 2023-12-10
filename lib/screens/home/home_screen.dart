@@ -4,6 +4,7 @@ import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/screens/add_hackathon/add_hackathon_screen.dart';
+import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
 import 'package:team_hack/screens/home/widget/hackathon_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -123,22 +124,32 @@ class CustomHacksCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(state);
     return state is GetAllHacksState
         ? ListView.separated(
             separatorBuilder: (context, index) => const SizedBox(height: 16),
             itemCount: state.hackModel.length,
             itemBuilder: (BuildContext context, index) {
               return state.hackModel.length > 0
-                  ? HackathonCard(
-                      hackathonName: "${state.hackModel[index].name}",
-                      hackathonDate:
-                          "${state.hackModel[index].hackStartDate} - ${state.hackModel[index].hackEndDate}",
-                      hackathonLocation: "${state.hackModel[index].location}",
-                      hackathonField: "${state.hackModel[index].field}",
+                  ? InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HackathonDetail(
+                                    selectedHack: state.hackModel[index])));
+                      },
+                      child: HackathonCard(
+                        hackathonName: "${state.hackModel[index].name}",
+                        hackathonDate:
+                            "${state.hackModel[index].hackStartDate} - ${state.hackModel[index].hackEndDate}",
+                        hackathonLocation: "${state.hackModel[index].location}",
+                        hackathonField: "${state.hackModel[index].field}",
+                      ),
                     )
-                  : const Center(child: Text("No Hackathons"));
+                  : const SizedBox();
             })
-        : const Center(child: CircularProgressIndicator());
+        : state is AddHackNoDataState
+            ? const Center(child: Text("No Hackathons"))
+            : const Center(child: CircularProgressIndicator());
   }
 }
