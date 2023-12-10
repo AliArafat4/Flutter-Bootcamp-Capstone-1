@@ -14,7 +14,13 @@ class AddHackErrorState extends HackState {
 }
 
 class GetAllHacksState extends HackState {
-  final HackModel hackModel;
+  final List<HackModel> hackModel;
 
   GetAllHacksState({required this.hackModel});
+}
+
+class GetAllHacksErrorState extends HackState {
+  final String errMsg;
+
+  GetAllHacksErrorState({required this.errMsg});
 }

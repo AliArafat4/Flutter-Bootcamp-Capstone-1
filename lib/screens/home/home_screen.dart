@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
+import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/screens/add_hackathon/add_hackathon_screen.dart';
 import 'package:team_hack/screens/home/widget/hackathon_card.dart';
 
@@ -7,6 +10,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const List<String> tabsTitle = [
+      'All',
+      'Design',
+      'Programming',
+      'Business analysis',
+      'Data analysis',
+      'Information security',
+      'Networking'
+    ];
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -39,21 +51,34 @@ class HomeScreen extends StatelessWidget {
                   length: 7,
                   child: Column(
                     children: [
-                      const TabBar(
-                        tabAlignment: TabAlignment.start,
-                        isScrollable: true,
-                        labelColor: Color(0xff62c1c7),
-                        indicatorColor: Color(0xff62c1c7),
-                        unselectedLabelColor: Colors.grey,
-                        tabs: [
-                          Tab(text: 'All'),
-                          Tab(text: 'Design'),
-                          Tab(text: 'Programming'),
-                          Tab(text: 'Business analysis'),
-                          Tab(text: 'Data analysis'),
-                          Tab(text: 'Information security'),
-                          Tab(text: 'Networking'),
-                        ],
+                      BlocBuilder<HackCubit, HackState>(
+                        builder: (context, state) {
+                          return TabBar(
+                            tabAlignment: TabAlignment.start,
+                            isScrollable: true,
+                            labelColor: const Color(0xff62c1c7),
+                            indicatorColor: const Color(0xff62c1c7),
+                            unselectedLabelColor: Colors.grey,
+                            onTap: (value) {
+                              if (value == 0) {
+                                context.read<HackCubit>().getAllHacksFunc();
+                              } else {
+                                context
+                                    .read<HackCubit>()
+                                    .getAllHacksFunc(field: tabsTitle[value]);
+                              }
+                            },
+                            tabs: const [
+                              Tab(text: 'All'),
+                              Tab(text: 'Design'),
+                              Tab(text: 'Programming'),
+                              Tab(text: 'Business analysis'),
+                              Tab(text: 'Data analysis'),
+                              Tab(text: 'Information security'),
+                              Tab(text: 'Networking'),
+                            ],
+                          );
+                        },
                       ),
                       const SizedBox(
                         height: 22,

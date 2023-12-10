@@ -2,10 +2,10 @@ class HackModel {
   String? name;
   int? teamSize;
   int? numberOfTeams;
-  DateTime? starRegDate;
-  DateTime? endRegDate;
-  DateTime? hackStartDate;
-  DateTime? hackEndDate;
+  String? starRegDate;
+  String? endRegDate;
+  String? hackStartDate;
+  String? hackEndDate;
   String? field;
   String? description;
   String? location;
