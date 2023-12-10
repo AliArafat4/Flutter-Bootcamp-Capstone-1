@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_event.dart';
+import 'package:team_hack/extentions/size_extention.dart';
+import 'package:team_hack/local_storage/shared_prefrences.dart';
+import 'package:team_hack/main.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/hackathon_info.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 import 'package:team_hack/screens/start/start_screen.dart';
@@ -14,7 +17,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  bool isSwitched = false;
+  bool isSwitched = getCurrentTheme() == "dark" ? true : false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 562),
+            const Spacer(),
             PrimaryButton(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 16,
@@ -68,7 +71,8 @@ class _SettingScreenState extends State<SettingScreen> {
                     MaterialPageRoute(
                         builder: (context) => const StartScreen()),
                   );
-                })
+                }),
+            SizedBox(height: context.getHeight(factor: 0.05)),
           ],
         ),
       ),
