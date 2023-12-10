@@ -12,6 +12,7 @@ import 'package:team_hack/bloc/create_new_team/create_new_team_bloc.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
 
 import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
+import 'package:team_hack/bloc/skills_bloc/skills_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
 import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
@@ -44,6 +45,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => CreateNewTeamBloc()),
         BlocProvider(create: (context) => SearchBloc()),
+        BlocProvider(create: (context) => SkillsBloc()),
 
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
