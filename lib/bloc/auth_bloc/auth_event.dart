@@ -18,3 +18,5 @@ class AuthRegisterEvent extends AuthEvent {
     required this.confirmPassword,
   });
 }
+
+class AuthGetCurrentUserEvent extends AuthEvent {}

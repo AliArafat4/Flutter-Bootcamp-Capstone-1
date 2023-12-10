@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/profile/widgets/about_section.dart';
 import 'package:team_hack/screens/profile/widgets/my_team_card.dart';
@@ -33,138 +35,191 @@ class ProfileScreen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: ListView(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
+          child: BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              return ListView(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
 
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 8,
-              ),
-              const ProfileImage(
-                image: "assets/images/proofile_image.jpg",
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              const PersonalInfo(
-                name: "Ahamd Abdullah",
-                email: "ahamad_abdullah22@gmail.com",
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              const Text(
-                "Bio",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              const AboutSection(
-                bio:
-                    "Lorie Smith is a Loan Officer at XYZ Bank, where Lorie processes loan applications from start to finish, including mortgage refinancing and educating clients about their different financing options. Lorie has worked with reputable real estate agencies, including ReMax, Century 21, and Coldwell Banker, among others.",
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-              const Text(
-                "Skill",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              const SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    SkillSection(
-                      skillName: "UX/UI",
-                    ),
-                    SkillSection(
-                      skillName: "developer",
-                    ),
-                    SkillSection(
-                      skillName: "network",
-                    ),
-                    SkillSection(
-                      skillName: "DB",
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 22,
-              ),
-              DefaultTabController(
-                length: 2,
-                child: Column(
-                  children: [
-                    const Center(
-                      child: TabBar(
-                        labelColor: Color(0xff62c1c7),
-                        indicatorColor: Color(0xff62c1c7),
-                        unselectedLabelColor: Colors.grey,
-                        tabs: [
-                          Tab(text: 'My team'),
-                          Tab(text: 'Requests to join'),
-                        ],
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const ProfileImage(
+                    image: "assets/images/proofile_image.jpg",
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  PersonalInfo(
+                    name: state is AuthGetCurrentUserState
+                        ? "${state.user.name}"
+                        : "...",
+                    email: state is AuthGetCurrentUserState
+                        ? "${state.user.email}"
+                        : "...",
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Bio",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
                       ),
-                    ),
-                    SizedBox(
-                      height: context.getHeight(factor: 0.5),
-                      child: TabBarView(children: [
-                        const MyTeamCard(
-                          hackathonImage: "assets/images/hackathon_image.png",
-                          hackathonName: "ai hack",
-                          teamName: 'sara team',
-                          firstMemberName: 'ahmad',
-                          secondMemberName: 'khalid',
-                          thirdMemberName: 'lama',
-                          fourMemberName: 'sara',
-                          thirdMemberRole: 'developer',
-                          secondMemberRole: 'ux/ui',
-                          firstMemberRole: 'ux/ui',
-                          fourMemberRole: 'developer',
+                      IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  AboutSection(
+                    bio: state is AuthGetCurrentUserState
+                        ? "${state.user.bio}"
+                        : "...",
+                  ),
+                  const SizedBox(
+                    height: 22,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Skill",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SizedBox(
+                                  height: 200,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        const Text('Modal BottomSheet'),
+                                        ElevatedButton(
+                                          child:
+                                              const Text('Close BottomSheet'),
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.add))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        SkillSection(
+                          skillName: state is AuthGetCurrentUserState
+                              ? "${state.user.skills}"
+                              : '',
                         ),
-                        ListView(
-                          shrinkWrap: true,
-                          children: const [
-                            RequestToJoinCard(
-                              hackathonName: "AI Hackathon",
-                              teamRoleName: "team name | Developer",
-                              state: "accepted",
-                            ),
-                            RequestToJoinCard(
-                              hackathonName: "AI Hackathon",
-                              teamRoleName: "team name | Developer",
-                              state: "accepted",
-                            ),
-                            RequestToJoinCard(
-                              hackathonName: "AI Hackathon",
-                              teamRoleName: "team name | Developer",
-                              state: "accepted",
-                            ),
-                            RequestToJoinCard(
-                              hackathonName: "AI Hackathon",
-                              teamRoleName: "team name | Developer",
-                              state: "accepted",
-                            ),
-                            RequestToJoinCard(
-                              hackathonName: "AI Hackathon",
-                              teamRoleName: "team name | Developer",
-                              state: "accepted",
-                            ),
-                          ],
-                        )
-                      ]),
+                        const SkillSection(
+                          skillName: "developer",
+                        ),
+                        const SkillSection(
+                          skillName: "network",
+                        ),
+                        const SkillSection(
+                          skillName: "DB",
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                  const SizedBox(
+                    height: 22,
+                  ),
+                  DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      children: [
+                        const Center(
+                          child: TabBar(
+                            labelColor: Color(0xff62c1c7),
+                            indicatorColor: Color(0xff62c1c7),
+                            unselectedLabelColor: Colors.grey,
+                            tabs: [
+                              Tab(text: 'My team'),
+                              Tab(text: 'Requests to join'),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: context.getHeight(factor: 0.5),
+                          child: TabBarView(children: [
+                            const MyTeamCard(
+                              hackathonImage:
+                                  "assets/images/hackathon_image.png",
+                              hackathonName: "ai hack",
+                              teamName: 'sara team',
+                              firstMemberName: 'ahmad',
+                              secondMemberName: 'khalid',
+                              thirdMemberName: 'lama',
+                              fourMemberName: 'sara',
+                              thirdMemberRole: 'developer',
+                              secondMemberRole: 'ux/ui',
+                              firstMemberRole: 'ux/ui',
+                              fourMemberRole: 'developer',
+                            ),
+                            ListView(
+                              shrinkWrap: true,
+                              children: const [
+                                RequestToJoinCard(
+                                  hackathonName: "AI Hackathon",
+                                  teamRoleName: "team name | Developer",
+                                  state: "accepted",
+                                ),
+                                RequestToJoinCard(
+                                  hackathonName: "AI Hackathon",
+                                  teamRoleName: "team name | Developer",
+                                  state: "accepted",
+                                ),
+                                RequestToJoinCard(
+                                  hackathonName: "AI Hackathon",
+                                  teamRoleName: "team name | Developer",
+                                  state: "accepted",
+                                ),
+                                RequestToJoinCard(
+                                  hackathonName: "AI Hackathon",
+                                  teamRoleName: "team name | Developer",
+                                  state: "accepted",
+                                ),
+                                RequestToJoinCard(
+                                  hackathonName: "AI Hackathon",
+                                  teamRoleName: "team name | Developer",
+                                  state: "accepted",
+                                ),
+                              ],
+                            )
+                          ]),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

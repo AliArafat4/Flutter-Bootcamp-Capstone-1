@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
 import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
+import 'package:team_hack/bloc/skills_bloc/skills_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
 import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
@@ -37,6 +38,7 @@ class MainApp extends StatelessWidget {
         BlocProvider<HackCubit>(create: (context) => HackCubit()),
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => SearchBloc()),
+        BlocProvider(create: (context) => SkillsBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
         if (state is GetThemeState) {
