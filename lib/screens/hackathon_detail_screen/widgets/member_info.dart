@@ -24,9 +24,15 @@ class MemberInfo extends StatelessWidget {
                 memberName,
                 style: const TextStyle(fontSize: 16),
               ),
-              Text(memberRole,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.onSecondary)),
+
+              Text(
+                memberRole,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+
             ],
           ),
           const Spacer(),

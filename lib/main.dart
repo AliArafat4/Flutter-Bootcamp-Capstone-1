@@ -14,11 +14,16 @@ import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
 import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
+
 import 'package:team_hack/screens/start/start_screen.dart';
+
+import 'package:flutter_config/flutter_config.dart';
+
 
 late SharedPreferences prefs;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
   await dotenv.load(fileName: ".env");
   await SupaBaseDB().initializeSupa();
   prefs = await SharedPreferences.getInstance();
@@ -46,7 +51,7 @@ class MainApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               home: SupaBaseDB().isTokenExpired()
                   ? const StartScreen()
-                  : const NavigationBarScreen());
+                  : const StartScreen());
         } else {
           return Container();
         }

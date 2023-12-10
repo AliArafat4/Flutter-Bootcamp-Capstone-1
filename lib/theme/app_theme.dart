@@ -14,10 +14,10 @@ final Map appThemeMap = {
         foregroundColor: const Color(0xff62c1c7),
       ),
     ),
-    iconTheme: const IconThemeData(color: Color(0xff695678)),
+    iconTheme: const IconThemeData(color: Color(0xff695678), size: 20),
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: Colors.black),
-      backgroundColor: Color(0xffF7F7F7),
+      backgroundColor: Colors.transparent,
     ),
     brightness: Brightness.light,
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -26,42 +26,34 @@ final Map appThemeMap = {
         elevation: 0,
       ),
     ),
-    colorScheme: const ColorScheme.light(
-      secondary: Colors.white,
-    ),
+
+    colorScheme: ColorScheme.light(
+        secondary: Colors.white, onPrimary: Colors.black.withOpacity(0.5)),
+
     primaryTextTheme: TextTheme(
       titleSmall: TextStyle(color: Colors.black.withOpacity(0.6)),
     ),
   ),
   "dark": ThemeData(
-      iconButtonTheme: IconButtonThemeData(
-        style: ButtonStyle(
-          iconColor: MaterialStateProperty.resolveWith<Color>(
-              (states) => Colors.black.withOpacity(0.6)),
-        ),
-      ),
-      brightness: Brightness.dark,
-      colorScheme: ColorScheme.dark(
+    brightness: Brightness.dark,
+    colorScheme: ColorScheme.dark(
         secondary: const Color(0xff62c1c7).withOpacity(0.1),
-        onPrimary: Colors.green,
-        onSecondary: Colors.red,
+
+        onPrimary: Colors.grey),
+    appBarTheme:
+        const AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: const Color(0xff62c1c7),
       ),
-      //textTheme: TextTheme()
-      appBarTheme:
-          const AppBarTheme(iconTheme: IconThemeData(color: Colors.amber)
-              //  iconTheme: IconThemeData(color: Colors.white),
-              ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: const Color(0xff62c1c7),
-        ),
+    ),
+    iconTheme: const IconThemeData(color: Colors.white),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xff62c1c7),
+        elevation: 0,
+
       ),
-      iconTheme: const IconThemeData(color: Color(0xff695678)),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xff62c1c7),
-          elevation: 0,
-        ),
-      ),
-      textTheme: const TextTheme()),
+    ),
+  ),
 };

@@ -19,8 +19,8 @@ dependencies:
   supabase_flutter: ^1.10.25
   shared_preferences: ^2.2.2
   flutter_dotenv: ^5.1.0
-#  google_maps_flutter: ^2.5.0
-
+  google_maps_flutter: ^2.5.0
+  flutter_config: ^2.0.2
 
 
 dev_dependencies:
@@ -30,11 +30,11 @@ dev_dependencies:
 
 flutter:
   assets:
+  - assets/json/dark_mode_style.json
   - assets/images/hackathon_image.png
   - .env
   - assets/images/proofile_image.jpg
   - assets/images/hackImage.png
-
   - assets/images/start_img.png
   - assets/images/design_filed.png
   - assets/images/business_analysis_filed.png

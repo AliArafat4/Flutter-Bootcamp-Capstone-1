@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
+import 'package:team_hack/screens/add_hackathon/components/google_maps.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_dropdown.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_textfield_date.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
@@ -125,162 +126,296 @@ class AddHackathonScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Add Hackathon"),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CreateHackathonTextFiled(
-                  content: 'Enter Hackathon Name',
-                  controller: nameController,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 70,
-                ),
-                WidgetDropdownButton(
-                  listString: listField,
-                  labelDropdownButton: 'Hackathon Field:',
-                  func: (value) {
-                    hackField = value!;
-                  },
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 70,
-                ),
-                CreateHackathonTextFiled(
-                  content: 'Location',
-                  controller: locationController,
-                  isDisabled: false,
-                  onTapFunc: () {
-                    //TODO: OPEN GOOGLE MAPS
-                  },
-                  iconButton: const IconButton(
-                    onPressed: null,
-                    disabledColor: Colors.black,
-                    icon: Icon(Icons.location_on_outlined),
+// <<<<<<< lujain
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  CreateHackathonTextFiled(
+                    content: 'Enter Hackathon Name',
+                    controller: nameController,
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: WidgetTextFieldDate(
-                        selectDate: () async {
-                          startDateRegister = await selectStartDateRegister(context);
-                        },
-                        controllerDate: conStartDateRegister,
-                        textfieldText: 'StartDate of Register',
+                  CreateHackathonTextFiled(
+                    content: 'Location',
+                    controller: locationController,
+                    isDisabled: false,
+                    onTapFunc: () {
+                      //TODO: OPEN GOOGLE MAPS
+                    },
+                    iconButton: const IconButton(
+                      onPressed: null,
+                      disabledColor: Colors.grey,
+                      icon: Icon(Icons.location_on_outlined),
+                    ),
+                  ),
+                  CreateHackathonTextFiled(
+                    isDetails: true,
+                    content: 'Enter Hackathon Details',
+                    controller: hackDetailsController,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 42,
+                  ),
+                  CreateHackathonTextFiled(
+                    content: 'Enter Team Size',
+                    controller: teamSizeController,
+                    keyboardType: TextInputType.number,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        flex: 2,
+                        child: WidgetTextFieldDate(
+                          selectDate: () async {
+                            startDateRegister =
+                                await selectStartDateRegister(context);
+                          },
+                          controllerDate: conStartDateRegister,
+                          textfieldText: 'StartDate of Register',
+                        ),
+// =======
+//             child: ListView(
+//               // crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 CreateHackathonTextFiled(
+//                   content: 'Enter Hackathon Name',
+//                   controller: nameController,
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height / 70,
+//                 ),
+//                 WidgetDropdownButton(
+//                   listString: listField,
+//                   labelDropdownButton: 'Hackathon Field:',
+//                   func: (value) {
+//                     hackField = value!;
+//                   },
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height / 70,
+//                 ),
+//                 CreateHackathonTextFiled(
+//                   content: 'Location',
+//                   controller: locationController,
+//                   isDisabled: true,
+//                   onTapFunc: () {
+//                     //TODO: OPEN GOOGLE MAPS
+//                     print("object");
+//                     print("22");
+//                     Navigator.push(context,
+//                         MaterialPageRoute(builder: (context) => MapSample()));
+//                   },
+//                   iconButton: const IconButton(
+//                     onPressed: null,
+//                     disabledColor: Colors.black,
+//                     icon: Icon(Icons.location_on_outlined),
+//                   ),
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height / 30,
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Flexible(
+//                       flex: 2,
+//                       child: WidgetTextFieldDate(
+//                         selectDate: () async {
+//                           startDateRegister =
+//                               await selectStartDateRegister(context);
+//                         },
+//                         controllerDate: conStartDateRegister,
+//                         textfieldText: 'StartDate of Register',
+//                       ),
+//                     ),
+//                     const SizedBox(
+//                       width: 12,
+//                     ),
+//                     Flexible(
+//                       flex: 2,
+//                       child: WidgetTextFieldDate(
+//                         selectDate: () async {
+//                           endDateRegister =
+//                               await selectEndDateRegister(context);
+//                         },
+//                         controllerDate: conEndDateRegister,
+//                         textfieldText: 'EndDate of Register',
+// >>>>>>> main
                       ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: WidgetTextFieldDate(
-                        selectDate: () async {
-                          endDateRegister = await selectEndDateRegister(context);
-                        },
-                        controllerDate: conEndDateRegister,
-                        textfieldText: 'EndDate of Register',
+                      const SizedBox(
+                        width: 12,
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 60,
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      flex: 2,
-                      child: WidgetTextFieldDate(
-                        selectDate: () async {
-                          startDatehack = await selectStartDateHack(context);
-                        },
-                        controllerDate: conStartDatehack,
-                        textfieldText: 'StartDate of Hackathon',
+                      Flexible(
+                        flex: 2,
+                        child: WidgetTextFieldDate(
+                          selectDate: () async {
+                            endDateRegister =
+                                await selectEndDateRegister(context);
+                          },
+                          controllerDate: conEndDateRegister,
+                          textfieldText: 'EndDate of Register',
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: WidgetTextFieldDate(
-                        selectDate: () async {
-                          endDatehack = await selectEndDateHack(context);
-                        },
-                        controllerDate: conEndDatehack,
-                        textfieldText: 'EndDate of Hackathon',
+// <<<<<<< lujain
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 60,
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                        flex: 2,
+                        child: WidgetTextFieldDate(
+                          selectDate: () async {
+                            startDatehack = await selectStartDateHack(context);
+                          },
+                          controllerDate: conStartDatehack,
+                          textfieldText: 'StartDate of Hackathon',
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 30,
-                ),
-                CreateHackathonTextFiled(
-                  content: 'Enter Hackathon Details',
-                  controller: hackDetailsController,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 70,
-                ),
-                WidgetDropdownButton(
-                  listString: listNumTeam,
-                  labelDropdownButton: 'Number of team member:',
-                  func: (value) {
-                    numberOfTeamMembers = value!;
-                  },
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 70,
-                ),
-                CreateHackathonTextFiled(
-                  content: 'Enter Team Size',
-                  controller: teamSizeController,
-                  keyboardType: TextInputType.number,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 15,
-                ),
-                BlocConsumer<HackCubit, HackState>(
-                  listener: (context, state) {
-                    state is AddHackSuccessState
-                        ? showSnackBar(context: context, message: "Hackathon Added Successfully")
-                        : const SizedBox();
-                    state is AddHackErrorState
-                        ? showSnackBar(context: context, message: state.errMsg)
-                        : const SizedBox();
-                  },
-                  builder: (context, state) {
-                    return PrimaryButton(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 16,
-                        title: "Add",
-                        onPressed: () {
-                          context.read<HackCubit>().addHackFunc(
-                              name: nameController.text,
-                              teamSize: teamSizeController.text,
-                              numberOfTeams: teamSizeController.text,
-                              starRegDate: startDateRegister,
-                              endRegDate: endDateRegister,
-                              hackStartDate: startDatehack,
-                              hackEndDate: endDatehack,
-                              field: hackField,
-                              description: hackDetailsController.text,
-                              location: locationController.text);
-                        });
-                  },
-                )
-              ],
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Flexible(
+                        flex: 2,
+                        child: WidgetTextFieldDate(
+                          selectDate: () async {
+                            endDatehack = await selectEndDateHack(context);
+                          },
+                          controllerDate: conEndDatehack,
+                          textfieldText: 'EndDate of Hackathon',
+                        ),
+                      ),
+                    ],
+                  ),
+                  WidgetDropdownButton(
+                    listString: listField,
+                    labelDropdownButton: 'Hackathon Field:',
+                    func: (value) {
+                      hackField = value!;
+                    },
+                  ),
+                  WidgetDropdownButton(
+                    listString: listNumTeam,
+                    labelDropdownButton: 'Number of team member:',
+                    func: (value) {
+                      numberOfTeamMembers = value!;
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 30,
+                  ),
+                  BlocConsumer<HackCubit, HackState>(
+                    listener: (context, state) {
+                      state is AddHackSuccessState
+                          ? showSnackBar(
+                              context: context,
+                              message: "Hackathon Added Successfully")
+                          : const SizedBox();
+                      state is AddHackErrorState
+                          ? showSnackBar(
+                              context: context, message: state.errMsg)
+                          : const SizedBox();
+                    },
+                    builder: (context, state) {
+                      return PrimaryButton(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height / 16,
+                          title: "Add",
+                          onPressed: () {
+                            context.read<HackCubit>().addHackFunc(
+                                name: nameController.text,
+                                teamSize: teamSizeController.text,
+                                numberOfTeams: teamSizeController.text,
+                                starRegDate: startDateRegister,
+                                endRegDate: endDateRegister,
+                                hackStartDate: startDatehack,
+                                hackEndDate: endDatehack,
+                                field: hackField,
+                                description: hackDetailsController.text,
+                                location: locationController.text);
+                          });
+                    },
+                  )
+                ],
+              ),
+// =======
+//                     ),
+//                   ],
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height / 30,
+//                 ),
+//                 CreateHackathonTextFiled(
+//                   content: 'Enter Hackathon Details',
+//                   controller: hackDetailsController,
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height / 70,
+//                 ),
+//                 WidgetDropdownButton(
+//                   listString: listNumTeam,
+//                   labelDropdownButton: 'Number of team member:',
+//                   func: (value) {
+//                     numberOfTeamMembers = value!;
+//                   },
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height / 70,
+//                 ),
+//                 CreateHackathonTextFiled(
+//                   content: 'Enter Team Size',
+//                   controller: teamSizeController,
+//                   keyboardType: TextInputType.number,
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height / 15,
+//                 ),
+//                 BlocConsumer<HackCubit, HackState>(
+//                   listener: (context, state) {
+//                     state is AddHackSuccessState
+//                         ? showSnackBar(
+//                             context: context,
+//                             message: "Hackathon Added Successfully")
+//                         : const SizedBox();
+//                     state is AddHackErrorState
+//                         ? showSnackBar(context: context, message: state.errMsg)
+//                         : const SizedBox();
+//                   },
+//                   builder: (context, state) {
+//                     return PrimaryButton(
+//                         width: MediaQuery.of(context).size.width,
+//                         height: MediaQuery.of(context).size.height / 16,
+//                         title: "Add",
+//                         onPressed: () {
+//                           context.read<HackCubit>().addHackFunc(
+//                               name: nameController.text,
+//                               teamSize: teamSizeController.text,
+//                               numberOfTeams: teamSizeController.text,
+//                               starRegDate: startDateRegister,
+//                               endRegDate: endDateRegister,
+//                               hackStartDate: startDatehack,
+//                               hackEndDate: endDatehack,
+//                               field: hackField,
+//                               description: hackDetailsController.text,
+//                               location: locationController.text);
+//                         });
+//                   },
+//                 )
+//               ],
+// >>>>>>> main
             ),
           ),
         ),

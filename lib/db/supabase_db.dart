@@ -116,13 +116,14 @@ class SupaBaseDB {
     try {
       final client = Supabase.instance.client;
       final hacks = await client.from("hackathons").select(field);
-      final hacksList = [];
+      final List<HackModel> hacksList = [];
       for (var item in hacks) {
         hacksList.add(HackModel.fromJson(item));
       }
+
       return hacksList;
-    } catch (err) {
-      return err;
+    } on PostgrestException catch (err) {
+      return err.message;
     }
   }
 }
