@@ -2,121 +2,221 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_google_maps_webservices/directions.dart';
+
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:team_hack/extentions/size_extention.dart';
+import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 
 // ------------------------------
 //USE THIS FOR STYLE & THEME
 // https://mapstyle.withgoogle.com/
 // ------------------------------
-class MapSample extends StatefulWidget {
-  const MapSample({super.key});
+
+class GoogleMapScreen extends StatefulWidget {
+  const GoogleMapScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<GoogleMapScreen> createState() => _GoogleMapScreenState();
 }
 
-class MapSampleState extends State<MapSample> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+class _GoogleMapScreenState extends State<GoogleMapScreen> {
+  LatLng? currentLatLng;
+  GoogleMapController? googleMapController;
+  LatLng? eventDestination;
+  Location? destination;
+  List<Marker> userMarker = [];
+  var place, first;
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(24.7136, 46.6753),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
-  Set<Marker> markers = {};
-  int id = 3;
   @override
   void initState() {
     super.initState();
-    _loadMapStyles();
-  }
 
-  late var _darkMapStyle;
-  Future _loadMapStyles() async {
-    _darkMapStyle =
-        await rootBundle.loadString('assets/json/dark_mode_style.json');
-    print(_darkMapStyle);
+    Geolocator.getCurrentPosition().then((currLocation) {
+      setState(() {
+        currentLatLng = LatLng(currLocation.latitude, currLocation.longitude);
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      markers.add(const Marker(
-        markerId: MarkerId('1'),
-        position: LatLng(13.007488, 77.598656),
-        infoWindow: InfoWindow(
-          title: 'Marker Title Second ',
-          snippet: 'My Custom Subtitle',
-        ),
-      ));
-      markers.add(const Marker(
-        markerId: MarkerId('2'),
-        position: LatLng(13.007481, 77.598651),
-        infoWindow: InfoWindow(
-          title: 'Marker Title Third ',
-          snippet: 'My Custom Subtitle',
-        ),
-      ));
-
-      markers.add(const Marker(
-        markerId: MarkerId('3'),
-        position: LatLng(13.001916, 77.588849),
-        infoWindow: InfoWindow(
-          title: 'Marker Title Fourth ',
-          snippet: 'My Custom Subtitle',
-        ),
-      ));
-    });
-
     return Scaffold(
-      body: GoogleMap(
-        mapToolbarEnabled: true,
-        indoorViewEnabled: true,
-        // mapType: MapType.hybrid,
-        markers: markers,
-        compassEnabled: true,
-        buildingsEnabled: true,
-        trafficEnabled: true,
-        onLongPress: (value) {
-          id += 1;
-          markers.add(Marker(
-            markerId: MarkerId("${id}"),
-            position: LatLng(value.latitude, value.longitude),
-          ));
-          setState(() {});
-        },
-        myLocationButtonEnabled: true,
-        zoomControlsEnabled: true,
-        onTap: (location) {
-          print(location);
-        },
-        myLocationEnabled: true,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          controller.setMapStyle(_darkMapStyle);
-          _controller.complete(controller);
-        },
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 40.0),
-        child: FloatingActionButton.extended(
-          onPressed: _goToTheLake,
-          label: const Text('To Riyadh'),
-          icon: const Icon(Icons.location_city),
+      appBar: AppBar(
+        title: const Text(""),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            getDestination();
+            Navigator.pop(context);
+          },
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                try {
+                  setState(() async {
+                    destination = await mapSearch(context);
+                    //TODO the marker should be removed when the search is used
+                    userMarker = [];
+                    ("$eventDestination".contains("null"))
+                        ? SizedBox()
+                        : eventDestination = null;
+
+                    userMarker.add(Marker(
+                        markerId: MarkerId(
+                          destination.toString(),
+                        ),
+                        position: LatLng(destination!.lat, destination!.lng)));
+                  });
+                } catch (err) {}
+              },
+              icon: const Icon(Icons.search)),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  userMarker = [];
+                });
+              },
+              icon: const Icon(
+                Icons.delete_forever,
+                semanticLabel: "Delete Marker",
+              )),
+        ],
+      ),
+      body: Stack(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+            child: "${currentLatLng}".contains("null")
+                ? const Center(child: CircularProgressIndicator())
+                : GoogleMap(
+                    compassEnabled: true,
+                    mapToolbarEnabled: true,
+                    myLocationEnabled: true,
+                    myLocationButtonEnabled: true,
+                    mapType: MapType.normal,
+                    onLongPress: (onPressedDestination) {
+                      setState(() {
+                        userMarker = [];
+                        ("$destination".contains("null"))
+                            ? const SizedBox()
+                            : destination = null;
+                        userMarker.add(Marker(
+                            markerId: MarkerId(
+                              onPressedDestination.toString(),
+                            ),
+                            position: onPressedDestination));
+                        eventDestination = onPressedDestination;
+                      });
+                    },
+                    markers: Set.from(userMarker),
+                    initialCameraPosition:
+                        CameraPosition(target: currentLatLng!),
+                    onMapCreated: (GoogleMapController controller) {
+                      googleMapController = controller;
+                    },
+                  ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 58),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 150,
+                child: PrimaryButton(
+                  height: context.getHeight(factor: 0.2),
+                  width: context.getWidth(factor: 0.2),
+                  onPressed: () {
+                    getDestination();
+                    Navigator.pop(context);
+                  },
+                  title: "Confirm",
+                  color: Colors.lightBlue,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  getDestination() async {
+    //from onPressed marker
+    if (!"${eventDestination}".contains("null")) {
+      place = await geocoding.placemarkFromCoordinates(
+          eventDestination!.latitude, eventDestination!.longitude);
+      first = place.first;
+      final selectedLatLng =
+          LatLng(eventDestination!.latitude, eventDestination!.longitude);
+    }
+    //from search
+    else if (!"${destination}".contains("null")) {
+      place = await geocoding.placemarkFromCoordinates(
+          destination!.lat, destination!.lng);
+      first = place.first;
+      final selectedLatLng = LatLng(destination!.lat, destination!.lng);
+    }
+    // locationControler.text =
+    //     ' ${first.locality}, ${first.subLocality},\n${first.street}';
+  }
+}
+
+Future<String> getPermission() async {
+  try {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      //nothing
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.low);
+
+    return "True";
+  } catch (err) {
+    return "False";
+  }
+}
+
+// Future<Location> mapSearch(context) async {
+Future<dynamic> mapSearch(context) async {
+  // const kGoogleApiKey = "API_KEY";
+  {
+    // const kGoogleApiKey = "AIzaSyApKjzpz3t8DL9nYdTdMGzYphz4DLN1OcY";
+
+    // Prediction? p = await PlacesAutocomplete.show(
+    //   context: context,
+    //   radius: 100000000,
+    //   types: [],
+    //   logo: const SizedBox.shrink(),
+    //   strictbounds: false,
+    //   mode: Mode.overlay,
+    //   language: "en",
+    //   components: [
+    //     Component(Component.country, "SA"),
+    //     // Component(Component.country, "BH"),
+    //     // Component(Component.country, "UK")
+    //   ],
+    //   apiKey: kGoogleApiKey,
+    // );
+
+    // GoogleMapsPlaces places =
+    //     GoogleMapsPlaces(apiKey: kGoogleApiKey); //Same API_KEY as above
+    // PlacesDetailsResponse detail =
+    //     await places.getDetailsByPlaceId("${p?.placeId}");
+    // double latitude = detail.result.geometry!.location.lat;
+    // double longitude = detail.result.geometry!.location.lng;
+    // String address = "${p?.description}";
+
+    // return detail.result.geometry!.location;
+    return "";
   }
 }
