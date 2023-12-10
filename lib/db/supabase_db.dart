@@ -135,23 +135,6 @@ class SupaBaseDB {
     }
   }
 
-
-  
-
-  addDataUser(
-    String bio,
-    String skills,
-    String role,
-  ) async {
-    try {
-      final client = Supabase.instance.client;
-      final user = await client
-          .from("users")
-          .insert({"skills": bio, "bio": skills, "role": role});
-      return true;
-    } catch (err) {
-      print(err);
-
   addNewTeam(
       {required String teamName,
       required String firstMemberName,
@@ -172,6 +155,22 @@ class SupaBaseDB {
       print(error);
 
       return false;
+    }
+  }
+
+  addDataUser(
+    String bio,
+    String skills,
+    String role,
+  ) async {
+    try {
+      final client = Supabase.instance.client;
+      final user = await client
+          .from("users")
+          .insert({"skills": bio, "bio": skills, "role": role});
+      return true;
+    } catch (err) {
+      print(err);
     }
   }
 }

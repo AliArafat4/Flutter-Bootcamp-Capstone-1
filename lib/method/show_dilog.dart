@@ -3,7 +3,9 @@ import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_scree
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 
 showSuccessDiolg(
-    {required BuildContext context, required String? successMessage}) {
+    {required BuildContext context,
+    required String? successMessage,
+    required Function() func}) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -45,17 +47,10 @@ showSuccessDiolg(
                     height: 12,
                   ),
                   PrimaryButton(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 18,
-                    title: "Done",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HackathonDetail()),
-                      );
-                    },
-                  )
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 18,
+                      title: "Done",
+                      onPressed: func)
                 ],
               ),
             ],
