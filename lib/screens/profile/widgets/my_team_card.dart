@@ -26,6 +26,7 @@ class MyTeamCard extends StatelessWidget {
       secondMemberRole,
       thirdMemberRole,
       fourMemberRole;
+      
   @override
   Widget build(BuildContext context) {
     return Padding(
