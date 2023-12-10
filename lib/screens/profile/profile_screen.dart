@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/profile/widgets/about_section.dart';
 import 'package:team_hack/screens/profile/widgets/my_team_card.dart';
 import 'package:team_hack/screens/profile/widgets/personal_info.dart';
@@ -28,51 +29,54 @@ class ProfileScreen extends StatelessWidget {
         ],
         centerTitle: true,
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.all(16),
+          child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
-              ProfileImage(
+              const ProfileImage(
                 image: "assets/images/proofile_image.jpg",
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
-              PersonalInfo(
+              const PersonalInfo(
                 name: "Ahamd Abdullah",
                 email: "ahamad_abdullah22@gmail.com",
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Text(
+              const Text(
                 "Bio",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
-              AboutSection(
+              const AboutSection(
                 bio:
                     "Lorie Smith is a Loan Officer at XYZ Bank, where Lorie processes loan applications from start to finish, including mortgage refinancing and educating clients about their different financing options. Lorie has worked with reputable real estate agencies, including ReMax, Century 21, and Coldwell Banker, among others.",
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
-              Text(
+              const Text(
                 "Skill",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
-              SingleChildScrollView(
+              const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
@@ -91,80 +95,74 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 22,
               ),
               DefaultTabController(
                 length: 2,
-                child: Center(
-                  child: TabBar(
-                    labelColor: Color(0xff62c1c7),
-                    indicatorColor: Color(0xff62c1c7),
-                    unselectedLabelColor: Colors.grey,
-                    tabs: [
-                      Tab(text: 'My team'),
-                      Tab(text: 'Requests to join'),
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    const Center(
+                      child: TabBar(
+                        labelColor: Color(0xff62c1c7),
+                        indicatorColor: Color(0xff62c1c7),
+                        unselectedLabelColor: Colors.grey,
+                        tabs: [
+                          Tab(text: 'My team'),
+                          Tab(text: 'Requests to join'),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: context.getHeight(factor: 0.5),
+                      child: TabBarView(children: [
+                        const MyTeamCard(
+                          hackathonImage: "assets/images/hackathon_image.png",
+                          hackathonName: "ai hack",
+                          teamName: 'sara team',
+                          firstMemberName: 'ahmad',
+                          secondMemberName: 'khalid',
+                          thirdMemberName: 'lama',
+                          fourMemberName: 'sara',
+                          thirdMemberRole: 'developer',
+                          secondMemberRole: 'ux/ui',
+                          firstMemberRole: 'ux/ui',
+                          fourMemberRole: 'developer',
+                        ),
+                        ListView(
+                          shrinkWrap: true,
+                          children: const [
+                            RequestToJoinCard(
+                              hackathonName: "AI Hackathon",
+                              teamRoleName: "team name | Developer",
+                              state: "accepted",
+                            ),
+                            RequestToJoinCard(
+                              hackathonName: "AI Hackathon",
+                              teamRoleName: "team name | Developer",
+                              state: "accepted",
+                            ),
+                            RequestToJoinCard(
+                              hackathonName: "AI Hackathon",
+                              teamRoleName: "team name | Developer",
+                              state: "accepted",
+                            ),
+                            RequestToJoinCard(
+                              hackathonName: "AI Hackathon",
+                              teamRoleName: "team name | Developer",
+                              state: "accepted",
+                            ),
+                            RequestToJoinCard(
+                              hackathonName: "AI Hackathon",
+                              teamRoleName: "team name | Developer",
+                              state: "accepted",
+                            ),
+                          ],
+                        )
+                      ]),
+                    ),
+                  ],
                 ),
-              ),
-              /*
-            TabBarView(children: [
-              Text(
-                'Tab Programming',
-                style: TextStyle(color: Colors.red),
-              ),
-              Text(
-                'Tab Programming',
-                style: TextStyle(color: Colors.red),
-              ),
-              Text(
-                'Tab Programming',
-                style: TextStyle(color: Colors.red),
-              ),
-            ])
-          ]),*/
-
-              SizedBox(
-                height: 22,
-              ),
-              MyTeamCard(
-                hackathonImage: "assets/images/hackathon_image.png",
-                hackathonName: "ai hack",
-                teamName: 'sara team',
-                firstMemberName: 'ahmad',
-                secondMemberName: 'khalid',
-                thirdMemberName: 'lama',
-                fourMemberName: 'sara',
-                thirdMemberRole: 'developer',
-                secondMemberRole: 'ux/ui',
-                firstMemberRole: 'ux/ui',
-                fourMemberRole: 'developer',
-              ),
-              RequestToJoinCard(
-                hackathonName: "AI Hackathon",
-                teamRoleName: "team name | Developer",
-                state: "accepted",
-              ),
-              RequestToJoinCard(
-                hackathonName: "AI Hackathon",
-                teamRoleName: "team name | Developer",
-                state: "accepted",
-              ),
-              RequestToJoinCard(
-                hackathonName: "AI Hackathon",
-                teamRoleName: "team name | Developer",
-                state: "accepted",
-              ),
-              RequestToJoinCard(
-                hackathonName: "AI Hackathon",
-                teamRoleName: "team name | Developer",
-                state: "accepted",
-              ),
-              RequestToJoinCard(
-                hackathonName: "AI Hackathon",
-                teamRoleName: "team name | Developer",
-                state: "accepted",
               ),
             ],
           ),

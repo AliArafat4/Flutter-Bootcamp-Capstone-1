@@ -6,14 +6,9 @@ class ProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ClipOval(
-        child: Image.asset(
-          image,
-          width: MediaQuery.of(context).size.width * 0.3,
-          height: MediaQuery.of(context).size.height * 0.1,
-          fit: BoxFit.fill,
-        ),
-      ),
-    );
+        child: CircleAvatar(
+      radius: 55,
+      foregroundImage: AssetImage(image),
+    ));
   }
 }

@@ -5,11 +5,13 @@ class HackathonCard extends StatelessWidget {
       {super.key,
       required this.hackathonName,
       required this.hackathonLocation,
-      required this.hackathonDate});
+      required this.hackathonDate,
+      required this.hackathonField});
 
   final String hackathonName;
   final String hackathonLocation;
   final String hackathonDate;
+  final String hackathonField;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class HackathonCard extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Theme.of(context).colorScheme.secondary),
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.44,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -62,6 +64,7 @@ class HackathonCard extends StatelessWidget {
                     Text(hackathonDate),
                   ],
                 ),
+                Text(hackathonField),
               ],
             ),
           ),

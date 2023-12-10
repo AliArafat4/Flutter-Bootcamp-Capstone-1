@@ -7,6 +7,10 @@ class HackInitial extends HackState {}
 
 class AddHackSuccessState extends HackState {}
 
+class AddHackLoadingState extends HackState {}
+
+class AddHackNoDataState extends HackState {}
+
 class AddHackErrorState extends HackState {
   final String errMsg;
 

@@ -1,5 +1,5 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/models/user_model.dart';
 
@@ -115,7 +115,15 @@ class SupaBaseDB {
   getAllHack({String field = "*"}) async {
     try {
       final client = Supabase.instance.client;
-      final hacks = await client.from("hackathons").select(field);
+      await Future.delayed(const Duration(seconds: 1));
+      late final hacks;
+
+      if (field.contains("*")) {
+        hacks = await client.from("hackathons").select(field);
+      } else {
+        hacks = await client.from("hackathons").select("*").eq("field", field);
+      }
+
       final List<HackModel> hacksList = [];
       for (var item in hacks) {
         hacksList.add(HackModel.fromJson(item));

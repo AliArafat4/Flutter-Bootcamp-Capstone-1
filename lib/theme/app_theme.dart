@@ -18,6 +18,7 @@ final Map appThemeMap = {
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: Colors.transparent,
+      elevation: 0,
     ),
     brightness: Brightness.light,
     elevatedButtonTheme: ElevatedButtonThemeData(

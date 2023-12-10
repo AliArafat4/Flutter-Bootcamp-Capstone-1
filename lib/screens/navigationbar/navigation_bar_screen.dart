@@ -17,7 +17,7 @@ class NavigationBarScreen extends StatelessWidget {
       builder: (context, state) {
         final pages = [
           const HomeScreen(),
-          const SearchScreen(),
+          SearchScreen(),
           const NotificationScrren(),
           const ProfileScreen()
         ];

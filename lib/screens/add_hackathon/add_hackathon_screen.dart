@@ -142,15 +142,21 @@ class AddHackathonScreen extends StatelessWidget {
               child: Column(
                 children: [
                   CreateHackathonTextFiled(
+                    isDisabled: false,
                     content: 'Enter Hackathon Name',
                     controller: nameController,
                   ),
                   CreateHackathonTextFiled(
                     content: 'Location',
                     controller: locationController,
-                    isDisabled: false,
+                    isDisabled: true,
+                    maxLines: 4,
                     onTapFunc: () {
                       //TODO: OPEN GOOGLE MAPS
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GoogleMapScreen()));
                     },
                     iconButton: const IconButton(
                       onPressed: null,
@@ -158,7 +164,11 @@ class AddHackathonScreen extends StatelessWidget {
                       icon: Icon(Icons.location_on_outlined),
                     ),
                   ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 42,
+                  ),
                   CreateHackathonTextFiled(
+                    isDisabled: false,
                     isDetails: true,
                     content: 'Enter Hackathon Details',
                     controller: hackDetailsController,
@@ -167,6 +177,7 @@ class AddHackathonScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 42,
                   ),
                   CreateHackathonTextFiled(
+                    isDisabled: false,
                     content: 'Enter Team Size',
                     controller: teamSizeController,
                     keyboardType: TextInputType.number,
