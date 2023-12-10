@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
 import 'bloc/hack_bloc/hack_cubit.dart';
 import 'db/supabase_db.dart';
-import 'screens/navigationbar/navigation_bar_screen.dart';
 import 'screens/start/start_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
