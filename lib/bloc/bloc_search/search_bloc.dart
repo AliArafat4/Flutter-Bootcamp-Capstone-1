@@ -14,13 +14,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
               .where((key) =>
                   key.toLowerCase().contains(event.textSearch.toLowerCase()))
               .toList();
-
+          print(event.textSearch);
           emit(SuccessState(
             textResults: searchResults,
           ));
         }
-
-        emit(ErrorState(errorText: 'Please enter the value'));
       } catch (error) {
         throw FormatException('Error with $error');
       }

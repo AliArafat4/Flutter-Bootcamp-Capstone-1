@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
 import 'package:team_hack/data/global.dart';
-import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/screens/auth/components/auth_text_field.dart';
 import 'package:team_hack/screens/search/widget/search_filed.dart';
 
@@ -37,6 +36,11 @@ class SearchScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 90,
                 ),
+
+                // if (state is ErrorState) {
+                //   showErrorSnackBar(context, state.errorText);
+                // }
+
                 Expanded(
                     child: GridView.builder(
                         gridDelegate:
@@ -48,21 +52,14 @@ class SearchScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, index) {
                           final key = searchResults[index];
                           final value = listSearch[key];
-                          return BlocBuilder<SearchBloc, SearchState>(
+
+                          BlocBuilder<SearchBloc, SearchState>(
                             builder: (context, state) {
-                              if (state is SuccessState) {
-                                return SearchField(
-                                    fieldName: key,
-                                    image: value!,
-                                    onTap: () {});
-                              }
-                              if (state is ErrorState) {
-                                return showErrorSnackBar(
-                                    context, state.errorText);
-                              }
-                              return Container();
+                              return SearchField(
+                                  fieldName: key, image: value!, onTap: () {});
                             },
                           );
+                          return null;
                         })),
               ])),
         ),
