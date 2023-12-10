@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
@@ -9,18 +8,13 @@ import 'bloc/hack_bloc/hack_cubit.dart';
 import 'db/supabase_db.dart';
 import 'screens/navigationbar/navigation_bar_screen.dart';
 import 'screens/start/start_screen.dart';
-=======
 import 'package:flutter_bloc/flutter_bloc.dart';
->>>>>>> Stashed changes
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
 import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
-<<<<<<< Updated upstream
-=======
 import 'package:team_hack/screens/start/start_screen.dart';
->>>>>>> Stashed changes
 
 late SharedPreferences prefs;
 void main() async {
