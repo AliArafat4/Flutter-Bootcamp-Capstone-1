@@ -75,6 +75,7 @@ class SupaBaseDB {
           .select()
           .eq('user_id', client.auth.currentUser!.id);
       final userInfo = UserModel.fromJson(user.first);
+
       return userInfo;
     } catch (err) {
       return err;
@@ -170,16 +171,69 @@ class SupaBaseDB {
     }
   }
 
-  addDataUser(
-    String bio,
-    String skills,
-    String role,
-  ) async {
+  addBioUser({
+    required String bioUser,
+    required String nameUser,
+    required String uuidUser,
+    required String emailUser,
+    required List<String> skill,
+    required String role,
+    required bool isAdmin,
+  }) async {
     try {
       final client = Supabase.instance.client;
       final user = await client
           .from("users")
-          .insert({"skills": bio, "bio": skills, "role": role});
+          .update({
+            "name": nameUser,
+            "bio": bioUser,
+            "email": client.auth.currentUser!.email,
+            "user_id": client.auth.currentUser!.id,
+            "skills": [],
+            "role": "",
+            "is_admin": isAdmin,
+          })
+          .eq("user_id", client.auth.currentUser!.id)
+          .select();
+      print(user);
+      return user;
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  addRoleUser(
+      {required String nameUser,
+      required String roleUser,
+      required String emailUser,
+      required String uuidUser}) async {
+    try {
+      final client = Supabase.instance.client;
+      final user = await client.from("users").update({
+        "name": nameUser,
+        "email": emailUser,
+        "user_id": uuidUser,
+        "role": roleUser
+      });
+      return true;
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  addSkillUser(
+      {required List<String> skill,
+      required String nameUser,
+      required String emailUser,
+      required String uuidUser}) async {
+    try {
+      final client = Supabase.instance.client;
+      final bioUser = await client.from("users").update({
+        "name": nameUser,
+        "email": emailUser,
+        "user_id": uuidUser,
+        "skills": skill,
+      });
       return true;
     } catch (err) {
       print(err);

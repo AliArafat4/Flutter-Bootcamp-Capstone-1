@@ -20,9 +20,6 @@ class AuthRegisterErrorState extends AuthState {
 }
 
 class LoadingState extends AuthState {}
-class AuthGetCurrentUserState extends AuthState {
-  final UserModel user;
-   AuthGetCurrentUserState({required this.user});
-}
+
 
 
