@@ -55,8 +55,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       }
     });
-    on<AuthGetCurrentUserEvent>((event, emit) async {
-      emit(AuthGetCurrentUserState(user: await SupaBaseDB().getCurrentUser()));
-    });
+   
   }
 }

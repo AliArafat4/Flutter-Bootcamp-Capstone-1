@@ -19,7 +19,7 @@ class NavigationBarScreen extends StatelessWidget {
           const HomeScreen(),
           SearchScreen(),
           const NotificationScrren(),
-          const ProfileScreen()
+          ProfileScreen()
         ];
         int currentIndex =
             state is NavigationInitialState ? state.indexPage : 0;

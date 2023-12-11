@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
-import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
-import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/screens/add_hackathon/add_hackathon_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
 import 'package:team_hack/screens/home/widget/hackathon_card.dart';
