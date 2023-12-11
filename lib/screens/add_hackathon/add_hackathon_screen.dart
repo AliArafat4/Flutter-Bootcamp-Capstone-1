@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:team_hack/bloc/add_hackathon_bloc/add_hackathon_cubit.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
+import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
 import 'package:team_hack/screens/add_hackathon/components/google_maps.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_dropdown.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_textfield_date.dart';
@@ -28,67 +28,15 @@ class AddHackathonScreen extends StatelessWidget {
   final TextEditingController conStartDatehack = TextEditingController();
   final TextEditingController conEndDatehack = TextEditingController();
 
-  late DateTime? startDateRegister;
-  late DateTime? endDateRegister;
-  late DateTime? startDatehack;
-  late DateTime? endDatehack;
-
-  final DateFormat _dateFormatter = DateFormat('yyyy-MM-dd');
-  final DateTime _date = DateTime.now();
-  selectStartDateRegister(BuildContext context) async {
-    final DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(hours: 10000)),
-    );
-    if (date != null && date != _date) {}
-    return date;
-  }
-
-  selectEndDateRegister(BuildContext context) async {
-    final DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(hours: 10000)),
-    );
-    if (date != null && date != _date) {}
-    return date;
-  }
-
-  selectStartDateHack(BuildContext context) async {
-    final DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(hours: 10000)),
-    );
-    if (date != null && date != _date) {}
-    return date;
-  }
-
-  selectEndDateHack(BuildContext context) async {
-    final DateTime? date = await showDatePicker(
-      context: context,
-      initialDate: _date,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(hours: 10000)),
-    );
-    if (date != null && date != _date) {}
-    return date;
-  }
-
   final TextEditingController nameController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController hackDetailsController = TextEditingController();
   final TextEditingController teamSizeController = TextEditingController();
+  String selected = "Online";
   String hackField = "Design";
   String numberOfTeamMembers = "2";
-
   @override
   Widget build(BuildContext context) {
-    String selected = "Online";
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -156,42 +104,51 @@ class AddHackathonScreen extends StatelessWidget {
                                     ? false
                                     : true
                                 : false,
-                            child: CreateHackathonTextFiled(
-                              content: 'Location',
-                              controller: locationController,
-                              isDisabled: true,
-                              maxLines: 4,
-                              onTapFunc: () {
-                                //TODO: OPEN GOOGLE MAPS
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const GoogleMapScreen()));
+                            child: BlocConsumer<MapBloc, MapState>(
+                              builder: (context, state) {
+                                return CreateHackathonTextFiled(
+                                  content: 'Location',
+                                  controller: locationController,
+                                  isDisabled: true,
+                                  maxLines: 4,
+                                  onTapFunc: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const GoogleMapScreen()));
+                                  },
+                                  iconButton: const IconButton(
+                                    onPressed: null,
+                                    disabledColor: Colors.grey,
+                                    icon: Icon(Icons.location_on_outlined),
+                                  ),
+                                );
                               },
-                              iconButton: const IconButton(
-                                onPressed: null,
-                                disabledColor: Colors.grey,
-                                icon: Icon(Icons.location_on_outlined),
-                              ),
+                              listener: (BuildContext context, MapState state) {
+                                state is MapGetMarkerLocationState
+                                    ? locationController.text = state.location
+                                    : const SizedBox();
+                                state is MapGetCurrentLocationState
+                                    ? const SizedBox()
+                                    : context
+                                        .read<MapBloc>()
+                                        .add(MapGetCurrentLocationEvent());
+                              },
                             ),
                           ),
                         ],
                       );
                     },
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 42,
-                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 42),
                   CreateHackathonTextFiled(
                     isDisabled: false,
                     isDetails: true,
                     content: 'Enter Hackathon Details',
                     controller: hackDetailsController,
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 42,
-                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 42),
                   CreateHackathonTextFiled(
                     isDisabled: false,
                     content: 'Enter The Number of Participating Teams',
@@ -203,57 +160,112 @@ class AddHackathonScreen extends StatelessWidget {
                     children: [
                       Flexible(
                         flex: 2,
-                        child: WidgetTextFieldDate(
-                          selectDate: () async {
-                            startDateRegister =
-                                await selectStartDateRegister(context);
+                        child:
+                            BlocConsumer<AddHackathonCubit, AddHackathonState>(
+                          buildWhen: (previous, current) =>
+                              current is AddHackathonStartRegDateState,
+                          builder: (context, state) {
+                            return WidgetTextFieldDate(
+                              selectDate: () async {
+                                context
+                                    .read<AddHackathonCubit>()
+                                    .changeHackStartRegDate(context: context);
+                              },
+                              controllerDate: conStartDateRegister,
+                              textFieldText: 'StartDate of Register',
+                            );
                           },
-                          controllerDate: conStartDateRegister,
-                          textfieldText: 'StartDate of Register',
+                          listener:
+                              (BuildContext context, AddHackathonState state) {
+                            state is AddHackathonStartRegDateState
+                                ? conStartDateRegister.text =
+                                    state.startRegDate ?? ""
+                                : const SizedBox();
+                          },
                         ),
                       ),
-                      const SizedBox(
-                        width: 12,
-                      ),
+                      const SizedBox(width: 12),
                       Flexible(
                         flex: 2,
-                        child: WidgetTextFieldDate(
-                          selectDate: () async {
-                            endDateRegister =
-                                await selectEndDateRegister(context);
+                        child:
+                            BlocConsumer<AddHackathonCubit, AddHackathonState>(
+                          buildWhen: (previous, current) =>
+                              current is AddHackathonEndRegDateState,
+                          builder: (context, state) {
+                            return WidgetTextFieldDate(
+                              selectDate: () async {
+                                context
+                                    .read<AddHackathonCubit>()
+                                    .changeHackEndRegDate(context: context);
+                              },
+                              controllerDate: conEndDateRegister,
+                              textFieldText: 'EndDate of Register',
+                            );
                           },
-                          controllerDate: conEndDateRegister,
-                          textfieldText: 'EndDate of Register',
+                          listener:
+                              (BuildContext context, AddHackathonState state) {
+                            state is AddHackathonEndRegDateState
+                                ? conEndDateRegister.text =
+                                    state.endRegDate ?? ""
+                                : const SizedBox();
+                          },
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 60,
-                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 60),
                   Row(
                     children: [
                       Flexible(
                         flex: 2,
-                        child: WidgetTextFieldDate(
-                          selectDate: () async {
-                            startDatehack = await selectStartDateHack(context);
+                        child:
+                            BlocConsumer<AddHackathonCubit, AddHackathonState>(
+                          buildWhen: (previous, current) =>
+                              current is AddHackathonStartHackDateState,
+                          builder: (context, state) {
+                            return WidgetTextFieldDate(
+                              selectDate: () async {
+                                context
+                                    .read<AddHackathonCubit>()
+                                    .changeHackStartDate(context: context);
+                              },
+                              controllerDate: conStartDatehack,
+                              textFieldText: 'StartDate of Hackathon',
+                            );
                           },
-                          controllerDate: conStartDatehack,
-                          textfieldText: 'StartDate of Hackathon',
+                          listener:
+                              (BuildContext context, AddHackathonState state) {
+                            state is AddHackathonStartHackDateState
+                                ? conStartDatehack.text =
+                                    state.startHackDate ?? ""
+                                : const SizedBox();
+                          },
                         ),
                       ),
-                      const SizedBox(
-                        width: 12,
-                      ),
+                      const SizedBox(width: 12),
                       Flexible(
                         flex: 2,
-                        child: WidgetTextFieldDate(
-                          selectDate: () async {
-                            endDatehack = await selectEndDateHack(context);
+                        child:
+                            BlocConsumer<AddHackathonCubit, AddHackathonState>(
+                          buildWhen: (previous, current) =>
+                              current is AddHackathonEndHackDateState,
+                          builder: (context, state) {
+                            return WidgetTextFieldDate(
+                              selectDate: () async {
+                                context
+                                    .read<AddHackathonCubit>()
+                                    .changeHackEndDate(context: context);
+                              },
+                              controllerDate: conEndDatehack,
+                              textFieldText: 'EndDate of Hackathon',
+                            );
                           },
-                          controllerDate: conEndDatehack,
-                          textfieldText: 'EndDate of Hackathon',
+                          listener:
+                              (BuildContext context, AddHackathonState state) {
+                            state is AddHackathonEndHackDateState
+                                ? conEndDatehack.text = state.endHackDate ?? ""
+                                : const SizedBox();
+                          },
                         ),
                       ),
                     ],
@@ -292,9 +304,7 @@ class AddHackathonScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 30,
-                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 30),
                   BlocConsumer<HackCubit, HackState>(
                     listener: (context, state) {
                       state is AddHackSuccessState
@@ -316,11 +326,11 @@ class AddHackathonScreen extends StatelessWidget {
                             context.read<HackCubit>().addHackFunc(
                                 name: nameController.text,
                                 teamSize: teamSizeController.text,
-                                numberOfTeams: teamSizeController.text,
-                                starRegDate: startDateRegister,
-                                endRegDate: endDateRegister,
-                                hackStartDate: startDatehack,
-                                hackEndDate: endDatehack,
+                                numberOfTeams: numberOfTeamMembers,
+                                starRegDate: conStartDateRegister.text,
+                                endRegDate: conEndDateRegister.text,
+                                hackStartDate: conStartDatehack.text,
+                                hackEndDate: conEndDatehack.text,
                                 field: hackField,
                                 description: hackDetailsController.text,
                                 location: locationController.text.isEmpty

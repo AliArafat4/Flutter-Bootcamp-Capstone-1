@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_event.dart';
+import 'package:team_hack/db/supabase_db.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/local_storage/shared_prefrences.dart';
 import 'package:team_hack/main.dart';
@@ -66,6 +67,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 color: Colors.red.withOpacity(0.8),
                 title: "Sign out",
                 onPressed: () {
+                  SupaBaseDB().signOut();
                   Navigator.push(
                     context,
                     MaterialPageRoute(

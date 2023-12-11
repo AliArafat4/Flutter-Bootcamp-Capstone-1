@@ -38,7 +38,9 @@ class SignInScreen extends StatelessWidget {
                 const Text(
                   "Sign In",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: 28, color: Color(0xff62c1c7)),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 28,
+                      color: Color(0xff62c1c7)),
                 ),
                 Text(
                   "Sign in to continue",
@@ -82,7 +84,8 @@ class SignInScreen extends StatelessWidget {
                 state is AuthLoginSuccessState
                     ? Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const NavigationBarScreen()),
                         (route) => false,
                       )
                     : const SizedBox();
@@ -94,7 +97,8 @@ class SignInScreen extends StatelessWidget {
                     title: "Login",
                     onPressed: () {
                       context.read<AuthBloc>().add(AuthLoginEvent(
-                          email: emailController.text, password: passwordController.text));
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim()));
                     });
               },
             ),
