@@ -1,4 +1,5 @@
 class HackModel {
+  int? id;
   String? name;
   int? teamSize;
   int? numberOfTeams;
@@ -11,6 +12,7 @@ class HackModel {
   String? location;
 
   HackModel({
+    required this.id,
     required this.name,
     required this.teamSize,
     required this.numberOfTeams,
@@ -24,6 +26,7 @@ class HackModel {
   });
 
   HackModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     teamSize = json['team_size'];
     numberOfTeams = json['number_of_teams'];

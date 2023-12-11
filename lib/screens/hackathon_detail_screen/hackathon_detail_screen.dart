@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/bloc/team_bloc/team_bloc.dart';
+import 'package:team_hack/bloc/team_bloc/team_event.dart';
+import 'package:team_hack/bloc/team_bloc/team_state.dart';
+import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/screens/create_team/create_team_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/hackathon_main_detail.dart';
@@ -13,6 +18,10 @@ class HackathonDetail extends StatelessWidget {
   final HackModel selectedHack;
   @override
   Widget build(BuildContext context) {
+    print("add event");
+    print(selectedHack.id);
+    context.read<TeamBloc>().add(LoadAllTeams(id: selectedHack.id!));
+    final bloc = context.read<TeamBloc>();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -79,28 +88,43 @@ class HackathonDetail extends StatelessWidget {
                   ),
                 ],
               ),
-              const TeamCard(
-                teamName: "Asma team's",
-                firstMemberName: 'asma ahamd',
-                secondMemberName: 'abdullah khalid',
-                thirdMemberName: 'sara salem',
-                firstMemberRole: 'developer',
-                fourMemberName: 'ahmad ali',
-                secondMemberRole: 'UX/UI',
-                thirdMemberRole: 'developr',
-                fourMemberRole: 'UX/UI',
-              ),
-              const TeamCard(
-                teamName: "Asma team's",
-                firstMemberName: 'asma ahamd',
-                secondMemberName: 'abdullah khalid',
-                thirdMemberName: 'sara salem',
-                firstMemberRole: 'developer',
-                fourMemberName: 'ahmad ali',
-                secondMemberRole: 'UX/UI',
-                thirdMemberRole: 'developr',
-                fourMemberRole: 'UX/UI',
-              ),
+              BlocConsumer<TeamBloc, TeamState>(
+                builder: ((context, state) {
+                  if (state is GetAllTeamSuccessState) {
+                    return Column(
+                      children: [
+                        ...bloc.allTeam!
+                            .map(
+                              (e) => TeamCard(
+                                teamName: e.teamName ?? "------",
+                                firstMemberName: e.firstMemberName ?? "------",
+                                secondMemberName:
+                                    e.secondMemberName ?? "------",
+                                thirdMemberName: e.thirdMemberName ?? "------",
+                                firstMemberRole: "ggggg",
+                                fourMemberName: e.fourthMemberName ?? "------",
+                                secondMemberRole: 'UX/UI',
+                                thirdMemberRole: 'developr',
+                                fourMemberRole: 'UX/UI',
+                                isLeader: e.isLeader ?? true,
+                              ),
+                            )
+                            .toList()
+                      ],
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Color(0xff62c1c7),
+                    ),
+                  );
+                }),
+                listener: (BuildContext context, TeamState state) {
+                  if (state is GetAllTeamErrorState) {
+                    showErrorSnackBar(context, state.errormessage);
+                  }
+                },
+              )
             ],
           ),
         ),

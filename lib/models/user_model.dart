@@ -6,7 +6,8 @@ class UserModel {
   String? bio;
   List? skills;
 
-  UserModel({this.userId, this.email, this.role, this.name, this.bio, this.skills});
+  UserModel(
+      {this.userId, this.email, this.role, this.name, this.bio, this.skills});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];

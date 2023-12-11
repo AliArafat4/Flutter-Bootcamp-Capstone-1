@@ -17,15 +17,17 @@ class TeamScreen extends StatelessWidget {
           child: Column(
             children: [
               TeamCard(
-                  firstMemberName: "dd",
-                  secondMemberName: "dd",
-                  thirdMemberName: "dd",
-                  fourMemberName: "dd",
-                  firstMemberRole: "dd",
-                  secondMemberRole: "dd",
-                  thirdMemberRole: "dd",
-                  fourMemberRole: "dd",
-                  teamName: "Ahmad team's")
+                firstMemberName: "dd",
+                secondMemberName: "dd",
+                thirdMemberName: "dd",
+                fourMemberName: "dd",
+                firstMemberRole: "dd",
+                secondMemberRole: "dd",
+                thirdMemberRole: "dd",
+                fourMemberRole: "dd",
+                teamName: "Ahmad team's",
+                isLeader: false,
+              )
             ],
           ),
         ),
