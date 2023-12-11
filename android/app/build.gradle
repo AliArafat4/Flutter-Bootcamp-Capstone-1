@@ -25,7 +25,7 @@ apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
 
 android {
     namespace "com.example.team_hack"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33// flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -46,7 +46,7 @@ android {
         applicationId "com.example.team_hack"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion  21 //flutter.minSdkVersion
+        minSdkVersion  23 //flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

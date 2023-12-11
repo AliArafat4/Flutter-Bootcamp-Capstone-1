@@ -1,6 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_hack/models/hack_model.dart';
+import 'package:team_hack/models/team_model.dart';
 import 'package:team_hack/models/user_model.dart';
 
 class SupaBaseDB {
@@ -54,6 +55,7 @@ class SupaBaseDB {
                   "name": name,
                   "bio": "",
                   "skills": [],
+                  'is_admin': false,
                 },
               ));
 
@@ -136,21 +138,31 @@ class SupaBaseDB {
     }
   }
 
-  addNewTeam(
-      {required String teamName,
-      required String firstMemberName,
-      required String secondMemberName,
-      required String thirdMemberName}) async {
+  addNewTeam({
+    required String teamName,
+    required String firstMemberName,
+    required String secondMemberName,
+    required String thirdMemberName,
+    required int hackId,
+  }) async {
     try {
       final client = Supabase.instance.client;
-      final team = await client.from("teams").insert({
-        "team_name": teamName,
-        "first_member_name": firstMemberName,
-        "second_member_name": secondMemberName,
-        "third_member_name": thirdMemberName,
-        "fourth_member_name": "",
-        "fifth_member_name": "",
-      });
+//TODO fix
+      final team = await client
+          .from("teams")
+          .insert({
+            "team_name": teamName,
+            "first_member_name": firstMemberName,
+            "second_member_name": secondMemberName,
+            "third_member_name": thirdMemberName,
+            "fourth_member_name": "",
+            "fifth_member_name": "",
+            "is_leader": true
+          })
+          .select()
+          .then((value) async => await client
+              .from("regirtered_team")
+              .insert({"kack_id": hackId, "team_id": value.first["id"]}));
       return true;
     } catch (error) {
       print(error);
@@ -226,5 +238,21 @@ class SupaBaseDB {
     } catch (err) {
       print(err);
     }
+  }
+
+  Future<List<TeamModel>> getAllTeam(int id) async {
+    print(id);
+    final client = Supabase.instance.client;
+    final teams = await client
+        .from("registered_team")
+        .select(" teams(*) ")
+        .eq("hack_id", id);
+    print(teams);
+    final List<TeamModel> allTeams = [];
+    for (var element in teams) {
+      allTeams.add(TeamModel.fromJson(element["teams"]));
+    }
+    print("objects");
+    return allTeams;
   }
 }

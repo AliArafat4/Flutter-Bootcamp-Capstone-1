@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_event.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_state.dart';
+import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
+import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/screens/home/home_screen.dart';
 import 'package:team_hack/screens/notification_screen/notification_screen.dart';
 import 'package:team_hack/screens/profile/profile_screen.dart';

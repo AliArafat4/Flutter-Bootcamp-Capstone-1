@@ -1,92 +1,44 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_google_maps_webservices/directions.dart';
-
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:team_hack/bloc/add_hackathon_bloc/add_hackathon_cubit.dart';
+import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 
-// ------------------------------
-//USE THIS FOR STYLE & THEME
-// https://mapstyle.withgoogle.com/
-// ------------------------------
-
-class GoogleMapScreen extends StatefulWidget {
+class GoogleMapScreen extends StatelessWidget {
   const GoogleMapScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<GoogleMapScreen> createState() => _GoogleMapScreenState();
-}
-
-class _GoogleMapScreenState extends State<GoogleMapScreen> {
-  LatLng? currentLatLng;
-  GoogleMapController? googleMapController;
-  LatLng? eventDestination;
-  Location? destination;
-  List<Marker> userMarker = [];
-  var place, first;
-
-  @override
-  void initState() {
-    super.initState();
-
-    Geolocator.getCurrentPosition().then((currLocation) {
-      setState(() {
-        currentLatLng = LatLng(currLocation.latitude, currLocation.longitude);
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    GoogleMapController? googleMapController;
+
+    List<Marker> userMarker = [];
+    LatLng userLocation = const LatLng(0, 0);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(""),
+        title: const Text("Select Hackathon Location"),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            getDestination();
+            googleMapController?.dispose();
             Navigator.pop(context);
           },
         ),
         actions: [
-          IconButton(
-              onPressed: () {
-                try {
-                  setState(() async {
-                    destination = await mapSearch(context);
-                    //TODO the marker should be removed when the search is used
+          BlocBuilder<MapBloc, MapState>(
+            builder: (context, state) {
+              return IconButton(
+                  onPressed: () {
                     userMarker = [];
-                    ("$eventDestination".contains("null"))
-                        ? SizedBox()
-                        : eventDestination = null;
-
-                    userMarker.add(Marker(
-                        markerId: MarkerId(
-                          destination.toString(),
-                        ),
-                        position: LatLng(destination!.lat, destination!.lng)));
-                  });
-                } catch (err) {}
-              },
-              icon: const Icon(Icons.search)),
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  userMarker = [];
-                });
-              },
-              icon: const Icon(
-                Icons.delete_forever,
-                semanticLabel: "Delete Marker",
-              )),
+                    context.read<MapBloc>().add(MapResetMarkersEvent());
+                  },
+                  icon: const Icon(Icons.delete_forever,
+                      semanticLabel: "Delete Marker"));
+            },
+          ),
         ],
       ),
       body: Stack(
@@ -94,129 +46,68 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
-            child: "${currentLatLng}".contains("null")
-                ? const Center(child: CircularProgressIndicator())
-                : GoogleMap(
-                    compassEnabled: true,
-                    mapToolbarEnabled: true,
-                    myLocationEnabled: true,
-                    myLocationButtonEnabled: true,
-                    mapType: MapType.normal,
-                    onLongPress: (onPressedDestination) {
-                      setState(() {
-                        userMarker = [];
-                        ("$destination".contains("null"))
-                            ? const SizedBox()
-                            : destination = null;
-                        userMarker.add(Marker(
-                            markerId: MarkerId(
-                              onPressedDestination.toString(),
-                            ),
-                            position: onPressedDestination));
-                        eventDestination = onPressedDestination;
-                      });
-                    },
-                    markers: Set.from(userMarker),
-                    initialCameraPosition:
-                        CameraPosition(target: currentLatLng!),
-                    onMapCreated: (GoogleMapController controller) {
-                      googleMapController = controller;
-                    },
-                  ),
+            child: BlocConsumer<MapBloc, MapState>(
+              builder: (context, state) {
+                return GoogleMap(
+                  compassEnabled: true,
+                  mapToolbarEnabled: true,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  mapType: MapType.satellite,
+                  onLongPress: (onPressedDestination) {
+                    context.read<MapBloc>().add(
+                        MapGetLocationEvent(location: onPressedDestination));
+                  },
+                  markers: state is MapSetMarkersState
+                      ? Set.from(state.userMarker)
+                      : Set.from(userMarker),
+                  initialCameraPosition: CameraPosition(
+                      target: state is MapGetCurrentLocationState
+                          ? userLocation = state.userLocation
+                          : userLocation),
+                  onMapCreated: (GoogleMapController controller) {
+                    googleMapController = controller;
+                  },
+                );
+              },
+              listener: (BuildContext context, MapState state) {
+                state is MapSetMarkersState
+                    ? userMarker.add(state.userMarker.first)
+                    : const SizedBox();
+                state is MapGetCurrentLocationState
+                    ? userLocation = state.userLocation
+                    : const SizedBox();
+              },
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 58),
+            padding: const EdgeInsets.only(bottom: 30),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: SizedBox(
-                width: 150,
-                child: PrimaryButton(
-                  height: context.getHeight(factor: 0.2),
-                  width: context.getWidth(factor: 0.2),
-                  onPressed: () {
-                    getDestination();
-                    Navigator.pop(context);
-                  },
-                  title: "Confirm",
-                  color: Colors.lightBlue,
-                ),
+              child: BlocBuilder<MapBloc, MapState>(
+                builder: (context, state) {
+                  return PrimaryButton(
+                    width: context.getWidth(factor: .5),
+                    height: context.getHeight(factor: 0.065),
+                    onPressed: () async {
+                      if (userMarker.isNotEmpty) {
+                        context.read<MapBloc>().add(MapGetMarkerLocationEvent(
+                            marker: userMarker.first));
+                      } else {
+                        userMarker = [];
+                        context.read<MapBloc>().add(MapResetMarkersEvent());
+                      }
+                      googleMapController?.dispose();
+                      Navigator.pop(context);
+                    },
+                    title: "Confirm",
+                  );
+                },
               ),
             ),
-          )
+          ),
         ],
       ),
     );
-  }
-
-  getDestination() async {
-    //from onPressed marker
-    if (!"${eventDestination}".contains("null")) {
-      place = await geocoding.placemarkFromCoordinates(
-          eventDestination!.latitude, eventDestination!.longitude);
-      first = place.first;
-      final selectedLatLng =
-          LatLng(eventDestination!.latitude, eventDestination!.longitude);
-    }
-    //from search
-    else if (!"${destination}".contains("null")) {
-      place = await geocoding.placemarkFromCoordinates(
-          destination!.lat, destination!.lng);
-      first = place.first;
-      final selectedLatLng = LatLng(destination!.lat, destination!.lng);
-    }
-    // locationControler.text =
-    //     ' ${first.locality}, ${first.subLocality},\n${first.street}';
-  }
-}
-
-Future<String> getPermission() async {
-  try {
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      //nothing
-    }
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.low);
-
-    return "True";
-  } catch (err) {
-    return "False";
-  }
-}
-
-// Future<Location> mapSearch(context) async {
-Future<dynamic> mapSearch(context) async {
-  // const kGoogleApiKey = "API_KEY";
-  {
-    // const kGoogleApiKey = "AIzaSyApKjzpz3t8DL9nYdTdMGzYphz4DLN1OcY";
-
-    // Prediction? p = await PlacesAutocomplete.show(
-    //   context: context,
-    //   radius: 100000000,
-    //   types: [],
-    //   logo: const SizedBox.shrink(),
-    //   strictbounds: false,
-    //   mode: Mode.overlay,
-    //   language: "en",
-    //   components: [
-    //     Component(Component.country, "SA"),
-    //     // Component(Component.country, "BH"),
-    //     // Component(Component.country, "UK")
-    //   ],
-    //   apiKey: kGoogleApiKey,
-    // );
-
-    // GoogleMapsPlaces places =
-    //     GoogleMapsPlaces(apiKey: kGoogleApiKey); //Same API_KEY as above
-    // PlacesDetailsResponse detail =
-    //     await places.getDetailsByPlaceId("${p?.placeId}");
-    // double latitude = detail.result.geometry!.location.lat;
-    // double longitude = detail.result.geometry!.location.lng;
-    // String address = "${p?.description}";
-
-    // return detail.result.geometry!.location;
-    return "";
   }
 }

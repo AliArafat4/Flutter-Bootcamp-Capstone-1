@@ -13,7 +13,8 @@ class TeamCard extends StatelessWidget {
       required this.secondMemberRole,
       required this.thirdMemberRole,
       required this.fourMemberRole,
-      required this.teamName});
+      required this.teamName,
+      required this.isLeader});
 
   final String teamName;
   final String firstMemberName,
@@ -24,6 +25,8 @@ class TeamCard extends StatelessWidget {
       secondMemberRole,
       thirdMemberRole,
       fourMemberRole;
+
+  final bool isLeader;
 
   @override
   Widget build(BuildContext context) {
@@ -53,19 +56,22 @@ class TeamCard extends StatelessWidget {
               MemberInfo(
                 memberName: firstMemberName,
                 memberRole: firstMemberRole,
-                isLeader: true,
+                isLeader: isLeader,
               ),
               MemberInfo(
                 memberName: secondMemberName,
                 memberRole: secondMemberRole,
+                isLeader: isLeader,
               ),
               MemberInfo(
                 memberName: thirdMemberName,
                 memberRole: thirdMemberRole,
+                isLeader: isLeader,
               ),
               MemberInfo(
                 memberName: fourMemberName,
                 memberRole: fourMemberRole,
+                isLeader: isLeader,
               ),
               Center(
                 child: SecondButton(
