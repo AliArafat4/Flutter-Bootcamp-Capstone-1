@@ -31,7 +31,7 @@ class AddHackathonScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController hackDetailsController = TextEditingController();
-  final TextEditingController teamSizeController = TextEditingController();
+  final TextEditingController numberOfTeamsController = TextEditingController();
   String selected = "Online";
   String hackField = "Design";
   String numberOfTeamMembers = "2";
@@ -111,12 +111,15 @@ class AddHackathonScreen extends StatelessWidget {
                                   controller: locationController,
                                   isDisabled: true,
                                   maxLines: 4,
-                                  onTapFunc: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const GoogleMapScreen()));
+                                  onTapFunc: () async {
+                                    final isAllowed = await userPermission();
+                                    if (isAllowed) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const GoogleMapScreen()));
+                                    }
                                   },
                                   iconButton: const IconButton(
                                     onPressed: null,
@@ -152,7 +155,7 @@ class AddHackathonScreen extends StatelessWidget {
                   CreateHackathonTextFiled(
                     isDisabled: false,
                     content: 'Enter The Number of Participating Teams',
-                    controller: teamSizeController,
+                    controller: numberOfTeamsController,
                     keyboardType: TextInputType.number,
                   ),
                   Row(
@@ -325,8 +328,8 @@ class AddHackathonScreen extends StatelessWidget {
                           onPressed: () {
                             context.read<HackCubit>().addHackFunc(
                                 name: nameController.text,
-                                teamSize: teamSizeController.text,
-                                numberOfTeams: numberOfTeamMembers,
+                                teamSize: numberOfTeamMembers,
+                                numberOfTeams: numberOfTeamsController.text,
                                 starRegDate: conStartDateRegister.text,
                                 endRegDate: conEndDateRegister.text,
                                 hackStartDate: conStartDatehack.text,

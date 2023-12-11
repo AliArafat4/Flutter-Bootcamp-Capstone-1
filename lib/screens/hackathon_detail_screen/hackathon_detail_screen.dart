@@ -18,10 +18,9 @@ class HackathonDetail extends StatelessWidget {
   final HackModel selectedHack;
   @override
   Widget build(BuildContext context) {
-    print("add event");
-    print(selectedHack.id);
-    context.read<TeamBloc>().add(LoadAllTeams(id: selectedHack.id!));
     final bloc = context.read<TeamBloc>();
+    bloc.add(LoadAllTeams(id: selectedHack.id!));
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -51,7 +50,7 @@ class HackathonDetail extends StatelessWidget {
                   location: selectedHack.location,
                   startDate: selectedHack.hackStartDate,
                   endDate: selectedHack.hackEndDate,
-                  teamSize: selectedHack.teamSize.toString()),
+                  teamSize: selectedHack.numberOfTeams.toString()),
               const SizedBox(height: 8),
               PrimaryButton(
                 width: MediaQuery.of(context).size.width,
@@ -61,7 +60,8 @@ class HackathonDetail extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CreateTeamScreen(),
+                      builder: (context) =>
+                          CreateTeamScreen(selectedHack: selectedHack),
                     ),
                   );
                 },
@@ -79,7 +79,8 @@ class HackathonDetail extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const TeamScreen()),
+                            builder: (context) =>
+                                TeamScreen(teamModelList: bloc.allTeam)),
                       );
                     },
                     child: const Text(
@@ -95,19 +96,7 @@ class HackathonDetail extends StatelessWidget {
                       children: [
                         ...bloc.allTeam!
                             .map(
-                              (e) => TeamCard(
-                                teamName: e.teamName ?? "------",
-                                firstMemberName: e.firstMemberName ?? "------",
-                                secondMemberName:
-                                    e.secondMemberName ?? "------",
-                                thirdMemberName: e.thirdMemberName ?? "------",
-                                firstMemberRole: "ggggg",
-                                fourMemberName: e.fourthMemberName ?? "------",
-                                secondMemberRole: 'UX/UI',
-                                thirdMemberRole: 'developr',
-                                fourMemberRole: 'UX/UI',
-                                isLeader: e.isLeader ?? true,
-                              ),
+                              (e) => TeamCard(teamModel: e),
                             )
                             .toList()
                       ],

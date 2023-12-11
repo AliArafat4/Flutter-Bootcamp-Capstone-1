@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_hack/screens/notification_screen/widget/notification_card.dart';
 
-class NotificationScrren extends StatelessWidget {
-  const NotificationScrren({
+class NotificationScreen extends StatelessWidget {
+  const NotificationScreen({
     super.key,
   });
 
@@ -11,6 +11,8 @@ class NotificationScrren extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Notification"),
+        leading: const SizedBox(),
+        leadingWidth: 0,
       ),
       body: const SingleChildScrollView(
         scrollDirection: Axis.vertical,

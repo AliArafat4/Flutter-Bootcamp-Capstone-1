@@ -1,33 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/bloc/team_bloc/team_bloc.dart';
+import 'package:team_hack/bloc/team_bloc/team_event.dart';
+import 'package:team_hack/bloc/team_bloc/team_state.dart';
+import 'package:team_hack/models/team_model.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/member_info.dart';
 import 'package:team_hack/screens/notification_screen/widget/second_button.dart';
 
 class TeamCard extends StatelessWidget {
-  const TeamCard(
-      {super.key,
-      required this.firstMemberName,
-      required this.secondMemberName,
-      required this.thirdMemberName,
-      required this.fourMemberName,
-      required this.firstMemberRole,
-      required this.secondMemberRole,
-      required this.thirdMemberRole,
-      required this.fourMemberRole,
-      required this.teamName,
-      required this.isLeader});
+  const TeamCard({
+    super.key,
+    required this.teamModel,
+    // required this.firstMemberName,
+    // required this.secondMemberName,
+    // required this.thirdMemberName,
+    // required this.fourMemberName,
+    // required this.firstMemberRole,
+    // required this.secondMemberRole,
+    // required this.thirdMemberRole,
+    // required this.fourMemberRole,
+    // required this.teamName,
+    // required this.isLeader
+  });
 
-  final String teamName;
-  final String firstMemberName,
-      secondMemberName,
-      thirdMemberName,
-      fourMemberName;
-  final String firstMemberRole,
-      secondMemberRole,
-      thirdMemberRole,
-      fourMemberRole;
-
-  final bool isLeader;
-
+  // final String teamName;
+  // final String teamID;
+  // final String firstMemberName,
+  //     secondMemberName,
+  //     thirdMemberName,
+  //     fourMemberName;
+  // final String firstMemberRole,
+  //     secondMemberRole,
+  //     thirdMemberRole,
+  //     fourMemberRole;
+  //
+  // final bool isLeader;
+  final TeamModel teamModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,7 +53,7 @@ class TeamCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                teamName,
+                "${teamModel.teamName}",
                 style: const TextStyle(fontSize: 18, color: Color(0xff695678)),
               ),
               Divider(
@@ -54,33 +62,45 @@ class TeamCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               MemberInfo(
-                memberName: firstMemberName,
-                memberRole: firstMemberRole,
-                isLeader: isLeader,
+                memberName: teamModel.firstMemberModel!.name ?? "No user",
+                memberRole:
+                    teamModel.firstMemberModel!.role ?? "No Role Assigned",
+                isLeader: teamModel.isLeader ?? false,
               ),
               MemberInfo(
-                memberName: secondMemberName,
-                memberRole: secondMemberRole,
-                isLeader: isLeader,
+                memberName: teamModel.secondMemberModel!.name ?? "No user",
+                memberRole:
+                    teamModel.secondMemberModel!.role ?? "No Role Assigned",
+                isLeader: false,
               ),
               MemberInfo(
-                memberName: thirdMemberName,
-                memberRole: thirdMemberRole,
-                isLeader: isLeader,
+                memberName: teamModel.thirdMemberModel!.name ?? "No user",
+                memberRole:
+                    teamModel.thirdMemberModel!.role ?? "No Role Assigned",
+                isLeader: false,
               ),
               MemberInfo(
-                memberName: fourMemberName,
-                memberRole: fourMemberRole,
-                isLeader: isLeader,
+                memberName: teamModel.fourthMemberModel!.name ?? "No user",
+                memberRole:
+                    teamModel.fourthMemberModel!.role ?? "No Role Assigned",
+                isLeader: false,
               ),
               Center(
-                child: SecondButton(
-                  textColor: const Color(0xff62c1c7),
-                  width: MediaQuery.of(context).size.width - 160,
-                  height: MediaQuery.of(context).size.height / 16,
-                  title: "Request to join",
-                  onPressed: () {},
-                  borderColor: const Color(0xff62c1c7),
+                child: BlocBuilder<TeamBloc, TeamState>(
+                  builder: (context, state) {
+                    return SecondButton(
+                      textColor: const Color(0xff62c1c7),
+                      width: MediaQuery.of(context).size.width - 160,
+                      height: MediaQuery.of(context).size.height / 16,
+                      title: "Request to join",
+                      onPressed: () {
+                        context
+                            .read<TeamBloc>()
+                            .add(RequestToJoin(teamID: teamModel.id!));
+                      },
+                      borderColor: const Color(0xff62c1c7),
+                    );
+                  },
                 ),
               ),
             ],

@@ -20,7 +20,7 @@ class NavigationBarScreen extends StatelessWidget {
         final pages = [
           const HomeScreen(),
           SearchScreen(),
-          const NotificationScrren(),
+          const NotificationScreen(),
           ProfileScreen()
         ];
         int currentIndex =

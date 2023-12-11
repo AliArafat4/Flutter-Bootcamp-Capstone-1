@@ -3,11 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 
-
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/models/hack_model.dart';
-
 
 import 'package:team_hack/screens/add_hackathon/add_hackathon_screen.dart';
 import 'package:team_hack/screens/chat/chat_screen.dart';
@@ -29,6 +27,9 @@ class HomeScreen extends StatelessWidget {
         : const SizedBox();
     final bloc = context.read<AuthBloc>();
     bloc.state is AuthInitial
+        ? bloc.add(AuthGetCurrentUserEvent())
+        : const SizedBox();
+    bloc.state is! AuthInitial
         ? bloc.add(AuthGetCurrentUserEvent())
         : const SizedBox();
 

@@ -58,20 +58,25 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     });
     on<MapGetMarkerLocationEvent>((event, emit) async {
       final location = await geocoding.placemarkFromCoordinates(
-          event.marker.position.latitude, event.marker.position.longitude);
+          localeIdentifier: "en",
+          event.marker.position.latitude,
+          event.marker.position.longitude);
 
       emit(MapGetMarkerLocationState(
           location:
               "${location.first.country},${location.first.name},${location.first.street}"));
     });
   }
-  userPermission() async {
-    //TODO: FIX
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
+}
+
+Future<bool> userPermission() async {
+  //TODO: FIX
+  LocationPermission permission;
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      //nothing
-    }
+    return false;
+  } else {
+    return true;
   }
 }
