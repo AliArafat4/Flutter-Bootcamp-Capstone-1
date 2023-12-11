@@ -51,15 +51,10 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => CreateNewTeamBloc()),
         BlocProvider(create: (context) => SearchBloc()),
-
         BlocProvider(
             create: (context) => ProfileBloc()..add(GetCurrentUserEvent())),
-
         BlocProvider(create: (context) => SkillsBloc()),
-
         BlocProvider(create: (context) => TeamBloc()),
-
-
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
         if (state is GetThemeState) {
