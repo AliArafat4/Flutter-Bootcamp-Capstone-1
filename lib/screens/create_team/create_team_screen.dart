@@ -8,6 +8,7 @@ import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/method/show_dilog.dart';
 import 'package:team_hack/method/show_loading.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
+import 'package:team_hack/screens/home/home_screen.dart';
 
 import 'components/create_team_text_field.dart';
 
@@ -25,7 +26,15 @@ class CreateTeamScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios_sharp),
+        leading: IconButton(
+          onPressed: Navigator.of(context).pop,
+          icon: IconButton(
+            icon: Icon(Icons.arrow_back_ios_sharp),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -82,11 +91,17 @@ class CreateTeamScreen extends StatelessWidget {
                   listener: (context, state) {
                     if (state is LoadingState) {
                       loading(context: context);
-                      Navigator.of(context);
-                    }
-                    if (state is CreateTeamSuccessState) {
+                      Navigator.of(context).pop();
+                    } else if (state is CreateTeamSuccessState) {
                       showSuccessDiolg(
-                          func: () {},
+                          func: () {
+                            //change to pushNamedAndRemoveUntil
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                            );
+                          },
                           context: context,
                           successMessage: state.successmessage);
                     } else if (state is CreateTeamErrorState) {

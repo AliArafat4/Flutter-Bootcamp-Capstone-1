@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/create_new_team/create_new_team.state.dart';
 import 'package:team_hack/bloc/create_new_team/create_new_team_event.dart';
@@ -17,6 +18,7 @@ class CreateNewTeamBloc extends Bloc<CreateNewTeamEvent, CreateNewTeamState> {
               event.secondMemberName.length > 2 &&
               event.thirdMemberName.length > 2) {
             final respons = await SupaBaseDB().addNewTeam(
+              hackId: 2,
               teamName: event.teamName,
               firstMemberName: event.firstMemberName,
               secondMemberName: event.secondMemberName,

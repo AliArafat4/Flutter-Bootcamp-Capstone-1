@@ -30,9 +30,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
     return SizedBox(
       height: 80,
       child: TextField(
-       
         readOnly: widget.onlyRead ?? false,
-         onChanged: widget.onChangeFunc,
+        onChanged: widget.onChangeFunc,
         onTap: widget.onTapFunc,
         keyboardType: widget.keyboardType,
         controller: widget.controller,
