@@ -21,3 +21,28 @@ class AddHackathonNumberOfTeamMembersState extends AddHackathonState {
   final String teamSize;
   AddHackathonNumberOfTeamMembersState({required this.teamSize});
 }
+
+class AddHackathonStartRegDateState extends AddHackathonState {
+  final String? startRegDate;
+  AddHackathonStartRegDateState({required this.startRegDate});
+}
+
+class AddHackathonEndRegDateState extends AddHackathonState {
+  final String? endRegDate;
+  AddHackathonEndRegDateState({required this.endRegDate});
+}
+
+class AddHackathonStartHackDateState extends AddHackathonState {
+  final String? startHackDate;
+  AddHackathonStartHackDateState({required this.startHackDate});
+}
+
+class AddHackathonEndHackDateState extends AddHackathonState {
+  final String? endHackDate;
+  AddHackathonEndHackDateState({required this.endHackDate});
+}
+
+class AddHackathonGetLocationState extends AddHackathonState {
+  final String? location;
+  AddHackathonGetLocationState({required this.location});
+}

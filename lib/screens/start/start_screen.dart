@@ -15,7 +15,7 @@ class StartScreen extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: context.getHeight(factor: 0.08)),
-            Image.asset("assets/images/start_img.png"),
+            Expanded(child: Image.asset("assets/images/start_img.png")),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -76,13 +76,6 @@ class StartScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
 
 /*
 import 'package:flutter/material.dart';

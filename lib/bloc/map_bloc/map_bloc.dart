@@ -13,38 +13,35 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   MapBloc() : super(MapInitial()) {
     on<MapGetLocationEvent>((event, emit) async {
       if (!event.location.toString().contains("null")) {
+        List<Marker> markers = [];
+
         // final place = await geocoding.placemarkFromCoordinates(
         //     event.location.latitude, event.location.longitude);
         // final first = place.first;
+        final userLocation = await Geolocator.getCurrentPosition();
+
         final selectedLatLng =
-            LatLng(event.location.latitude, event.location.longitude);
+            LatLng(userLocation.latitude, userLocation.longitude);
 
-        emit(MapSuccessState(
-            location: selectedLatLng,
-            currentLocation: selectedLatLng,
-            markers: []));
+        // emit(MapSuccessState(
+        //     location: selectedLatLng,
+        //     currentLocation: selectedLatLng,
+        //     markers: []));
 
-        event.markers.add(Marker(
+        markers.add(Marker(
             markerId: MarkerId(event.location.toString()),
             position: event.location));
+        emit(MapSetMarkersState(userMarker: markers));
 
-        emit(MapSuccessState(
-            location: selectedLatLng,
-            currentLocation: selectedLatLng,
-            markers: event.markers));
+        // emit(MapSuccessState(
+        //     location: selectedLatLng,
+        //     currentLocation: selectedLatLng,
+        //     markers: markers));
       }
     });
 
     on<MapGetCurrentLocationEvent>((event, emit) async {
       try {
-        LocationPermission permission;
-        permission = await Geolocator.checkPermission();
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          //nothing
-        }
-        // Position position = await Geolocator.getCurrentPosition(
-        //     desiredAccuracy: LocationAccuracy.low);
         await Geolocator.getCurrentPosition().then((currLocation) {
           final currentLatLng =
               LatLng(currLocation.latitude, currLocation.longitude);
@@ -54,5 +51,27 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         print(err);
       }
     });
+    on<MapResetMarkersEvent>((event, emit) async {
+      final userLocation = await Geolocator.getCurrentPosition();
+      emit(MapResetMarkersState(
+          userLocation: LatLng(userLocation.latitude, userLocation.longitude)));
+    });
+    on<MapGetMarkerLocationEvent>((event, emit) async {
+      final location = await geocoding.placemarkFromCoordinates(
+          event.marker.position.latitude, event.marker.position.longitude);
+
+      emit(MapGetMarkerLocationState(
+          location:
+              "${location.first.country},${location.first.name},${location.first.street}"));
+    });
+  }
+  userPermission() async {
+    //TODO: FIX
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      //nothing
+    }
   }
 }

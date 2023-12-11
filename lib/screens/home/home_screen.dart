@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
+import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/screens/add_hackathon/add_hackathon_screen.dart';
 import 'package:team_hack/screens/chat/chat_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
+import 'package:team_hack/screens/home/widget/custom_hack_card.dart';
 import 'package:team_hack/screens/home/widget/hackathon_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,6 +18,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final blocHack = context.read<HackCubit>();
     blocHack.state is HackInitial
+        ? blocHack.getAllHacksFunc()
+        : const SizedBox();
+    blocHack.state is! HackInitial
         ? blocHack.getAllHacksFunc()
         : const SizedBox();
     final bloc = context.read<AuthBloc>();
@@ -82,14 +87,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 22,
-              ),
+              SizedBox(height: context.getHeight(factor: 0.028)),
               BlocBuilder<HackCubit, HackState>(
                 builder: (context, state) {
                   return Expanded(
                     child: DefaultTabController(
-                      length: 7,
+                      length: tabsTitle.length,
                       child: Column(
                         children: [
                           TabBar(
@@ -107,28 +110,19 @@ class HomeScreen extends StatelessWidget {
                                     .getAllHacksFunc(field: tabsTitle[value]);
                               }
                             },
-                            tabs: const [
-                              Tab(text: 'All'),
-                              Tab(text: 'Design'),
-                              Tab(text: 'Programming'),
-                              Tab(text: 'Business analysis'),
-                              Tab(text: 'Data analysis'),
-                              Tab(text: 'Information security'),
-                              Tab(text: 'Networking'),
+                            tabs: [
+                              ...List.generate(tabsTitle.length,
+                                  (index) => Tab(text: tabsTitle[index]))
                             ],
                           ),
-                          const SizedBox(
-                            height: 22,
-                          ),
+                          SizedBox(height: context.getHeight(factor: 0.028)),
                           Flexible(
                             child: Padding(
                               padding: const EdgeInsets.all(10),
                               child: TabBarView(
                                 children: [
-                                  ...List.generate(
-                                    7,
-                                    (index) => CustomHacksCards(state: state),
-                                  )
+                                  ...List.generate(tabsTitle.length,
+                                      (index) => CustomHacksCards(state: state))
                                 ],
                               ),
                             ),
@@ -144,44 +138,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class CustomHacksCards extends StatelessWidget {
-  const CustomHacksCards({
-    super.key,
-    required this.state,
-  });
-  final dynamic state;
-
-  @override
-  Widget build(BuildContext context) {
-    return state is GetAllHacksState
-        ? ListView.separated(
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemCount: state.hackModel.length,
-            itemBuilder: (BuildContext context, index) {
-              return state.hackModel.length > 0
-                  ? InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HackathonDetail(
-                                    selectedHack: state.hackModel[index])));
-                      },
-                      child: HackathonCard(
-                        hackathonName: "${state.hackModel[index].name}",
-                        hackathonDate:
-                            "${state.hackModel[index].hackStartDate} - ${state.hackModel[index].hackEndDate}",
-                        hackathonLocation: "${state.hackModel[index].location}",
-                        hackathonField: "${state.hackModel[index].field}",
-                      ),
-                    )
-                  : const SizedBox();
-            })
-        : state is AddHackNoDataState
-            ? const Center(child: Text("No Hackathons"))
-            : const Center(child: CircularProgressIndicator());
   }
 }

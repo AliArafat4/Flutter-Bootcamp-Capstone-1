@@ -17,13 +17,14 @@ class MapSetMarkersState extends MapState {
   MapSetMarkersState({required this.userMarker});
 }
 
-class MapSuccessState extends MapState {
-  final LatLng location;
-  final LatLng currentLocation;
-  final List<Marker> markers;
+class MapResetMarkersState extends MapState {
+  final LatLng userLocation;
 
-  MapSuccessState(
-      {required this.location,
-      required this.currentLocation,
-      required this.markers});
+  MapResetMarkersState({required this.userLocation});
+}
+
+class MapGetMarkerLocationState extends MapState {
+  final String location;
+
+  MapGetMarkerLocationState({required this.location});
 }

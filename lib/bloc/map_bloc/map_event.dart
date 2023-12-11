@@ -5,15 +5,15 @@ abstract class MapEvent {}
 
 class MapGetLocationEvent extends MapEvent {
   final LatLng location;
-  List<Marker> markers = [];
-  MapGetLocationEvent({required this.markers, required this.location});
+  MapGetLocationEvent({required this.location});
 }
 
 class MapGetCurrentLocationEvent extends MapEvent {}
 
-class MapSetMarkersEvent extends MapEvent {
-  final LatLng location;
-  MapSetMarkersEvent({required this.location});
+class MapGetMarkerLocationEvent extends MapEvent {
+  final Marker marker;
+
+  MapGetMarkerLocationEvent({required this.marker});
 }
 
-// class MapResetMarkersEvent extends MapEvent {}
+class MapResetMarkersEvent extends MapEvent {}
