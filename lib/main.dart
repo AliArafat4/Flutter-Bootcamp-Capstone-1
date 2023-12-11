@@ -3,10 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:team_hack/bloc/add_hackathon_bloc/add_hackathon_cubit.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
 import 'package:team_hack/bloc/create_new_team/create_new_team_bloc.dart';
-import 'package:team_hack/bloc/team_bloc/team_bloc.dart';
+
+import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
+import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
+
 import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
 import 'package:team_hack/bloc/skills_bloc/skills_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
@@ -37,11 +41,17 @@ class MainApp extends StatelessWidget {
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<HackCubit>(create: (context) => HackCubit()),
+        BlocProvider<AddHackathonCubit>(
+            create: (context) => AddHackathonCubit()),
+        BlocProvider<MapBloc>(
+            create: (context) => MapBloc()..add(MapGetCurrentLocationEvent())),
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => CreateNewTeamBloc()),
         BlocProvider(create: (context) => SearchBloc()),
         BlocProvider(create: (context) => SkillsBloc()),
+
         BlocProvider(create: (context) => TeamBloc()),
+
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
         if (state is GetThemeState) {

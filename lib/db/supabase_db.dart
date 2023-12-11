@@ -55,6 +55,7 @@ class SupaBaseDB {
                   "name": name,
                   "bio": "",
                   "skills": [],
+                  'is_admin': false,
                 },
               ));
 

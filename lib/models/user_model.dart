@@ -5,9 +5,18 @@ class UserModel {
   String? name;
   String? bio;
   List? skills;
+  bool? isAdmin;
 
   UserModel(
-      {this.userId, this.email, this.role, this.name, this.bio, this.skills});
+
+      {this.userId,
+      this.email,
+      this.role,
+      this.name,
+      this.bio,
+      this.skills,
+      this.isAdmin});
+
 
   UserModel.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -16,6 +25,7 @@ class UserModel {
     name = json['name'];
     bio = json['bio'];
     skills = json['skills'];
+    isAdmin = json['is_admin'];
   }
 
 // Map<String, dynamic> toJson() {

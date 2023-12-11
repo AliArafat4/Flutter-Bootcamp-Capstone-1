@@ -5,11 +5,11 @@ class WidgetTextFieldDate extends StatelessWidget {
       {super.key,
       required this.selectDate,
       required this.controllerDate,
-      required this.textfieldText});
+      required this.textFieldText});
 
   final TextEditingController controllerDate;
   final Function() selectDate;
-  final String textfieldText;
+  final String textFieldText;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -18,7 +18,7 @@ class WidgetTextFieldDate extends StatelessWidget {
         controller: controllerDate,
         canRequestFocus: false,
         decoration: InputDecoration(
-          hintText: textfieldText,
+          hintText: textFieldText,
           hintStyle:
               const TextStyle(color: Colors.grey, fontWeight: FontWeight.w400),
           focusedBorder: OutlineInputBorder(

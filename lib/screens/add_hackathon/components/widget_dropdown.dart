@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class WidgetDropdownButton extends StatelessWidget {
-  WidgetDropdownButton(
+  const WidgetDropdownButton(
       {super.key,
       required this.listString,
       required this.labelDropdownButton,
-      required this.func});
+      required this.func,
+      this.dropdownValue});
 
-  String? dropdownValue;
+  final String? dropdownValue;
   final String labelDropdownButton;
   final List<String> listString;
+
   final Function(String? value) func;
   @override
   Widget build(BuildContext context) {
