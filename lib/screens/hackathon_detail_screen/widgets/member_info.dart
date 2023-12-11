@@ -24,7 +24,6 @@ class MemberInfo extends StatelessWidget {
                 memberName,
                 style: const TextStyle(fontSize: 16),
               ),
-
               Text(
                 memberRole,
                 style: Theme.of(context)
@@ -32,7 +31,6 @@ class MemberInfo extends StatelessWidget {
                     .bodyMedium!
                     .copyWith(color: Theme.of(context).colorScheme.onPrimary),
               ),
-
             ],
           ),
           const Spacer(),

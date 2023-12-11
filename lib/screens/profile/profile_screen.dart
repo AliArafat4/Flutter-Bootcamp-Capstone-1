@@ -45,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: const Icon(Icons.settings))
         ],
         centerTitle: true,
+        leading: const SizedBox(),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

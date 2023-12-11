@@ -6,7 +6,8 @@ class CreateTeamTextField extends StatelessWidget {
       required this.content,
       required this.controller,
       required this.keyboardType,
-      this.onTapFunc})
+      this.onTapFunc,
+      this.isDisabled})
       : super(key: key);
 
   final String content;
@@ -16,7 +17,7 @@ class CreateTeamTextField extends StatelessWidget {
   final TextInputType keyboardType;
 
   final Function()? onTapFunc;
-
+  final bool? isDisabled;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -25,6 +26,7 @@ class CreateTeamTextField extends StatelessWidget {
         onTap: onTapFunc,
         keyboardType: keyboardType,
         controller: controller,
+        enabled: isDisabled ?? true,
         textAlign: TextAlign.start,
         textAlignVertical: TextAlignVertical.bottom,
         decoration: InputDecoration(
@@ -37,6 +39,11 @@ class CreateTeamTextField extends StatelessWidget {
                 BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
           ),
           enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide:
+                BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),
+          ),
+          disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide:
                 BorderSide(width: 1, color: Colors.grey.withOpacity(0.3)),

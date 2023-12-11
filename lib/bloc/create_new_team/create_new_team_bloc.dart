@@ -9,20 +9,24 @@ class CreateNewTeamBloc extends Bloc<CreateNewTeamEvent, CreateNewTeamState> {
     on<CreateTeamEvent>((event, emit) async {
       emit(LoadingState());
       try {
-        if (event.teamName.isNotEmpty &&
-            event.firstMemberName.isNotEmpty &&
-            event.secondMemberName.isNotEmpty &&
-            event.thirdMemberName.isNotEmpty) {
-          if (event.teamName.length > 2 &&
-              event.firstMemberName.length > 2 &&
-              event.secondMemberName.length > 2 &&
-              event.thirdMemberName.length > 2) {
+        if (event.teamName.isNotEmpty
+            //&&
+            // event.firstMemberName.isNotEmpty &&
+            // event.secondMemberName.isNotEmpty &&
+            // event.thirdMemberName.isNotEmpty
+            ) {
+          if (event.teamName.length > 2
+              //&&
+              // event.firstMemberName.length > 2 &&
+              // event.secondMemberName.length > 2 &&
+              // event.thirdMemberName.length > 2
+              ) {
             final respons = await SupaBaseDB().addNewTeam(
-              hackId: 2,
+              hackId: event.hackID,
               teamName: event.teamName,
-              firstMemberName: event.firstMemberName,
-              secondMemberName: event.secondMemberName,
-              thirdMemberName: event.thirdMemberName,
+              // firstMemberName: event.firstMemberName,
+              // secondMemberName: event.secondMemberName,
+              // thirdMemberName: event.thirdMemberName,
             );
             {
               if (respons) {
