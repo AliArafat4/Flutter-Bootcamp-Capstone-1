@@ -53,7 +53,7 @@ class HackathonDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HackathonMainDetail(
-                hackathonImage: "assets/images/hackathon_image.png",
+                hackathonImage: "assets/images/hackImage.png",
                 hackathonName: "${selectedHack.name}",
                 hackathonDetail: "${selectedHack.description}",
               ),
