@@ -4,6 +4,7 @@ import 'package:team_hack/bloc/team_bloc/team_bloc.dart';
 import 'package:team_hack/bloc/team_bloc/team_event.dart';
 import 'package:team_hack/bloc/team_bloc/team_state.dart';
 import 'package:team_hack/models/team_model.dart';
+import 'package:team_hack/screens/auth/components/show_snack_bar.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/member_info.dart';
 import 'package:team_hack/screens/notification_screen/widget/second_button.dart';
 
@@ -11,30 +12,8 @@ class TeamCard extends StatelessWidget {
   const TeamCard({
     super.key,
     required this.teamModel,
-    // required this.firstMemberName,
-    // required this.secondMemberName,
-    // required this.thirdMemberName,
-    // required this.fourMemberName,
-    // required this.firstMemberRole,
-    // required this.secondMemberRole,
-    // required this.thirdMemberRole,
-    // required this.fourMemberRole,
-    // required this.teamName,
-    // required this.isLeader
   });
 
-  // final String teamName;
-  // final String teamID;
-  // final String firstMemberName,
-  //     secondMemberName,
-  //     thirdMemberName,
-  //     fourMemberName;
-  // final String firstMemberRole,
-  //     secondMemberRole,
-  //     thirdMemberRole,
-  //     fourMemberRole;
-  //
-  // final bool isLeader;
   final TeamModel teamModel;
   @override
   Widget build(BuildContext context) {

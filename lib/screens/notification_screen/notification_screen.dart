@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_hack/db/supabase_db.dart';
 import 'package:team_hack/screens/notification_screen/widget/notification_card.dart';
 
 class NotificationScreen extends StatelessWidget {
