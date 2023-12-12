@@ -14,4 +14,10 @@ class BioEvent extends ProfileEvent {
   BioEvent({required this.bio});
 }
 
+class RoleEvent extends ProfileEvent {
+  final String role;
+
+  RoleEvent({required this.role});
+}
+
 class GetCurrentUserEvent extends ProfileEvent {}

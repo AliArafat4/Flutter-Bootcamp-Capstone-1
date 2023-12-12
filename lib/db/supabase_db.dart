@@ -78,6 +78,7 @@ class SupaBaseDB {
 
       return userInfo;
     } catch (err) {
+      print(err);
       return err;
     }
   }
@@ -190,7 +191,7 @@ class SupaBaseDB {
     required String nameUser,
     required String uuidUser,
     required String emailUser,
-    required List<String> skill,
+    required List skill,
     required String role,
     required bool isAdmin,
   }) async {
@@ -203,8 +204,8 @@ class SupaBaseDB {
             "bio": bioUser,
             "email": client.auth.currentUser!.email,
             "user_id": client.auth.currentUser!.id,
-            "skills": [],
-            "role": "",
+            "skills": skill,
+            "role": role,
             "is_admin": isAdmin,
           })
           .eq("user_id", client.auth.currentUser!.id)
@@ -216,39 +217,52 @@ class SupaBaseDB {
     }
   }
 
-  addRoleUser(
-      {required String nameUser,
-      required String roleUser,
-      required String emailUser,
-      required String uuidUser}) async {
-    try {
-      final client = Supabase.instance.client;
-      final user = await client.from("users").update({
-        "name": nameUser,
-        "email": emailUser,
-        "user_id": uuidUser,
-        "role": roleUser
-      });
-      return true;
-    } catch (err) {
-      print(err);
-    }
-  }
+  // addRoleUser(
+  //     {required String nameUser,
+  //     required String roleUser,
+  //     required String emailUser,
+  //     required String uuidUser}) async {
+  //   try {
+  //     final client = Supabase.instance.client;
+  //     final user = await client.from("users").update({
+  //       "name": nameUser,
+  //       "email": emailUser,
+  //       "user_id": uuidUser,
+  //       "role": roleUser
+  //     });
+  //     return true;
+  //   } catch (err) {
+  //     print(err);
+  //   }
+  // }
 
   addSkillUser(
-      {required List<String> skill,
+      {required String bioUser,
+      required String role,
+      required List skill,
       required String nameUser,
       required String emailUser,
+      required bool isAdmin,
       required String uuidUser}) async {
     try {
       final client = Supabase.instance.client;
-      final bioUser = await client.from("users").update({
-        "name": nameUser,
-        "email": emailUser,
-        "user_id": uuidUser,
-        "skills": skill,
-      });
-      return true;
+      final user = await client
+          .from("users")
+          .update({
+            "bio": bioUser,
+            "email": client.auth.currentUser!.email,
+            "user_id": client.auth.currentUser!.id,
+            "role": role,
+            "is_admin": isAdmin,
+            "name": nameUser,
+            "skills": skill,
+          })
+          .eq("user_id", client.auth.currentUser!.id)
+          .select();
+
+      final UserModel userSkill = UserModel.fromJson(user[0]);
+
+      return userSkill;
     } catch (err) {
       print(err);
     }

@@ -6,20 +6,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:team_hack/bloc/add_hackathon_bloc/add_hackathon_cubit.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
-
-import 'package:team_hack/bloc/create_new_team/create_new_team_bloc.dart';
-
-import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
-import 'package:team_hack/bloc/skills_bloc/skills_bloc.dart';
-import 'package:team_hack/bloc/team_bloc/team_bloc.dart';
-import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
-
 import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
 import 'package:team_hack/bloc/create_new_team/create_new_team_bloc.dart';
+import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
 import 'package:team_hack/bloc/profile_bloc/profile_bloc.dart';
+import 'package:team_hack/bloc/team_bloc/team_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
 import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
+
 import 'bloc/hack_bloc/hack_cubit.dart';
 import 'db/supabase_db.dart';
 import 'screens/start/start_screen.dart';
@@ -54,7 +49,6 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => SearchBloc()),
         BlocProvider(
             create: (context) => ProfileBloc()..add(GetCurrentUserEvent())),
-        BlocProvider(create: (context) => SkillsBloc()),
         BlocProvider(create: (context) => TeamBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
