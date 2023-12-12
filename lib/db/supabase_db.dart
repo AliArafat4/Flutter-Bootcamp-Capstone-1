@@ -87,7 +87,6 @@ class SupaBaseDB {
       final client = Supabase.instance.client;
       final user = await client.from("users").select().eq('user_id', userID);
       final userInfo = UserModel.fromJson(user.first);
-      print(userInfo.name);
       return userInfo;
     } catch (err) {
       UserModel errUser = UserModel();
@@ -256,7 +255,6 @@ class SupaBaseDB {
   }
 
   Future<List<TeamModel>> getAllTeam(int id) async {
-    print(id);
     final client = Supabase.instance.client;
     final teams = await client
         .from("registered_team")
@@ -299,17 +297,55 @@ class SupaBaseDB {
 
       if (checkIfLeader.first["teams"]["first_member_name"] ==
           client.auth.currentUser!.id) {
-        print("you are the leader");
         return "you are the leader";
       } else if (checkIfRequested.isNotEmpty) {
-        print("You requested already");
         return "You requested already";
       } else {
         final request = await client.from("request").upsert({
           "team_name": teamID,
-          "user_id": client.auth.currentUser!.id,
+          "request_from": client.auth.currentUser!.id,
+          "request_to": checkIfLeader.first["teams"]["first_member_name"],
         });
+        return "Request Sent Successfully";
       }
+    } catch (err) {
+      print(err);
+      return err;
+    }
+  }
+
+  getNotifications() async {
+    try {
+      final client = Supabase.instance.client;
+
+      final requests = await client
+          .from("request")
+          .select("*,users!request_request_from_fkey(*) ")
+          .eq("request_to", client.auth.currentUser!.id);
+      print(requests[0]["users"]);
+
+      //to get teams name from request
+      final teamToJoin = [];
+      final teamsName = [];
+      for (int i = 0; i < requests.length; i++) {
+        teamToJoin.add(await client
+            .from("teams")
+            .select("team_name")
+            .eq("id", requests[i]["team_name"]));
+        teamsName.add(teamToJoin[i][0]);
+      }
+      print(teamsName);
+      //to get users name from request
+      final requestFrom = [];
+      final requestFromName = [];
+      for (int i = 0; i < requests.length; i++) {
+        requestFrom.add(await client
+            .from("users")
+            .select("*")
+            .eq("user_id", requests[i]["request_from"]));
+        requestFromName.add(requestFrom[i][0]);
+      }
+      print(requestFromName);
     } catch (err) {
       print(err);
     }

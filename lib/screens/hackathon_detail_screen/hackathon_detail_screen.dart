@@ -5,6 +5,7 @@ import 'package:team_hack/bloc/team_bloc/team_event.dart';
 import 'package:team_hack/bloc/team_bloc/team_state.dart';
 import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/models/hack_model.dart';
+import 'package:team_hack/screens/auth/components/show_snack_bar.dart';
 import 'package:team_hack/screens/create_team/create_team_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/hackathon_main_detail.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
@@ -92,14 +93,24 @@ class HackathonDetail extends StatelessWidget {
               BlocConsumer<TeamBloc, TeamState>(
                 builder: ((context, state) {
                   if (state is GetAllTeamSuccessState) {
-                    return Column(
-                      children: [
-                        ...bloc.allTeam!
-                            .map(
-                              (e) => TeamCard(teamModel: e),
-                            )
-                            .toList()
-                      ],
+                    return BlocConsumer<TeamBloc, TeamState>(
+                      listener: (BuildContext context, TeamState state) {
+                        state is RequsetToJoinSuccessState
+                            ? showSnackBar(
+                                context: context, message: state.successmessage)
+                            : const SizedBox();
+                      },
+                      builder: (context, state) {
+                        return Column(
+                          children: [
+                            ...bloc.allTeam!
+                                .map(
+                                  (e) => TeamCard(teamModel: e),
+                                )
+                                .toList()
+                          ],
+                        );
+                      },
                     );
                   }
                   return const Center(

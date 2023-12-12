@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_hack/db/supabase_db.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 import 'package:team_hack/screens/notification_screen/widget/second_button.dart';
 
@@ -40,7 +41,9 @@ class NotificationCard extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 2.5,
                         height: MediaQuery.of(context).size.height / 18,
                         title: "Accepte",
-                        onPressed: () {},
+                        onPressed: () {
+                          SupaBaseDB().getNotifications();
+                        },
                       ),
                       const SizedBox(
                         width: 16,
