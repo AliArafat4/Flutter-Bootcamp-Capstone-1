@@ -10,7 +10,7 @@ class TeamBloc extends Bloc<TeamEvent, TeamState> {
   TeamBloc() : super(TeamInitial()) {
     on<LoadAllTeams>(getAllTeam);
     on<RequestToJoin>((event, emit) async {
-      // TODO: implement event handler
+      
       final msgState = await SupaBaseDB().sendRequest(teamID: event.teamID);
       print(msgState);
       emit(RequsetToJoinSuccessState(successmessage: msgState));

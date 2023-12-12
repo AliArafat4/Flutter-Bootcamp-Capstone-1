@@ -40,6 +40,12 @@ final class ErrorBioState extends ProfileState {
   ErrorBioState({required this.errormessage});
 }
 
+final class ErrorRoleState extends ProfileState {
+  final String errormessage;
+
+  ErrorRoleState({required this.errormessage});
+}
+
 final class GetCurrentUserState extends ProfileState {
   final UserModel user;
   GetCurrentUserState({required this.user});

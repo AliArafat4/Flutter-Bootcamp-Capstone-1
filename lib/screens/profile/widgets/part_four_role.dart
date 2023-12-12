@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/profile_bloc/profile_bloc.dart';
+import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/screens/notification_screen/widget/second_button.dart';
 import 'package:team_hack/screens/profile/widgets/about_section.dart';
 import 'package:team_hack/widgets/create_hackathon_textfiled.dart';
@@ -68,6 +69,8 @@ class _PartFourRoleState extends State<PartFourRole> {
                                         .read<ProfileBloc>()
                                         .add(RoleEvent(role: conRole.text));
                                     conRole.clear();
+                                    Navigator.pop(context);
+                                    //  conRole.clear();
                                   },
                                   borderColor: const Color(0xff62c1c7),
                                 ),
@@ -87,27 +90,29 @@ class _PartFourRoleState extends State<PartFourRole> {
         ),
         SizedBox(
           height: 50,
-          child: BlocBuilder<ProfileBloc, ProfileState>(
-              buildWhen: (previous, current) =>
-                  current is GetCurrentUserState || current is SuccessRoleState,
-              builder: (context, state) {
-                if (state is GetCurrentUserState) {
-                  return AboutSection(
-                    bio: "${state.user.bio}",
-                  );
-                } else if (state is SuccessRoleState) {
-                  return AboutSection(
-                    bio: "${state.dataUser.bio}",
-                  );
-                } else if (state is LoadingBioState) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return Container(
-                  child: const Text(''),
+          child: BlocConsumer<ProfileBloc, ProfileState>(
+            buildWhen: (previous, current) =>
+                current is GetCurrentUserState || current is SuccessRoleState,
+            builder: (context, state) {
+              if (state is GetCurrentUserState) {
+                return AboutSection(
+                  bio: "${state.user.role}",
                 );
-              }),
+              } else if (state is SuccessRoleState) {
+                return AboutSection(
+                  bio: "${state.dataUser.role}",
+                );
+              }
+              return Container(
+                child: const Text(''),
+              );
+            },
+            listener: (BuildContext context, ProfileState state) {
+              state is ErrorRoleState
+                  ? showErrorSnackBar(context, state.errormessage)
+                  : const SizedBox();
+            },
+          ),
         ),
       ],
     );
