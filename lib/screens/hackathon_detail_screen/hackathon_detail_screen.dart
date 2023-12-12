@@ -5,6 +5,7 @@ import 'package:team_hack/bloc/team_bloc/team_event.dart';
 import 'package:team_hack/bloc/team_bloc/team_state.dart';
 import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/models/hack_model.dart';
+import 'package:team_hack/screens/auth/components/show_snack_bar.dart';
 import 'package:team_hack/screens/create_team/create_team_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/hackathon_main_detail.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
@@ -18,10 +19,9 @@ class HackathonDetail extends StatelessWidget {
   final HackModel selectedHack;
   @override
   Widget build(BuildContext context) {
-    print("add event");
-    print(selectedHack.id);
-    context.read<TeamBloc>().add(LoadAllTeams(id: selectedHack.id!));
     final bloc = context.read<TeamBloc>();
+    bloc.add(LoadAllTeams(id: selectedHack.id!));
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,6 +31,21 @@ class HackathonDetail extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_sharp),
         ),
         title: const Text("Details"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        TeamScreen(teamModelList: bloc.allTeam, bloc: bloc)),
+              );
+            },
+            child: const Text(
+              "View all Teams",
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -51,7 +66,7 @@ class HackathonDetail extends StatelessWidget {
                   location: selectedHack.location,
                   startDate: selectedHack.hackStartDate,
                   endDate: selectedHack.hackEndDate,
-                  teamSize: selectedHack.teamSize.toString()),
+                  teamSize: selectedHack.numberOfTeams.toString()),
               const SizedBox(height: 8),
               PrimaryButton(
                 width: MediaQuery.of(context).size.width,
@@ -61,70 +76,35 @@ class HackathonDetail extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CreateTeamScreen(),
+                      builder: (context) =>
+                          CreateTeamScreen(selectedHack: selectedHack),
                     ),
                   );
                 },
               ),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  const Text(
-                    "Teams",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const TeamScreen()),
-                      );
-                    },
-                    child: const Text(
-                      "View all",
-                    ),
-                  ),
-                ],
-              ),
-              BlocConsumer<TeamBloc, TeamState>(
-                builder: ((context, state) {
-                  if (state is GetAllTeamSuccessState) {
-                    return Column(
-                      children: [
-                        ...bloc.allTeam!
-                            .map(
-                              (e) => TeamCard(
-                                teamName: e.teamName ?? "------",
-                                firstMemberName: e.firstMemberName ?? "------",
-                                secondMemberName:
-                                    e.secondMemberName ?? "------",
-                                thirdMemberName: e.thirdMemberName ?? "------",
-                                firstMemberRole: "ggggg",
-                                fourMemberName: e.fourthMemberName ?? "------",
-                                secondMemberRole: 'UX/UI',
-                                thirdMemberRole: 'developr',
-                                fourMemberRole: 'UX/UI',
-                                isLeader: e.isLeader ?? true,
-                              ),
-                            )
-                            .toList()
-                      ],
-                    );
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0xff62c1c7),
-                    ),
-                  );
-                }),
-                listener: (BuildContext context, TeamState state) {
-                  if (state is GetAllTeamErrorState) {
-                    showErrorSnackBar(context, state.errormessage);
-                  }
-                },
-              )
+              // Row(
+              //   children: [
+              //     const Text(
+              //       "Teams",
+              //       style: TextStyle(fontSize: 20),
+              //     ),
+              //     const Spacer(),
+              //     TextButton(
+              //       onPressed: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => TeamScreen(
+              //                   teamModelList: bloc.allTeam, bloc: bloc)),
+              //         );
+              //       },
+              //       child: const Text(
+              //         "View all",
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),

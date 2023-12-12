@@ -2,6 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_hack/models/hack_model.dart';
+import 'package:team_hack/models/requests_model.dart';
 import 'package:team_hack/models/team_model.dart';
 import 'package:team_hack/models/user_model.dart';
 
@@ -79,7 +80,20 @@ class SupaBaseDB {
 
       return userInfo;
     } catch (err) {
+      print(err);
       return err;
+    }
+  }
+
+  Future<dynamic> getUserInfo({required String? userID}) async {
+    try {
+      final client = Supabase.instance.client;
+      final user = await client.from("users").select().eq('user_id', userID);
+      final userInfo = UserModel.fromJson(user.first);
+      return userInfo;
+    } catch (err) {
+      UserModel errUser = UserModel();
+      return errUser;
     }
   }
 
@@ -141,29 +155,31 @@ class SupaBaseDB {
 
   addNewTeam({
     required String teamName,
-    required String firstMemberName,
-    required String secondMemberName,
-    required String thirdMemberName,
+    // required String firstMemberName,
+    // required String secondMemberName,
+    // required String thirdMemberName,
     required int hackId,
   }) async {
     try {
       final client = Supabase.instance.client;
-//TODO fix
+      print(teamName);
+      print(client.auth.currentUser!.id);
+
       final team = await client
           .from("teams")
           .insert({
             "team_name": teamName,
-            "first_member_name": firstMemberName,
-            "second_member_name": secondMemberName,
-            "third_member_name": thirdMemberName,
-            "fourth_member_name": "",
-            "fifth_member_name": "",
+            "first_member_name": client.auth.currentUser!.id,
+            // "second_member_name": , //secondMemberName,
+            // "third_member_name": , //thirdMemberName,
+            // "fourth_member_name": ,
+            // "fifth_member_name": ,
             "is_leader": true
           })
           .select()
           .then((value) async => await client
-              .from("regirtered_team")
-              .insert({"kack_id": hackId, "team_id": value.first["id"]}));
+              .from("registered_team")
+              .insert({"hack_id": hackId, "team_id": value.first["id"]}));
       return true;
     } catch (error) {
       print(error);
@@ -177,7 +193,7 @@ class SupaBaseDB {
     required String nameUser,
     required String uuidUser,
     required String emailUser,
-    required List<String> skill,
+    required List skill,
     required String role,
     required bool isAdmin,
   }) async {
@@ -190,13 +206,13 @@ class SupaBaseDB {
             "bio": bioUser,
             "email": client.auth.currentUser!.email,
             "user_id": client.auth.currentUser!.id,
-            "skills": [],
-            "role": "",
+            "skills": skill,
+            "role": role,
             "is_admin": isAdmin,
           })
           .eq("user_id", client.auth.currentUser!.id)
           .select();
-      print(user);
+
       return user;
     } catch (err) {
       print(err);
@@ -204,58 +220,94 @@ class SupaBaseDB {
   }
 
   addRoleUser(
-      {required String nameUser,
-      required String roleUser,
+      {required String bioUser,
+      required String role,
+      required List skill,
+      required String nameUser,
       required String emailUser,
+      required bool isAdmin,
       required String uuidUser}) async {
     try {
       final client = Supabase.instance.client;
-      final user = await client.from("users").update({
-        "name": nameUser,
-        "email": emailUser,
-        "user_id": uuidUser,
-        "role": roleUser
-      });
-      return true;
+      final user = await client
+          .from("users")
+          .update({
+            "bio": bioUser,
+            "email": client.auth.currentUser!.email,
+            "user_id": client.auth.currentUser!.id,
+            "role": role,
+            "is_admin": isAdmin,
+            "name": nameUser,
+            "skills": skill,
+          })
+          .eq("user_id", client.auth.currentUser!.id)
+          .select();
+
+      return user;
     } catch (err) {
       print(err);
     }
   }
 
   addSkillUser(
-      {required List<String> skill,
+      {required String bioUser,
+      required String role,
+      required List skill,
       required String nameUser,
       required String emailUser,
+      required bool isAdmin,
       required String uuidUser}) async {
     try {
       final client = Supabase.instance.client;
-      final bioUser = await client.from("users").update({
-        "name": nameUser,
-        "email": emailUser,
-        "user_id": uuidUser,
-        "skills": skill,
-      });
-      return true;
+      final user = await client
+          .from("users")
+          .update({
+            "bio": bioUser,
+            "email": client.auth.currentUser!.email,
+            "user_id": client.auth.currentUser!.id,
+            "role": role,
+            "is_admin": isAdmin,
+            "name": nameUser,
+            "skills": skill,
+          })
+          .eq("user_id", client.auth.currentUser!.id)
+          .select();
+
+      final UserModel userSkill = UserModel.fromJson(user[0]);
+
+      return userSkill;
     } catch (err) {
       print(err);
     }
   }
 
   Future<List<TeamModel>> getAllTeam(int id) async {
-    print(id);
     final client = Supabase.instance.client;
     final teams = await client
         .from("registered_team")
         .select(" teams(*) ")
         .eq("hack_id", id);
-    print(teams);
+
     final List<TeamModel> allTeams = [];
+
     for (var element in teams) {
       allTeams.add(TeamModel.fromJson(element["teams"]));
     }
-    print("objects");
+    for (int i = 0; i < allTeams.length; i++) {
+      allTeams[i].firstMemberModel =
+          await getUserInfo(userID: teams[i]["teams"]['first_member_name']);
+      allTeams[i].secondMemberModel =
+          await getUserInfo(userID: teams[i]["teams"]['second_member_name']);
+      allTeams[i].thirdMemberModel =
+          await getUserInfo(userID: teams[i]["teams"]['third_member_name']);
+      allTeams[i].fourthMemberModel =
+          await getUserInfo(userID: teams[i]["teams"]['fourth_member_name']);
+      allTeams[i].fifthMemberModel =
+          await getUserInfo(userID: teams[i]["teams"]['fifth_member_name']);
+    }
     return allTeams;
   }
+
 
   Future<List<HackModel>> getHackathon({required String hackName}) async {
     final supabase = Supabase.instance.client;
@@ -271,5 +323,85 @@ class SupaBaseDB {
     return hackathonList;
   }
 
-  
+
+  sendRequest({required int teamID}) async {
+    try {
+      final client = Supabase.instance.client;
+      final checkIfLeader = await client
+          .from("registered_team")
+          .select("teams(*)")
+          .eq("team_id", teamID);
+
+      final checkIfRequested = await client
+          .from("request")
+          .select("*")
+          .eq("team_name", teamID)
+          .eq("request_from", client.auth.currentUser!.id);
+
+      if (checkIfLeader.first["teams"]["first_member_name"] ==
+          client.auth.currentUser!.id) {
+        return "You are the Leader on This Team";
+      } else if (checkIfRequested.isNotEmpty) {
+        return "You Have Requested to Join This Team";
+      } else {
+        final request = await client.from("request").upsert({
+          "team_name": teamID,
+          "request_from": client.auth.currentUser!.id,
+          "request_to": checkIfLeader.first["teams"]["first_member_name"],
+        });
+        return "Request Sent Successfully";
+      }
+    } catch (err) {
+      print(err);
+      return err;
+    }
+  }
+
+  getNotifications() async {
+    try {
+      final client = Supabase.instance.client;
+
+      final requests = await client
+          .from("request")
+          .select("*,users!request_request_from_fkey(*),teams(*) ")
+          .eq("request_to", client.auth.currentUser!.id);
+
+      final List<RequestModel> requestModel = [];
+
+      for (var request in requests) {
+        requestModel.add(RequestModel.fromJson(request));
+      }
+
+      return requestModel;
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  resolveRequest({
+    required String userID,
+    required String updatedColumn,
+    required int teamID,
+    required int requestID,
+    required String type,
+  }) async {
+    try {
+      final client = Supabase.instance.client;
+      if (type.toLowerCase() == "accept") {
+        final requests = await client
+            .from("teams")
+            .update({
+              updatedColumn: userID,
+            })
+            .eq("id", teamID)
+            .then((value) async =>
+                await client.from("request").delete().match({'id': requestID}));
+      } else if (type.toLowerCase() == "decline") {
+        await client.from("request").delete().match({'id': requestID});
+      }
+    } catch (err) {
+      print(err);
+    }
+  }
+
 }

@@ -9,8 +9,12 @@ class TeamBloc extends Bloc<TeamEvent, TeamState> {
   List<TeamModel>? allTeam;
   TeamBloc() : super(TeamInitial()) {
     on<LoadAllTeams>(getAllTeam);
-    on<RequestToJoin>((event, emit) {
-      // TODO: implement event handler
+    on<RequestToJoin>((event, emit) async {
+      
+      final msgState = await SupaBaseDB().sendRequest(teamID: event.teamID);
+      print(msgState);
+      emit(RequsetToJoinSuccessState(successmessage: msgState));
+      emit(GetAllTeamSuccessState());
     });
   }
 
@@ -18,7 +22,7 @@ class TeamBloc extends Bloc<TeamEvent, TeamState> {
     try {
       emit(LoadingState());
       allTeam = await SupaBaseDB().getAllTeam(event.id);
-      print(allTeam!.length);
+
       emit(GetAllTeamSuccessState());
     } catch (error) {
       print(error);

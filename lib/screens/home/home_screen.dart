@@ -29,6 +29,9 @@ class HomeScreen extends StatelessWidget {
     bloc.state is AuthInitial
         ? bloc.add(AuthGetCurrentUserEvent())
         : const SizedBox();
+    bloc.state is! AuthInitial
+        ? bloc.add(AuthGetCurrentUserEvent())
+        : const SizedBox();
 
     const List<String> tabsTitle = [
       'All',
@@ -68,15 +71,16 @@ class HomeScreen extends StatelessWidget {
                                     );
                                   },
                                   icon: const Icon(Icons.add))
-                              : IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ChatScreen()),
-                                    );
-                                  },
-                                  icon: const Icon(Icons.chat))
+                              : const SizedBox()
+                          // IconButton(
+                          //             onPressed: () {
+                          //               Navigator.push(
+                          //                 context,
+                          //                 MaterialPageRoute(
+                          //                     builder: (context) => ChatScreen()),
+                          //               );
+                          //             },
+                          //             icon: const Icon(Icons.chat))
                           : const SizedBox();
                     },
                     listener: (BuildContext context, AuthState state) {

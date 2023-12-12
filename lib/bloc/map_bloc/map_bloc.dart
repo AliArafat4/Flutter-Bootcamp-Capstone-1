@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_webservice/directions.dart';
-import 'package:meta/meta.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:meta/meta.dart';
+
 part 'map_event.dart';
 part 'map_state.dart';
 
@@ -58,20 +56,25 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     });
     on<MapGetMarkerLocationEvent>((event, emit) async {
       final location = await geocoding.placemarkFromCoordinates(
-          event.marker.position.latitude, event.marker.position.longitude);
+          localeIdentifier: "en",
+          event.marker.position.latitude,
+          event.marker.position.longitude);
 
       emit(MapGetMarkerLocationState(
           location:
               "${location.first.country},${location.first.name},${location.first.street}"));
     });
   }
-  userPermission() async {
-    //TODO: FIX
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
+}
+
+Future<bool> userPermission() async {
+  //TODO: FIX
+  LocationPermission permission;
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      //nothing
-    }
+    return false;
+  } else {
+    return true;
   }
 }

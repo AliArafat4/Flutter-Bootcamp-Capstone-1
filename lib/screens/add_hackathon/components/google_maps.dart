@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:team_hack/bloc/add_hackathon_bloc/add_hackathon_cubit.dart';
 import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
@@ -55,6 +54,7 @@ class GoogleMapScreen extends StatelessWidget {
                   myLocationButtonEnabled: true,
                   mapType: MapType.satellite,
                   onLongPress: (onPressedDestination) {
+                    userMarker = [];
                     context.read<MapBloc>().add(
                         MapGetLocationEvent(location: onPressedDestination));
                   },

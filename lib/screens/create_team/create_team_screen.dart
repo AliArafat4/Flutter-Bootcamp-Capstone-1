@@ -7,29 +7,31 @@ import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/method/show_dilog.dart';
 import 'package:team_hack/method/show_loading.dart';
+import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
-import 'package:team_hack/screens/home/home_screen.dart';
+import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
 
 import 'components/create_team_text_field.dart';
 
-// ignore: must_be_immutable
 class CreateTeamScreen extends StatelessWidget {
-  CreateTeamScreen({Key? key}) : super(key: key);
+  CreateTeamScreen({Key? key, required this.selectedHack}) : super(key: key);
 
-  TextEditingController teamName = TextEditingController();
-  TextEditingController teamSize = TextEditingController();
-  TextEditingController firsTeeamName = TextEditingController();
-  TextEditingController seacondTeeamName = TextEditingController();
-  TextEditingController thirdTeamName = TextEditingController();
+  final TextEditingController teamName = TextEditingController();
+  final TextEditingController teamSize = TextEditingController();
+  final TextEditingController firsTeamName = TextEditingController();
+  final TextEditingController secondTeamName = TextEditingController();
+  final TextEditingController thirdTeamName = TextEditingController();
 
+  final HackModel selectedHack;
   @override
   Widget build(BuildContext context) {
+    teamSize.text = "Team Size is ${selectedHack.teamSize}";
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: Navigator.of(context).pop,
           icon: IconButton(
-            icon: Icon(Icons.arrow_back_ios_sharp),
+            icon: const Icon(Icons.arrow_back_ios_sharp),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -65,28 +67,32 @@ class CreateTeamScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  "Team Size is ${selectedHack.teamSize}",
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(
                   height: 32,
                 ),
                 CreateTeamTextField(
                     keyboardType: TextInputType.name,
                     controller: teamName,
                     content: "Team Name"),
-                CreateTeamTextField(
-                    keyboardType: TextInputType.number,
-                    controller: teamSize,
-                    content: "Team size //from db hackathon"),
-                CreateTeamTextField(
-                    keyboardType: TextInputType.name,
-                    controller: firsTeeamName,
-                    content: "Member Name 1"),
-                CreateTeamTextField(
-                    keyboardType: TextInputType.name,
-                    controller: seacondTeeamName,
-                    content: "Member Name 2"),
-                CreateTeamTextField(
-                    keyboardType: TextInputType.name,
-                    controller: thirdTeamName,
-                    content: "Member Name 3"),
+                // CreateTeamTextField(
+                //     keyboardType: TextInputType.name,
+                //     controller: firsTeamName,
+                //     content: "Member Name 1"),
+                // CreateTeamTextField(
+                //     keyboardType: TextInputType.name,
+                //     controller: secondTeamName,
+                //     content: "Member Name 2"),
+                // CreateTeamTextField(
+                //     keyboardType: TextInputType.name,
+                //     controller: thirdTeamName,
+                //     content: "Member Name 3"),
                 BlocListener<CreateNewTeamBloc, CreateNewTeamState>(
                   listener: (context, state) {
                     if (state is LoadingState) {
@@ -99,7 +105,8 @@ class CreateTeamScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
+                                  builder: (context) =>
+                                      const NavigationBarScreen()),
                             );
                           },
                           context: context,
@@ -113,11 +120,15 @@ class CreateTeamScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 16,
                     title: "Create",
                     onPressed: () async {
-                      context.read<CreateNewTeamBloc>().add(CreateTeamEvent(
-                          teamName: teamName.text,
-                          firstMemberName: firsTeeamName.text,
-                          secondMemberName: seacondTeeamName.text,
-                          thirdMemberName: thirdTeamName.text));
+                      context.read<CreateNewTeamBloc>().add(
+                            CreateTeamEvent(
+                              hackID: selectedHack.id!,
+                              teamName: teamName.text,
+                              // firstMemberName: firsTeamName.text,
+                              // secondMemberName: secondTeamName.text,
+                              // thirdMemberName: thirdTeamName.text,
+                            ),
+                          );
                     },
                   ),
                 )
