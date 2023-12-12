@@ -1,6 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_hack/models/hack_model.dart';
+import 'package:team_hack/models/requests_model.dart';
 import 'package:team_hack/models/team_model.dart';
 import 'package:team_hack/models/user_model.dart';
 
@@ -307,13 +308,13 @@ class SupaBaseDB {
           .from("request")
           .select("*")
           .eq("team_name", teamID)
-          .eq("user_id", client.auth.currentUser!.id);
+          .eq("request_from", client.auth.currentUser!.id);
 
       if (checkIfLeader.first["teams"]["first_member_name"] ==
           client.auth.currentUser!.id) {
-        return "you are the leader";
+        return "You are the Leader on This Team";
       } else if (checkIfRequested.isNotEmpty) {
-        return "You requested already";
+        return "You Have Requested to Join This Team";
       } else {
         final request = await client.from("request").upsert({
           "team_name": teamID,
@@ -334,32 +335,42 @@ class SupaBaseDB {
 
       final requests = await client
           .from("request")
-          .select("*,users!request_request_from_fkey(*) ")
+          .select("*,users!request_request_from_fkey(*),teams(*) ")
           .eq("request_to", client.auth.currentUser!.id);
-      print(requests[0]["users"]);
 
-      //to get teams name from request
-      final teamToJoin = [];
-      final teamsName = [];
-      for (int i = 0; i < requests.length; i++) {
-        teamToJoin.add(await client
+      final List<RequestModel> requestModel = [];
+
+      for (var request in requests) {
+        requestModel.add(RequestModel.fromJson(request));
+      }
+
+      return requestModel;
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  resolveRequest({
+    required String userID,
+    required String updatedColumn,
+    required int teamID,
+    required int requestID,
+    required String type,
+  }) async {
+    try {
+      final client = Supabase.instance.client;
+      if (type.toLowerCase() == "accept") {
+        final requests = await client
             .from("teams")
-            .select("team_name")
-            .eq("id", requests[i]["team_name"]));
-        teamsName.add(teamToJoin[i][0]);
+            .update({
+              updatedColumn: userID,
+            })
+            .eq("id", teamID)
+            .then((value) async =>
+                await client.from("request").delete().match({'id': requestID}));
+      } else if (type.toLowerCase() == "decline") {
+        await client.from("request").delete().match({'id': requestID});
       }
-      print(teamsName);
-      //to get users name from request
-      final requestFrom = [];
-      final requestFromName = [];
-      for (int i = 0; i < requests.length; i++) {
-        requestFrom.add(await client
-            .from("users")
-            .select("*")
-            .eq("user_id", requests[i]["request_from"]));
-        requestFromName.add(requestFrom[i][0]);
-      }
-      print(requestFromName);
     } catch (err) {
       print(err);
     }

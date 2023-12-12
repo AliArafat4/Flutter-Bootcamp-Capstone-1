@@ -10,6 +10,7 @@ import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
 import 'package:team_hack/bloc/create_new_team/create_new_team_bloc.dart';
 import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
 import 'package:team_hack/bloc/profile_bloc/profile_bloc.dart';
+import 'package:team_hack/bloc/request_bloc/request_cubit.dart';
 import 'package:team_hack/bloc/team_bloc/team_bloc.dart';
 import 'package:team_hack/bloc/theme_bloc/them_.state.dart';
 import 'package:team_hack/bloc/theme_bloc/them_bloc.dart';
@@ -40,6 +41,7 @@ class MainApp extends StatelessWidget {
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<HackCubit>(create: (context) => HackCubit()),
+        BlocProvider<RequestCubit>(create: (context) => RequestCubit()),
         BlocProvider<AddHackathonCubit>(
             create: (context) => AddHackathonCubit()),
         BlocProvider<MapBloc>(
