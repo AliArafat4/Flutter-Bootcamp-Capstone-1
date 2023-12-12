@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/add_hackathon_bloc/add_hackathon_cubit.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
+import 'package:team_hack/method/show_dilog.dart';
 import 'package:team_hack/screens/add_hackathon/components/google_maps.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_dropdown.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_textfield_date.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
+import 'package:team_hack/screens/home/home_screen.dart';
 import 'package:team_hack/widgets/create_hackathon_textfiled.dart';
 
 import '../auth/components/show_snack_bar.dart';
@@ -311,9 +313,12 @@ class AddHackathonScreen extends StatelessWidget {
                   BlocConsumer<HackCubit, HackState>(
                     listener: (context, state) {
                       state is AddHackSuccessState
-                          ? showSnackBar(
+                          ? showSuccessDiolg(
                               context: context,
-                              message: "Hackathon Added Successfully")
+                              successMessage: "Hackathon Added Successfully",
+                              func: () {
+                                Navigator.of(context).pop();
+                              })
                           : const SizedBox();
                       state is AddHackErrorState
                           ? showSnackBar(
