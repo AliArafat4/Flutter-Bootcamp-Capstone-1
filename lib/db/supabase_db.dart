@@ -211,31 +211,42 @@ class SupaBaseDB {
           })
           .eq("user_id", client.auth.currentUser!.id)
           .select();
-      print(user);
+
       return user;
     } catch (err) {
       print(err);
     }
   }
 
-  // addRoleUser(
-  //     {required String nameUser,
-  //     required String roleUser,
-  //     required String emailUser,
-  //     required String uuidUser}) async {
-  //   try {
-  //     final client = Supabase.instance.client;
-  //     final user = await client.from("users").update({
-  //       "name": nameUser,
-  //       "email": emailUser,
-  //       "user_id": uuidUser,
-  //       "role": roleUser
-  //     });
-  //     return true;
-  //   } catch (err) {
-  //     print(err);
-  //   }
-  // }
+  addRoleUser(
+      {required String bioUser,
+      required String role,
+      required List skill,
+      required String nameUser,
+      required String emailUser,
+      required bool isAdmin,
+      required String uuidUser}) async {
+    try {
+      final client = Supabase.instance.client;
+      final user = await client
+          .from("users")
+          .update({
+            "bio": bioUser,
+            "email": client.auth.currentUser!.email,
+            "user_id": client.auth.currentUser!.id,
+            "role": role,
+            "is_admin": isAdmin,
+            "name": nameUser,
+            "skills": skill,
+          })
+          .eq("user_id", client.auth.currentUser!.id)
+          .select();
+
+      return user;
+    } catch (err) {
+      print(err);
+    }
+  }
 
   addSkillUser(
       {required String bioUser,

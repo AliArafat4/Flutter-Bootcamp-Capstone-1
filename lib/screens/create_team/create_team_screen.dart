@@ -9,7 +9,6 @@ import 'package:team_hack/method/show_dilog.dart';
 import 'package:team_hack/method/show_loading.dart';
 import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
-import 'package:team_hack/screens/home/home_screen.dart';
 import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
 
 import 'components/create_team_text_field.dart';

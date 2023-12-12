@@ -67,5 +67,33 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<GetCurrentUserEvent>((event, emit) async {
       emit(GetCurrentUserState(user: await SupaBaseDB().getCurrentUser()));
     });
+
+    on<RoleEvent>((event, emit) async {
+      emit(LoadingBioState());
+      final bloc = await SupaBaseDB().getCurrentUser();
+      try {
+        if (event.role.isNotEmpty) {
+          final resultuploadData = await SupaBaseDB().addBioUser(
+            bioUser: bloc.bio!,
+            nameUser: bloc.name,
+            emailUser: bloc.email,
+            uuidUser: bloc.userId,
+            skill: bloc.skills,
+            role: event.role,
+            isAdmin: bloc.isAdmin,
+          );
+
+          final UserModel user = UserModel.fromJson(resultuploadData[0]);
+
+          if (resultuploadData != null && resultuploadData.isNotEmpty) {
+            emit(SuccessRoleState(dataUser: user));
+          }
+        } else {
+          emit(ErrorRoleState(errormessage: 'Please enter a role'));
+        }
+      } catch (error) {
+        throw Exception('Error is $error');
+      }
+    });
   }
 }

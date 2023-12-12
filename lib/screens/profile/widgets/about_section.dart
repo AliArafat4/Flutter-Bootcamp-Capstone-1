@@ -12,15 +12,13 @@ class AboutSection extends StatelessWidget {
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width - 32,
-
           child: Text(
             bio,
             style: Theme.of(context)
                 .textTheme
-                .bodySmall!
+                .titleMedium!
                 .copyWith(color: Theme.of(context).colorScheme.onPrimary),
           ),
-
         )
       ],
     );
