@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:team_hack/extentions/size_extention.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 
@@ -16,16 +18,14 @@ showSuccessDiolg(
         child: Center(
           child: Column(
             children: [
-              const SizedBox(
-                height: 12,
+              SizedBox(height: context.getHeight(factor: 0.01)),
+              Flexible(
+                child: Image.asset(
+                  "assets/images/success_icon.png",
+                  width: 180,
+                ),
               ),
-              Image.asset(
-                "assets/images/success_icon.png",
-                width: 180,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
+              SizedBox(height: context.getHeight(factor: 0.01)),
               Column(
                 children: [
                   const Text(
@@ -43,9 +43,7 @@ showSuccessDiolg(
                           fontSize: 14, color: Colors.black.withOpacity(0.6)),
                     ),
                   ),
-                  const SizedBox(
-                    height: 12,
-                  ),
+                  SizedBox(height: context.getHeight(factor: 0.01)),
                   PrimaryButton(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 18,
