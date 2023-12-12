@@ -14,6 +14,9 @@ final Map appThemeMap = {
         foregroundColor: const Color(0xff62c1c7),
       ),
     ),
+    radioTheme: const RadioThemeData(
+      fillColor: MaterialStatePropertyAll<Color>(Color(0xff62c1c7)),
+    ),
     iconTheme: const IconThemeData(color: Color(0xff695678), size: 20),
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: Colors.black),
@@ -34,23 +37,31 @@ final Map appThemeMap = {
     ),
   ),
   "dark": ThemeData(
-    brightness: Brightness.dark,
-    colorScheme: ColorScheme.dark(
-        secondary: const Color(0xff62c1c7).withOpacity(0.1),
-        onPrimary: Colors.grey),
-    appBarTheme:
-        const AppBarTheme(iconTheme: IconThemeData(color: Colors.white)),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        foregroundColor: const Color(0xff62c1c7),
-      ),
-    ),
-    iconTheme: const IconThemeData(color: Colors.white),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff62c1c7),
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.dark(
+          secondary: const Color(0xff62c1c7).withOpacity(0.1),
+          onPrimary: Colors.grey),
+      appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-    ),
-  ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: const Color(0xff62c1c7),
+        ),
+      ),
+      iconTheme: const IconThemeData(color: Colors.white),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xff62c1c7),
+          elevation: 0,
+        ),
+      ),
+      datePickerTheme: const DatePickerThemeData(
+          dayOverlayColor: MaterialStatePropertyAll<Color>(Color(0xff62c1c7)),
+          weekdayStyle: TextStyle(color: Colors.white),
+          rangePickerBackgroundColor: Color(0xff62c1c7))),
 };

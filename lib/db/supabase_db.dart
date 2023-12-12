@@ -1,5 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/models/requests_model.dart';
@@ -308,7 +308,6 @@ class SupaBaseDB {
     return allTeams;
   }
 
-
   Future<List<HackModel>> getHackathon({required String hackName}) async {
     final supabase = Supabase.instance.client;
     final client = await supabase
@@ -323,8 +322,8 @@ class SupaBaseDB {
     return hackathonList;
   }
 
-
   sendRequest({required int teamID}) async {
+    //TODO: CHECK IF USER IN TEAM
     try {
       final client = Supabase.instance.client;
       final checkIfLeader = await client
@@ -403,5 +402,4 @@ class SupaBaseDB {
       print(err);
     }
   }
-
 }

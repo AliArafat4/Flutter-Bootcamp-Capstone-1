@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/team_bloc/team_bloc.dart';
+import 'package:team_hack/bloc/team_bloc/team_event.dart';
 import 'package:team_hack/bloc/team_bloc/team_state.dart';
 import 'package:team_hack/method/alert_snackbar.dart';
+import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/models/team_model.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/team_card.dart';
 
 import '../auth/components/show_snack_bar.dart';
 
 class TeamScreen extends StatelessWidget {
-  const TeamScreen(
-      {super.key, required this.teamModelList, required this.bloc});
+  const TeamScreen({super.key, required this.selectedHack});
 
-  final List<TeamModel>? teamModelList;
-  final dynamic bloc;
+  // final List<TeamModel>? teamModelList;
+  // final dynamic bloc;
+  final HackModel selectedHack;
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<TeamBloc>();
+    bloc.add(LoadAllTeams(id: selectedHack.id!));
     return Scaffold(
       appBar: AppBar(
         title: const Text("Teams"),
@@ -24,7 +28,7 @@ class TeamScreen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: teamModelList != null
+          child: bloc.allTeam != null
               ? Column(
                   children: [
                     BlocConsumer<TeamBloc, TeamState>(

@@ -13,29 +13,26 @@ class EmptyStateUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              image,
-              width: MediaQuery.of(context).size.width * 0.7,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            image,
+            width: MediaQuery.of(context).size.width * 0.7,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: Text(
-                title,
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-            ),
-            Text(
-              subTitle,
-              style: const TextStyle(color: Colors.grey),
-            )
-          ],
-        ),
+          ),
+          Text(
+            subTitle,
+            style: const TextStyle(color: Colors.grey),
+          )
+        ],
       ),
     );
   }
