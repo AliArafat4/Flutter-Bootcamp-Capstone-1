@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/hackathon_detail_screen.dart';
 import 'package:team_hack/screens/home/widget/hackathon_card.dart';
+import 'package:team_hack/widgets/empty_state.dart';
 
 class CustomHacksCards extends StatelessWidget {
   const CustomHacksCards({
@@ -37,7 +38,10 @@ class CustomHacksCards extends StatelessWidget {
                   : const SizedBox();
             })
         : state is AddHackNoDataState
-            ? const Center(child: Text("No Hackathons"))
+            ? const EmptyStateUI(
+                title: "No hackathon",
+                subTitle: "Sorry,there are no hackathon under this category",
+                image: "assets/images/no_search_result.png")
             : const Center(child: CircularProgressIndicator());
   }
 }

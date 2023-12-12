@@ -4,7 +4,7 @@ final listFiledName = [
   "Data analysis",
   "Bussines analysis",
   "Information security",
-  "Networking"
+  "Networking",
 ];
 
 final listFiledImage = [

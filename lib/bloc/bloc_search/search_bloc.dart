@@ -1,27 +1,31 @@
 import 'package:bloc/bloc.dart';
-import 'package:team_hack/data/global.dart';
-
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:team_hack/db/supabase_db.dart';
+import 'package:team_hack/models/hack_model.dart';
 part 'search_event.dart';
 part 'search_state.dart';
 
 //get data field from database
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
+  List<HackModel> haclist = [];
   SearchBloc() : super(SearchInitial()) {
-    on<SearchEvent>((event, emit) {
+    on<SearchStateEvent>((event, emit) async {
+      emit(LoadingState());
       try {
         if (event.textSearch.isNotEmpty) {
-          searchResults = listSearch.keys
-              .where((key) =>
-                  key.toLowerCase().contains(event.textSearch.toLowerCase()))
-              .toList();
-          print(event.textSearch);
-          emit(SuccessState(
-            textResults: searchResults,
-          ));
+          haclist = await SupaBaseDB().getHackathon(hackName: event.textSearch);
+          if (haclist.isEmpty) {
+            emit(EmptyState());
+          } else {
+            emit(SuccessState(haclist));
+          }
+        } else {
+          emit(SearchInitial());
         }
+        print("i am here  ------");
       } catch (error) {
-        throw FormatException('Error with $error');
+        emit(ErrorState("$error"));
       }
-    });
+    }, transformer: restartable());
   }
 }
