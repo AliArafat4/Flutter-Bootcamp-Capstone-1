@@ -42,34 +42,38 @@ class MyTeamCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  ClipOval(
-                      child: Image.asset(
-                    hackathonImage,
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.fill,
-                  )),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        hackathonName,
-                        style: const TextStyle(
-                            fontSize: 18, color: Color(0xff695678)),
+              Flexible(
+                child: Row(
+                  children: [
+                    ClipOval(
+                        child: Image.asset(
+                      hackathonImage,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.fill,
+                    )),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            hackathonName,
+                            style: const TextStyle(
+                                fontSize: 18, color: Color(0xff695678)),
+                          ),
+                          Text(
+                            teamName,
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
+                          ),
+                        ],
                       ),
-                      Text(
-                        teamName,
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
               Divider(
                 endIndent: 2,

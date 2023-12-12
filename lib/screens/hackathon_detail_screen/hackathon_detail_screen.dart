@@ -31,6 +31,21 @@ class HackathonDetail extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_sharp),
         ),
         title: const Text("Details"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        TeamScreen(teamModelList: bloc.allTeam, bloc: bloc)),
+              );
+            },
+            child: const Text(
+              "View all Teams",
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -68,63 +83,28 @@ class HackathonDetail extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  const Text(
-                    "Teams",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                TeamScreen(teamModelList: bloc.allTeam)),
-                      );
-                    },
-                    child: const Text(
-                      "View all",
-                    ),
-                  ),
-                ],
-              ),
-              BlocConsumer<TeamBloc, TeamState>(
-                builder: ((context, state) {
-                  if (state is GetAllTeamSuccessState) {
-                    return BlocConsumer<TeamBloc, TeamState>(
-                      listener: (BuildContext context, TeamState state) {
-                        state is RequsetToJoinSuccessState
-                            ? showSnackBar(
-                                context: context, message: state.successmessage)
-                            : const SizedBox();
-                      },
-                      builder: (context, state) {
-                        return Column(
-                          children: [
-                            ...bloc.allTeam!
-                                .map(
-                                  (e) => TeamCard(teamModel: e),
-                                )
-                                .toList()
-                          ],
-                        );
-                      },
-                    );
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0xff62c1c7),
-                    ),
-                  );
-                }),
-                listener: (BuildContext context, TeamState state) {
-                  if (state is GetAllTeamErrorState) {
-                    showErrorSnackBar(context, state.errormessage);
-                  }
-                },
-              )
+              // Row(
+              //   children: [
+              //     const Text(
+              //       "Teams",
+              //       style: TextStyle(fontSize: 20),
+              //     ),
+              //     const Spacer(),
+              //     TextButton(
+              //       onPressed: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => TeamScreen(
+              //                   teamModelList: bloc.allTeam, bloc: bloc)),
+              //         );
+              //       },
+              //       child: const Text(
+              //         "View all",
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
