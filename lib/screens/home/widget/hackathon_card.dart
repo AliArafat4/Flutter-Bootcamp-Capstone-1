@@ -57,7 +57,7 @@ class HackathonCard extends StatelessWidget {
                       children: [
                         const Icon(Icons.location_on_outlined),
                         const SizedBox(width: 4),
-                        Text(hackathonLocation),
+                        Flexible(child: Text(hackathonLocation)),
                       ],
                     ),
                   ),
