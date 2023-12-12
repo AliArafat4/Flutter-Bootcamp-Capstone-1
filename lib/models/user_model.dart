@@ -7,7 +7,6 @@ class UserModel {
   List? skills;
   bool? isAdmin;
 
-
   UserModel(
       {this.userId,
       this.email,
@@ -16,8 +15,6 @@ class UserModel {
       this.bio,
       this.skills,
       this.isAdmin});
-
-
 
   UserModel.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
