@@ -97,10 +97,8 @@ class SignInScreen extends StatelessWidget {
                     title: "Login",
                     onPressed: () {
                       context.read<AuthBloc>().add(AuthLoginEvent(
-
                           email: emailController.text.trim(),
                           password: passwordController.text.trim()));
-
                     });
               },
             ),

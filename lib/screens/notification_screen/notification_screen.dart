@@ -5,6 +5,7 @@ import 'package:team_hack/bloc/request_bloc/request_cubit.dart';
 import 'package:team_hack/db/supabase_db.dart';
 import 'package:team_hack/screens/auth/components/show_snack_bar.dart';
 import 'package:team_hack/screens/notification_screen/widget/notification_card.dart';
+import 'package:team_hack/widgets/empty_state.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({
@@ -39,7 +40,10 @@ class NotificationScreen extends StatelessWidget {
                               state: state,
                               requestModel: state.requestModel[index]);
                         })
-                    : const Center(child: Text("No Requests"))
+                    : const EmptyStateUI(
+                        title: "No Notification",
+                        subTitle: "Sorry,there are no notification yet",
+                        image: "assets/images/no_search_result.png")
                 : const Center(
                     child: CircularProgressIndicator(),
                   );

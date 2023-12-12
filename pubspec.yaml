@@ -60,6 +60,7 @@ flutter:
   - assets/images/programming_filed.png
   - assets/images/success_icon.png
   - assets/images/no_search_result.png
+  - assets/placeHolderAvatar-noback.png
 
   uses-material-design: true
 

@@ -3,17 +3,23 @@ import 'package:flutter/material.dart';
 class ProfileImage extends StatelessWidget {
   const ProfileImage(
       {super.key, required this.image, required this.uploadImageFunc});
-  final String image;
+  final String? image;
   final Function() uploadImageFunc;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Stack(
         children: [
-          CircleAvatar(
-            radius: 55,
-            foregroundImage: NetworkImage(image),
-          ),
+          image == null
+              ? const CircleAvatar(
+                  radius: 55,
+                  foregroundImage:
+                      AssetImage("assets/placeHolderAvatar-noback.png"),
+                )
+              : CircleAvatar(
+                  radius: 55,
+                  foregroundImage: NetworkImage(image!),
+                ),
           Positioned(
             top: 70,
             left: 70,

@@ -19,9 +19,6 @@ class HackathonDetail extends StatelessWidget {
   final HackModel selectedHack;
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<TeamBloc>();
-    bloc.add(LoadAllTeams(id: selectedHack.id!));
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,8 +34,9 @@ class HackathonDetail extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        TeamScreen(teamModelList: bloc.allTeam, bloc: bloc)),
+                    builder: (context) => TeamScreen(
+                          selectedHack: selectedHack,
+                        )),
               );
             },
             child: const Text(

@@ -13,7 +13,8 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +39,9 @@ class SignUpScreen extends StatelessWidget {
                 const Text(
                   "Sign Up",
                   style: TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: 28, color: Color(0xff62c1c7)),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 28,
+                      color: Color(0xff62c1c7)),
                 ),
                 Text(
                   "Create a new account",
@@ -81,7 +84,8 @@ class SignUpScreen extends StatelessWidget {
                 state is AuthRegisterSuccessState
                     ? Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const NavigationBarScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const NavigationBarScreen()),
                         (route) => false,
                       )
                     : const SizedBox();
@@ -97,7 +101,8 @@ class SignUpScreen extends StatelessWidget {
                                 email: emailController.text,
                                 password: passwordController.text,
                                 userName: nameController.text,
-                                confirmPassword: confirmPasswordController.text),
+                                confirmPassword:
+                                    confirmPasswordController.text),
                           );
                     });
               },
