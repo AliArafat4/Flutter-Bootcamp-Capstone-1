@@ -1,4 +1,5 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_hack/models/hack_model.dart';
 import 'package:team_hack/models/requests_model.dart';
@@ -307,6 +308,22 @@ class SupaBaseDB {
     return allTeams;
   }
 
+
+  Future<List<HackModel>> getHackathon({required String hackName}) async {
+    final supabase = Supabase.instance.client;
+    final client = await supabase
+        .from("hackathons")
+        .select("*")
+        .ilikeAnyOf("name", ["%$hackName%"]);
+    List<HackModel> hackathonList = [];
+    for (var element in client) {
+      hackathonList.add(HackModel.fromJson(element));
+    }
+
+    return hackathonList;
+  }
+
+
   sendRequest({required int teamID}) async {
     try {
       final client = Supabase.instance.client;
@@ -386,4 +403,5 @@ class SupaBaseDB {
       print(err);
     }
   }
+
 }

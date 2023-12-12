@@ -1,7 +1,8 @@
 part of 'search_bloc.dart';
 
-class SearchEvent {
-  final String textSearch;
+abstract class SearchEvent {}
 
-  SearchEvent({required this.textSearch});
+class SearchStateEvent extends SearchEvent {
+  final String textSearch;
+  SearchStateEvent({required this.textSearch});
 }
