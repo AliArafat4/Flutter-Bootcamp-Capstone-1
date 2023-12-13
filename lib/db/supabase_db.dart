@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_hack/models/hack_model.dart';
@@ -450,6 +451,48 @@ class SupaBaseDB {
       }
     } catch (err) {
       print(err);
+    }
+  }
+
+  addImage(XFile image) async {
+    DateTime now = DateTime.now();
+    try {
+      final ImageBytes = await image.readAsBytes();
+      final supabase = Supabase.instance.client;
+      final userId = supabase.auth.currentUser!.id;
+      final imagePath = "image_hack_${userId}_${now.microsecond}.png";
+      await supabase.storage
+          .from("image_hack")
+          .uploadBinary(imagePath, ImageBytes);
+    } catch (error) {
+      print("$error");
+    }
+  }
+
+  getImage() async {
+    DateTime now = DateTime.now();
+    try {
+      print("1");
+      final supabase = Supabase.instance.client;
+      final userId = supabase.auth.currentUser!.id;
+
+      final imagePath = "image_hack_$userId";
+
+      final List<FileObject> imagesList =
+          await supabase.storage.from("image_hack").list();
+      print(imagesList);
+      for (var element in imagesList) {
+        print(element.name);
+        if ("${element.name}".startsWith(imagePath)) {
+          final imageUrl = await supabase.storage
+              .from("image_hack")
+              .getPublicUrl(element.name);
+          return imageUrl;
+        }
+      }
+      return "Not Found";
+    } catch (error) {
+      print("$error");
     }
   }
 }
