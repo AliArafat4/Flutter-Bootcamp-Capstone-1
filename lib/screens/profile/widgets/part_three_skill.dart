@@ -113,19 +113,26 @@ class _PartThreeSkillState extends State<PartThreeSkill> {
                 //     );
                 //   });
               } else if (state is SuccessSkillState) {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: state.dataUser.skills!.length,
-                    itemBuilder: (context, index) {
-                      return SkillSection(
-                        skillName: state.dataUser.skills![index],
-                      );
-                    });
+                return Wrap(
+                  children: [
+                    ...List.generate(
+                        state.dataUser.skills!.length,
+                        (index) => SkillSection(
+                              skillName: state.dataUser.skills![index],
+                            ))
+                  ],
+                );
+                // ListView.builder(
+                //     shrinkWrap: true,
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: state.dataUser.skills!.length,
+                //     itemBuilder: (context, index) {
+                //       return SkillSection(
+                //         skillName: state.dataUser.skills![index],
+                //       );
+                //     });
               }
-              return Container(
-                child: const Text(''),
-              );
+              return const Text('');
             },
             listener: (BuildContext context, ProfileState state) {
               state is ErrorSkillState

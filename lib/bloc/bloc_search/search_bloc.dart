@@ -22,7 +22,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         } else {
           emit(SearchInitial());
         }
-        print("i am here  ------");
       } catch (error) {
         emit(ErrorState("$error"));
       }

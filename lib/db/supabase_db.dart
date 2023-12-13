@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -85,13 +88,47 @@ class SupaBaseDB {
     }
   }
 
-  Future<dynamic> getUserInfo({required String? userID}) async {
+  Future<dynamic> getUserInfo({
+    required String? userID1,
+    required String? userID2,
+    required String? userID3,
+    required String? userID4,
+  }) async {
     try {
       final client = Supabase.instance.client;
-      final user = await client.from("users").select().eq('user_id', userID);
-      final userInfo = UserModel.fromJson(user.first);
-      return userInfo;
+      late final user;
+      if (userID2 == null) {
+        user = await client.from("users").select().in_('user_id', [
+          userID1,
+        ]);
+      } else if (userID3 == null) {
+        user = await client.from("users").select().in_('user_id', [
+          userID1,
+          userID2,
+        ]);
+      } else if (userID4 == null) {
+        user = await client.from("users").select().in_('user_id', [
+          userID1,
+          userID2,
+          userID3,
+        ]);
+      } else {
+        user = await client.from("users").select().in_('user_id', [
+          userID1,
+          userID2,
+          userID3,
+          userID4,
+        ]);
+      }
+
+      final List<UserModel> usersList = [];
+      for (var users in user) {
+        usersList.add(UserModel.fromJson(users));
+      }
+
+      return usersList;
     } catch (err) {
+      print(err);
       UserModel errUser = UserModel();
       return errUser;
     }
@@ -282,30 +319,42 @@ class SupaBaseDB {
   }
 
   Future<List<TeamModel>> getAllTeam(int id) async {
-    final client = Supabase.instance.client;
-    final teams = await client
-        .from("registered_team")
-        .select(" teams(*) ")
-        .eq("hack_id", id);
+    try {
+      final client = Supabase.instance.client;
+      final teams = await client
+          .from("registered_team")
+          .select(" teams(*) ")
+          .eq("hack_id", id);
 
-    final List<TeamModel> allTeams = [];
+      final List<TeamModel> allTeams = [];
 
-    for (var element in teams) {
-      allTeams.add(TeamModel.fromJson(element["teams"]));
+      for (var element in teams) {
+        final List<UserModel> list = await getUserInfo(
+            userID1: element["teams"]['first_member_name'],
+            userID2: element["teams"]['second_member_name'],
+            userID3: element["teams"]['third_member_name'],
+            userID4: element["teams"]['fourth_member_name']);
+
+        if (list.length == 4) {
+          allTeams.add(TeamModel.fromJson(element["teams"],
+              user1: list[0], user2: list[1], user3: list[2], user4: list[3]));
+        } else if (list.length == 3) {
+          allTeams.add(TeamModel.fromJson(element["teams"],
+              user1: list[0], user2: list[1], user3: list[2]));
+        } else if (list.length == 2) {
+          allTeams.add(TeamModel.fromJson(element["teams"],
+              user1: list[0], user2: list[1]));
+        } else if (list.length == 1) {
+          allTeams.add(TeamModel.fromJson(element["teams"], user1: list[0]));
+        }
+      }
+
+      return allTeams;
+    } catch (err) {
+      final List<TeamModel> allTeams = [];
+      print(err);
+      return allTeams;
     }
-    for (int i = 0; i < allTeams.length; i++) {
-      allTeams[i].firstMemberModel =
-          await getUserInfo(userID: teams[i]["teams"]['first_member_name']);
-      allTeams[i].secondMemberModel =
-          await getUserInfo(userID: teams[i]["teams"]['second_member_name']);
-      allTeams[i].thirdMemberModel =
-          await getUserInfo(userID: teams[i]["teams"]['third_member_name']);
-      allTeams[i].fourthMemberModel =
-          await getUserInfo(userID: teams[i]["teams"]['fourth_member_name']);
-      allTeams[i].fifthMemberModel =
-          await getUserInfo(userID: teams[i]["teams"]['fifth_member_name']);
-    }
-    return allTeams;
   }
 
   Future<List<HackModel>> getHackathon({required String hackName}) async {
