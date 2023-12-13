@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/request_bloc/request_cubit.dart';
 import 'package:team_hack/bloc/request_bloc/request_cubit.dart';
 import 'package:team_hack/db/supabase_db.dart';
+import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/screens/auth/components/show_snack_bar.dart';
 import 'package:team_hack/screens/notification_screen/widget/notification_card.dart';
 import 'package:team_hack/widgets/empty_state.dart';
@@ -50,7 +51,7 @@ class NotificationScreen extends StatelessWidget {
           },
           listener: (BuildContext context, RequestState state) {
             state is RequestSuccessState
-                ? showSnackBar(context: context, message: state.msg)
+                ? showSuccessSnackBar(context, state.msg)
                 : const SizedBox();
           },
         ),

@@ -93,45 +93,96 @@ class CreateTeamScreen extends StatelessWidget {
                 //     keyboardType: TextInputType.name,
                 //     controller: thirdTeamName,
                 //     content: "Member Name 3"),
-                BlocListener<CreateNewTeamBloc, CreateNewTeamState>(
-                  listener: (context, state) {
-                    if (state is LoadingState) {
-                      loading(context: context);
-                      Navigator.of(context).pop();
-                    } else if (state is CreateTeamSuccessState) {
-                      showSuccessDiolg(
-                          func: () {
-                            //change to pushNamedAndRemoveUntil
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NavigationBarScreen()),
-                            );
-                          },
-                          context: context,
-                          successMessage: state.successmessage);
-                    } else if (state is CreateTeamErrorState) {
+                // BlocListener<CreateNewTeamBloc, CreateNewTeamState>(
+                //   listener: (context, state) {
+                //     state is LoadingState
+                //         ? loading(context: context)
+                //         : const SizedBox();
+                //     (state is CreateTeamSuccessState)
+                //         ? showSuccessDiolg(
+                //             func: () {
+                //               //change to pushNamedAndRemoveUntil
+                //               Navigator.pushAndRemoveUntil(
+                //                 context,
+                //                 MaterialPageRoute(
+                //                     builder: (context) =>
+                //                         const NavigationBarScreen()),
+                //                 (route) => false,
+                //               );
+                //             },
+                //             context: context,
+                //             successMessage: state.successmessage)
+                //         : const SizedBox();
+                //     (state is CreateTeamErrorState)
+                //         ? showErrorSnackBar(context, state.errormessage)
+                //         : const SizedBox();
+                //   },
+                //   child: PrimaryButton(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: MediaQuery.of(context).size.height / 16,
+                //     title: "Create",
+                //     onPressed: () async {
+                //       context.read<CreateNewTeamBloc>().add(
+                //             CreateTeamEvent(
+                //               hackID: selectedHack.id!,
+                //               teamName: teamName.text,
+                //               // firstMemberName: firsTeamName.text,
+                //               // secondMemberName: secondTeamName.text,
+                //               // thirdMemberName: thirdTeamName.text,
+                //             ),
+                //           );
+                //     },
+                //   ),
+                // ),
+                BlocConsumer<CreateNewTeamBloc, CreateNewTeamState>(
+                  builder: (context, state) => Column(
+                    children: [
+                      PrimaryButton(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height / 16,
+                        title: "Create",
+                        onPressed: () async {
+                          context.read<CreateNewTeamBloc>().add(
+                                CreateTeamEvent(
+                                  hackID: selectedHack.id!,
+                                  teamName: teamName.text,
+                                  // firstMemberName: firsTeamName.text,
+                                  // secondMemberName: secondTeamName.text,
+                                  // thirdMemberName: thirdTeamName.text,
+                                ),
+                              );
+                        },
+                      ),
+                      state is LoadingState
+                          ? const Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: LinearProgressIndicator(),
+                            )
+                          : const SizedBox()
+                    ],
+                  ),
+                  listener: (BuildContext context, CreateNewTeamState state) {
+                    (state is CreateTeamSuccessState)
+                        ? showSuccessDiolg(
+                            func: () {
+                              //change to pushNamedAndRemoveUntil
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const NavigationBarScreen()),
+                                (route) => false,
+                              );
+                            },
+                            context: context,
+                            successMessage: state.successmessage)
+                        : const SizedBox();
+                    if (state is CreateTeamErrorState) {
+                      FocusScope.of(context).unfocus();
                       showErrorSnackBar(context, state.errormessage);
                     }
                   },
-                  child: PrimaryButton(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 16,
-                    title: "Create",
-                    onPressed: () async {
-                      context.read<CreateNewTeamBloc>().add(
-                            CreateTeamEvent(
-                              hackID: selectedHack.id!,
-                              teamName: teamName.text,
-                              // firstMemberName: firsTeamName.text,
-                              // secondMemberName: secondTeamName.text,
-                              // thirdMemberName: thirdTeamName.text,
-                            ),
-                          );
-                    },
-                  ),
-                )
+                ),
               ],
             ),
           ),

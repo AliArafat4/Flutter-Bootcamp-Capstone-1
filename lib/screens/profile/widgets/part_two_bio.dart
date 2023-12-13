@@ -91,7 +91,9 @@ class _PartTwoBioState extends State<PartTwoBio> {
         ),
         BlocConsumer<ProfileBloc, ProfileState>(
           buildWhen: (previous, current) =>
-              current is GetCurrentUserState || current is SuccessBioState,
+              current is GetCurrentUserState ||
+              current is SuccessBioState ||
+              current is SuccessSkillState,
           builder: (context, state) {
             if (state is GetCurrentUserState) {
               return AboutSection(
@@ -101,15 +103,17 @@ class _PartTwoBioState extends State<PartTwoBio> {
               return AboutSection(
                 bio: "${state.dataUser.bio}",
               );
+            } else if (state is SuccessSkillState) {
+              return AboutSection(
+                bio: "${state.dataUser.bio}",
+              );
             }
             // else if (state is LoadingBioState) {
             //   return const Center(
             //     child: CircularProgressIndicator(),
             //   );
             // }
-            return Container(
-              child: const Text(''),
-            );
+            return const Text('');
           },
           listener: (BuildContext context, ProfileState state) {
             state is ErrorBioState

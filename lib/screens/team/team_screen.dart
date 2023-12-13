@@ -37,9 +37,8 @@ class TeamScreen extends StatelessWidget {
                           return BlocConsumer<TeamBloc, TeamState>(
                             listener: (BuildContext context, TeamState state) {
                               state is RequsetToJoinSuccessState
-                                  ? showSnackBar(
-                                      context: context,
-                                      message: state.successmessage)
+                                  ? showSuccessSnackBar(
+                                      context, state.successmessage)
                                   : const SizedBox();
                             },
                             builder: (context, state) {

@@ -1,24 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:team_hack/bloc/profile_bloc/profile_bloc.dart';
-import 'package:team_hack/data/global.dart';
-import 'package:team_hack/extentions/size_extention.dart';
-import 'package:team_hack/screens/notification_screen/widget/second_button.dart';
-import 'package:team_hack/screens/profile/widgets/about_section.dart';
-import 'package:team_hack/screens/profile/widgets/my_team_card.dart';
+
 import 'package:team_hack/screens/profile/widgets/personal_info.dart';
 import 'package:team_hack/screens/profile/widgets/profile_image.dart';
-import 'package:team_hack/screens/profile/widgets/request_to_join_card.dart';
-import 'package:team_hack/screens/profile/widgets/skills_section.dart';
 
-import 'package:team_hack/screens/profile/widgets/part_five_tabBar.dart';
 import 'package:team_hack/screens/profile/widgets/part_four_role.dart';
-import 'package:team_hack/screens/profile/widgets/part_one_image.dart';
 import 'package:team_hack/screens/profile/widgets/part_three_skill.dart';
 import 'package:team_hack/screens/profile/widgets/part_two_bio.dart';
 
@@ -43,6 +33,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<ProfileBloc>();
+    bloc.state is! ProfileInitial
+        ? bloc.add(GetCurrentUserEvent())
+        : const SizedBox();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile"),
@@ -115,10 +110,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SizedBox(
                           height: 8,
                         ),
-                        // PartOneImage(),
-                        // SizedBox(
-                        //   height: 50,
-                        // ),
                         PartTwoBio(),
                         SizedBox(
                           height: 22,
