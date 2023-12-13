@@ -336,12 +336,13 @@ class SupaBaseDB {
           .select("*")
           .eq("team_name", teamID)
           .eq("request_from", client.auth.currentUser!.id);
-
       if (checkIfLeader.first["teams"]["first_member_name"] ==
           client.auth.currentUser!.id) {
         return "You are the Leader on This Team";
       } else if (checkIfRequested.isNotEmpty) {
         return "You Have Requested to Join This Team";
+      } else if (checkIfLeader.first["teams"]["fourth_member_name"] != null) {
+        return "Team Is Full";
       } else {
         final request = await client.from("request").upsert({
           "team_name": teamID,
