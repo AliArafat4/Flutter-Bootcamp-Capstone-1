@@ -20,7 +20,7 @@ class TeamModel {
   late final UserModel? secondMemberModel;
   late final UserModel? thirdMemberModel;
   late final UserModel? fourthMemberModel;
-  late final UserModel? fifthMemberModel;
+  // late final UserModel? fifthMemberModel;
   late final bool? isLeader;
 
   TeamModel(
@@ -30,16 +30,20 @@ class TeamModel {
       this.secondMemberModel,
       this.thirdMemberModel,
       this.fourthMemberModel,
-      this.fifthMemberModel,
+      // this.fifthMemberModel,
       this.isLeader});
 
-  TeamModel.fromJson(Map<String, dynamic> json) {
+  TeamModel.fromJson(Map<String, dynamic> json,
+      {UserModel? user1,
+      UserModel? user2,
+      UserModel? user3,
+      UserModel? user4}) {
     id = json['id'];
     teamName = json['team_name'];
-    // firstMemberModel = json['first_member_name'];
-    // secondMemberModel = json['second_member_name'];
-    // thirdMemberModel = json['third_member_name'];
-    // fourthMemberModel = json['fourth_member_name'];
+    firstMemberModel = user1; // json['first_member_name'];
+    secondMemberModel = user2; //json['second_member_name'];
+    thirdMemberModel = user3; //json['third_member_name'];
+    fourthMemberModel = user4; //json['fourth_member_name'];
     // fifthMemberModel = json['fifth_member_name'];
     isLeader = json['is_leader'];
   }

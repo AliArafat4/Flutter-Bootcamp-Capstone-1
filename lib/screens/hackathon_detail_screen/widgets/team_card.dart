@@ -41,27 +41,26 @@ class TeamCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               MemberInfo(
-                memberName: teamModel.firstMemberModel!.name ?? "No user",
-                memberRole:
-                    teamModel.firstMemberModel!.role ?? "No Role Assigned",
+                memberName: teamModel.firstMemberModel?.name ?? "No user",
+                memberRole: teamModel.firstMemberModel?.role ?? "",
                 isLeader: teamModel.isLeader ?? false,
               ),
               MemberInfo(
-                memberName: teamModel.secondMemberModel!.name ?? "No user",
-                memberRole:
-                    teamModel.secondMemberModel!.role ?? "No Role Assigned",
+                memberName:
+                    teamModel.secondMemberModel?.name ?? "No Team member",
+                memberRole: teamModel.secondMemberModel?.role ?? "",
                 isLeader: false,
               ),
               MemberInfo(
-                memberName: teamModel.thirdMemberModel!.name ?? "No user",
-                memberRole:
-                    teamModel.thirdMemberModel!.role ?? "No Role Assigned",
+                memberName:
+                    teamModel.thirdMemberModel?.name ?? "No Team member",
+                memberRole: teamModel.thirdMemberModel?.role ?? "",
                 isLeader: false,
               ),
               MemberInfo(
-                memberName: teamModel.fourthMemberModel!.name ?? "No user",
-                memberRole:
-                    teamModel.fourthMemberModel!.role ?? "No Role Assigned",
+                memberName:
+                    teamModel.fourthMemberModel?.name ?? "No Team member",
+                memberRole: teamModel.fourthMemberModel?.role ?? "",
                 isLeader: false,
               ),
               Center(
