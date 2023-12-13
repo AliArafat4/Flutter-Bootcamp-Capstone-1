@@ -42,13 +42,13 @@ class MainApp extends StatelessWidget {
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<HackCubit>(create: (context) => HackCubit()),
         BlocProvider<RequestCubit>(create: (context) => RequestCubit()),
+        BlocProvider(create: (context) => ThemeBloc()),
+        BlocProvider(create: (context) => CreateNewTeamBloc()),
+        BlocProvider(create: (context) => SearchBloc()),
         BlocProvider<AddHackathonCubit>(
             create: (context) => AddHackathonCubit()),
         BlocProvider<MapBloc>(
             create: (context) => MapBloc()..add(MapGetCurrentLocationEvent())),
-        BlocProvider(create: (context) => ThemeBloc()),
-        BlocProvider(create: (context) => CreateNewTeamBloc()),
-        BlocProvider(create: (context) => SearchBloc()),
         BlocProvider(
             create: (context) => ProfileBloc()..add(GetCurrentUserEvent())),
         BlocProvider(create: (context) => TeamBloc()),
