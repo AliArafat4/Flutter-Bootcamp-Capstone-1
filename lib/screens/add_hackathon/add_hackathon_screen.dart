@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/add_hackathon_bloc/add_hackathon_cubit.dart';
 import 'package:team_hack/bloc/hack_bloc/hack_cubit.dart';
 import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
+import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/method/show_dilog.dart';
 import 'package:team_hack/screens/add_hackathon/components/google_maps.dart';
 import 'package:team_hack/screens/add_hackathon/components/widget_dropdown.dart';
@@ -321,8 +322,7 @@ class AddHackathonScreen extends StatelessWidget {
                               })
                           : const SizedBox();
                       state is AddHackErrorState
-                          ? showSnackBar(
-                              context: context, message: state.errMsg)
+                          ? showErrorSnackBar(context, state.errMsg)
                           : const SizedBox();
                     },
                     builder: (context, state) {

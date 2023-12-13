@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/extentions/size_extention.dart';
+import 'package:team_hack/method/alert_snackbar.dart';
 import 'package:team_hack/screens/hackathon_detail_screen/widgets/primary_button.dart';
 
 import 'package:team_hack/screens/navigationbar/navigation_bar_screen.dart';
@@ -79,7 +80,7 @@ class SignInScreen extends StatelessWidget {
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 state is AuthLoginErrorState
-                    ? showSnackBar(context: context, message: state.errorMsg)
+                    ? showErrorSnackBar(context, state.errorMsg)
                     : const SizedBox();
                 state is AuthLoginSuccessState
                     ? Navigator.pushAndRemoveUntil(

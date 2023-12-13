@@ -94,15 +94,24 @@ class _PartThreeSkillState extends State<PartThreeSkill> {
                 current is SuccessSkillState || current is GetCurrentUserState,
             builder: (context, state) {
               if (state is GetCurrentUserState) {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: state.user.skills!.length,
-                    itemBuilder: (context, index) {
-                      return SkillSection(
-                        skillName: state.user.skills![index],
-                      );
-                    });
+                return Wrap(
+                  children: [
+                    ...List.generate(
+                        state.user.skills!.length,
+                        (index) => SkillSection(
+                              skillName: state.user.skills![index],
+                            ))
+                  ],
+                );
+                // ListView.builder(
+                //   shrinkWrap: true,
+                //   scrollDirection: Axis.horizontal,
+                //   itemCount: state.user.skills!.length,
+                //   itemBuilder: (context, index) {
+                //     return SkillSection(
+                //       skillName: state.user.skills![index],
+                //     );
+                //   });
               } else if (state is SuccessSkillState) {
                 return ListView.builder(
                     shrinkWrap: true,
