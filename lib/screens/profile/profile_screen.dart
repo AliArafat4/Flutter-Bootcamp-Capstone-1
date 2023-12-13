@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:team_hack/bloc/image_bloc/bloc/image_bloc_bloc.dart';
 import 'package:team_hack/bloc/profile_bloc/profile_bloc.dart';
 import 'package:team_hack/data/global.dart';
 import 'package:team_hack/extentions/size_extention.dart';
@@ -71,28 +72,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(
                       height: 8,
                     ),
-                    ProfileImage(
-                        uploadImageFunc: () async {
-                          DateTime now = DateTime.now();
-                          final ImagePicker picker = ImagePicker();
-                          final XFile? image = await picker.pickImage(
-                              source: ImageSource.gallery);
-                          if (image == null) {
-                            return;
-                          }
-                          final ImageBytes = await image.readAsBytes();
-                          final supabase = Supabase.instance.client;
-                          final userId = supabase.auth.currentUser!.id;
-                          final imagePath = "/$userId/image_hack_$now.png";
-                          await supabase.storage
-                              .from("image_hack")
-                              .uploadBinary(imagePath, ImageBytes);
-                          imageUrl = supabase.storage
-                              .from("image_hack")
-                              .getPublicUrl(imagePath);
-                          setState(() {});
-                        },
-                        image: imageUrl),
+                     ProfileImage(
+                                        
+                    ),
                     const SizedBox(
                       height: 8,
                     ),

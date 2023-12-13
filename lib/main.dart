@@ -8,6 +8,7 @@ import 'package:team_hack/bloc/auth_bloc/auth_bloc.dart';
 import 'package:team_hack/bloc/bloc_navigationbar/navigationbar_bloc.dart';
 import 'package:team_hack/bloc/bloc_search/search_bloc.dart';
 import 'package:team_hack/bloc/create_new_team/create_new_team_bloc.dart';
+import 'package:team_hack/bloc/image_bloc/bloc/image_bloc_bloc.dart';
 import 'package:team_hack/bloc/map_bloc/map_bloc.dart';
 import 'package:team_hack/bloc/profile_bloc/profile_bloc.dart';
 import 'package:team_hack/bloc/request_bloc/request_cubit.dart';
@@ -52,6 +53,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(
             create: (context) => ProfileBloc()..add(GetCurrentUserEvent())),
         BlocProvider(create: (context) => TeamBloc()),
+        BlocProvider(create: (context) => ImageBloc()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(builder: (context, state) {
         if (state is GetThemeState) {
