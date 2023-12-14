@@ -23,9 +23,11 @@ class HackathonInfo extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Text(title, style: Theme.of(context).textTheme.titleMedium
-              //TextStyle(color: Colors.black.withOpacity(0.8),),
-              ),
+          Flexible(
+            child: Text(title, style: Theme.of(context).textTheme.titleMedium
+                //TextStyle(color: Colors.black.withOpacity(0.8),),
+                ),
+          ),
         ],
       ),
     );

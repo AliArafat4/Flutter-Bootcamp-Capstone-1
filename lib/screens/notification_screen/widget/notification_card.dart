@@ -78,6 +78,7 @@ class NotificationCard extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 18,
                     title: "Accept",
                     onPressed: () {
+                      print(requestModel.users!.name);
                       context.read<RequestCubit>().resolveRequest(
                           requestModel: requestModel, type: 'accept');
 
